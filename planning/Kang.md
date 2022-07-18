@@ -6,7 +6,4 @@
 
 
 
-#### 결과: 
-
-![openvidu_start](C:\Users\SSAFY\Desktop\TERAS\planning\openvidu_start.PNG)
-
+#### 결과: ![openvidu_start](images/openvidu_start.PNG)
