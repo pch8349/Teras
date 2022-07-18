@@ -1,2 +1,2 @@
 # Mockup
-![image](/uploads/6aadcb863677d3e1a8dbdd0bb6e666fd/image.png)
+![image](/uploads/96c27083de719f41f53fe413cda79660/image.png)
