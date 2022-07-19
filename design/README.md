@@ -1,3 +1,6 @@
 # Mockup
-![image](/uploads/96c27083de719f41f53fe413cda79660/image.png)
+<br>
+##7-19 17:00 진행상황
+
+#목업
 ![image](/uploads/a316f490e61b2370d7dea992ff8fea45/image.png)
