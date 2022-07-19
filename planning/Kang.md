@@ -7,3 +7,14 @@
 
 
 #### 결과: ![openvidu_start](images/openvidu_start.PNG)
+
+
+
+
+
+### 0719 오늘의 한 일
+
+#### 1. ERD 작업 완료
+
+#### 2.기술 스택 협의
+
