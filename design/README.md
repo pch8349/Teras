@@ -8,4 +8,4 @@
 
 
 ### 스토리보드
-![스토리보드](/uploads/a27aaadf7ba2776a151bbcec73c8130b/스토리보드.PNG)
+![storyboard](/uploads/be4cf4475ddee0e6fca117bf07f43bc3/storyboard.PNG)
