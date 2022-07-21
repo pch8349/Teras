@@ -9,7 +9,12 @@
 | Java    | 1.8     |             |
 | Gradle  | 6.7+    | Build Tool  |
 | MySQL   |         |             |
-|         |         |             |
+
+|   IDE   |   Version   | Description |
+| ------- | ----------- | ----------- |
+| Eclipse | (4.20)      |             |
+| STS3    | (3.9.18)[https://github.com/spring-attic/toolsuite-distribution/wiki/Spring-Tool-Suite-3]    | Spring Tool |
+|         |             |             |
 
 ## 사용 API
 
