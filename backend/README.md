@@ -4,11 +4,12 @@
 
 ## 기술스택 및 라이브러리
 
-| Project | Version | Description |
-| ------- | ------- | ----------- |
-| Java    | 1.8     |             |
-| Gradle  | 6.7+    | Build Tool  |
-| MySQL   |         |             |
+|   Project   | Version | Description |
+| ----------- | ------- | ----------- |
+| Java        | 1.8     |             |
+| Gradle      | 6.7+    | Build Tool  |
+| MySQL       |         |             |
+| Spring Boot | 2.7.1   |             | 
 
 |   IDE   |   Version   | Description |
 | ------- | ----------- | ----------- |
