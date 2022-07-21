@@ -96,3 +96,43 @@ localhost:3000페이지의 join을 누른다.
 #### 3. openvidu 기본과 pro(유료)의 차이
 
 ![openvidu_pro와기본차이](images/openvidu_pro와기본차이.PNG)
+
+
+
+### 4. openvidu 1:1 연결
+
+```
+npm install -g http-server
+```
+
+```
+http-server openvidu-tutorials/openvidu-hello-world/web
+```
+
+여기서는 튜토리얼의 문서를 사용했으나 개발 진척시 백엔드에서 가능할 듯
+
+
+
+```
+docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-server-kms:2.22.0
+```
+
+도커의 버전에 주의
+
+서로 다른 ip를 연결할 매개체인 도커를 준비한다.
+
+
+
+```
+http-server openvidu-tutorials/openvidu-iframe/web
+```
+
+다른 터미널에서 실행
+
+
+
+결과
+
+![1대1_1](images/1대1_1.PNG)
+
+![1대1_2](images/1대1_2.PNG)
