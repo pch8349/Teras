@@ -12,7 +12,7 @@
 
 |   IDE   |   Version   | Description |
 | ------- | ----------- | ----------- |
-| Eclipse | 4.20        |             |
+| Eclipse | 4.16        |             |
 | STS3    | [3.9.14](https://github.com/spring-attic/toolsuite-distribution/wiki/Spring-Tool-Suite-3)    | Spring Tool |
 |         |             |             |
 
