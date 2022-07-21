@@ -90,3 +90,9 @@ localhost:3000페이지의 join을 누른다.
 ##### 2-3. 사용 가능한 기능
 
 마이크 카메라, 화면 공유, 전체화면, 채팅, 카메라전환, 종료
+
+
+
+#### 3. openvidu 기본과 pro(유료)의 차이
+
+![openvidu_pro와기본차이](images/openvidu_pro와기본차이.PNG)
