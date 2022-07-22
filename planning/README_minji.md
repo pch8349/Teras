@@ -21,3 +21,11 @@ springboot공부
 springboot공부
 
 jpa공부
+
+### 0722한일
+
+프로젝트 버전 맞추기, 기본 세팅
+
+spring security 테스트(로그인, 회원가입)
+
+주말동안 api로 만들어서 postman으로 확인해보기
