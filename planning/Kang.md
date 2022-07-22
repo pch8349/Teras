@@ -136,3 +136,9 @@ http-server openvidu-tutorials/openvidu-iframe/web
 ![1대1_1](images/1대1_1.PNG)
 
 ![1대1_2](images/1대1_2.PNG)
+
+### 0721 오늘의 한 일
+
+다른 팀원과 버전 맞추기
+
+로그인 회원가입 구현 시도
