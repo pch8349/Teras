@@ -3,13 +3,13 @@
 ## Git branch naming convention
 
 
-master - develop - frontend - feature/fe-login
+- master - develop - frontend - feature/fe-login
 
-                            - feature/fe-signup
+                              - feature/fe-signup
 
-                 - backend  - feature/be-login
+                   - backend  - feature/be-login
                  
-                            - feature/be-signup
+                              - feature/be-signup
 
 ## Git merge request naming convention
 
