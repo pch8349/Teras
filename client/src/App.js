@@ -13,8 +13,8 @@ function App() {
     try {
       await doLogin(
         {
-          id: { id },
-          password: { password },
+          id,
+          password,
         },
         () =>
           setUser({

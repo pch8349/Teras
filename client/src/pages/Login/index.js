@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./login.css";
 
 function LoginForm({ authenticated, login }) {
   const [id, setId] = useState("");
@@ -15,7 +16,7 @@ function LoginForm({ authenticated, login }) {
   };
 
   return (
-    <>
+    <div className="loginGridContainer">
       <h1>Login</h1>
       <input
         value={id}
@@ -30,7 +31,7 @@ function LoginForm({ authenticated, login }) {
         placeholder="password"
       />
       <button onClick={handleClick}>Login</button>
-    </>
+    </div>
   );
 }
 
