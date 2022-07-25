@@ -8,11 +8,17 @@
 
    develop
 
-      |---------------------|
+      |
+
+      ______________________
+
+      |                     |
 
    frontend              backend
+      |                     |
+                            _____________________________
 
-      |                     |---------------------------|
+      |                     |                           |
 
 feature/fe-login      feature/be-login           feature/be-signup
 
