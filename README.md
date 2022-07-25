@@ -1,7 +1,7 @@
 # Teras
 
 ## Git branch naming convention
-
+ master > develop > Be/Fe > feature/fe-login
 
 ## Git merge request naming convention
 
