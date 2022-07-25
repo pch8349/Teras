@@ -29,3 +29,13 @@ jpa공부
 spring security 테스트(로그인, 회원가입)
 
 주말동안 api로 만들어서 postman으로 확인해보기
+
+### 0725한일
+
+회원가입 api 구현, db연결, api 테스트, jwt 공부
+
+비밀번호 암호화 된 상태로 들어가도록 코드 바꾸기
+
+httpstatus 설정하기
+
+default 설정 했는데도 class code가 null값으로 들어가는 문제 해결하기
