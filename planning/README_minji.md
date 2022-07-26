@@ -39,3 +39,7 @@ spring security 테스트(로그인, 회원가입)
 httpstatus 설정하기
 
 default 설정 했는데도 class code가 null값으로 들어가는 문제 해결하기
+
+### 0726한일
+
+spring security 적용, 비밀번호 암호화, jwt 공부
