@@ -46,4 +46,4 @@ spring security 적용, 비밀번호 암호화, jwt 공부
 
 ### 0727한일
 
-로그인 구현
+로그인 구현, spring security 공부
