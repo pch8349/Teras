@@ -1,13 +1,27 @@
 import React, { useState } from "react";
 import "./login.css";
 
-function LoginForm({ authenticated, login }) {
+import { doLogin } from "./api/Users";
+
+function LoginForm() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleClick = () => {
+  const handleClick = async () => {
     try {
-      login({ id, password });
+      await doLogin(
+        { id, password },
+        (response) => {
+          const accessToken = response.data.token;
+
+          localStorage.setItem("accessToken", accessToken);
+
+          setAuthToken();
+
+          window.location.href = "/";
+        },
+        () => console.log("로그인 실패"),
+      );
     } catch (e) {
       alert("Failed to login");
       setId("");
