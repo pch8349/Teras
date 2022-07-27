@@ -29,9 +29,24 @@ ex) [BE] login api add / [FE] signup page css update
 
 ## AWS 진행 사항
 
-방화벽 설정
+방화벽 설정(ssh 허용, 방화성 활성화)
 * sudo ufw allow ssh
 * sudo ufw enable
 
 nginx 설치
 * sudo apt-get install nginx
+
+nginx 설정
+* sudo vi /etc/nginx/sites-available/default
+```
+server_name localhost teras.site www.teras.site;
+``` 
+
+nginx 재부팅
+* sudo service nginx reload
+
+mysql-server 설치
+* sudo apt-get install mysql-server
+
+방화벽 설정(mysql 허용)
+* sudo ufw allow mysql
