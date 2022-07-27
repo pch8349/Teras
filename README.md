@@ -57,7 +57,7 @@ certbot 설치
 * sudo snap install --classic certbot
 
 https 인증서 발급
-* sudo certbot --nginx -d [도메인 이름] -d www.[도메인이름]
+* sudo certbot --nginx -d i7a706.p.ssafy.io
 
 ***
 
