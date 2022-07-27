@@ -46,23 +46,14 @@ nginx 설정
 server_name localhost teras.site www.teras.site;
 ``` 
 
-nginx 재부팅
-* sudo service nginx reload
+nginx 명령어
+* 재부팅    : sudo service nginx reload
+* 중지      : sudo systemctl stop nginx
+* 시작      : sudo systemctl start nginx
+* 재시작    : sudo systemctl restart nginx
+* 비활성화  : sudo systemctl disable nginx
+* 활성화    : sudo systemctl enable nginx
 
-nginx 중지
-* sudo systemctl stop nginx
-
-nginx 시작
-* sudo systemctl start nginx
-
-nginx 재시작
-* sudo systemctl restart nginx
-
-nginx 부팅시 시작
-* sudo systemctl disable nginx
-
-nginx 활성화
-* sudo systemctl enable nginx
 ***
 
 ### https
