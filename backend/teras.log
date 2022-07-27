@@ -2576,3 +2576,9 @@ java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'ssafy' for k
 2022-07-27 15:42:50.542 DEBUG 31400 --- [http-nio-127.0.0.1-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.teras.api.request.UserRegisterPostReq@1c138269]
 2022-07-27 15:42:50.648 DEBUG 31400 --- [http-nio-127.0.0.1-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
 2022-07-27 15:42:50.649 DEBUG 31400 --- [http-nio-127.0.0.1-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.teras.common.model.response.BaseResponseBody@42c4ab42]
+2022-07-27 15:42:50.651 DEBUG 31400 --- [http-nio-127.0.0.1-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-07-27 15:45:25.528  INFO 31400 --- [RMI TCP Connection(2)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2022-07-27 15:45:25.543  INFO 31400 --- [RMI TCP Connection(2)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2022-07-27 15:45:25.546  INFO 31400 --- [RMI TCP Connection(2)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-07-27 15:45:25.548  INFO 31400 --- [RMI TCP Connection(2)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2022-07-27 15:45:25.553  INFO 31400 --- [RMI TCP Connection(2)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
