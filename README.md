@@ -26,3 +26,12 @@ title : ex) [FE] merge feature/fe-login into frontend
 [FE/BE] (구현한 기능) (동사)
 
 ex) [BE] login api add / [FE] signup page css update
+
+## AWS 진행 사항
+
+방화벽 설정
+* sudo ufw allow ssh
+* sudo ufw enable
+
+nginx 설치
+* sudo apt-get install nginx
