@@ -56,6 +56,9 @@ nginx 재부팅
 certbot 설치
 * sudo snap install --classic certbot
 
+방화벽 설정
+* sudo ufw allow 80/tcp
+
 https 인증서 발급
 * sudo certbot --nginx -d i7a706.p.ssafy.io
 
