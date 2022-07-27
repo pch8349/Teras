@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.teras.api.request.UserRegisterPostReq;
+import com.teras.common.model.column.TerasAuthority;
 import com.teras.db.entity.User;
 import com.teras.db.repository.UserRepository;
 import com.teras.db.repository.UserRepositorySupport;
@@ -29,6 +30,19 @@ public class UserServiceImpl implements UserService {
 		user.setUserId(userRegisterInfo.getId());
 		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
 		user.setPassword(passwordEncoder.encode(userRegisterInfo.getPassword()));
+		
+		user.setName(userRegisterInfo.getName());
+		
+		user.setEmail(userRegisterInfo.getEmail());
+		
+		user.setPhoneNumber(userRegisterInfo.getPhoneNumber());
+		
+		user.setClassCode(userRegisterInfo.getClassCode());
+		
+		System.out.println(TerasAuthority.valueOf("STUDENT"));
+		
+		user.setAuthority(TerasAuthority.valueOf(userRegisterInfo.getAuthority()));
+		
 		return userRepository.save(user);
 	}
 
