@@ -1,11 +1,10 @@
-import "./App.css";
-import { Student_Main } from "./Student_Main";
+import { UserLogin } from "./components/user/UserLogin";
 
 function App() {
   document.body.style.backgroundColor = "#f5f5f5";
   document.body.style.margin = "0";
   // eslint-disable-next-line react/jsx-pascal-case
-  return <Student_Main />;
+  return <UserLogin />;
 }
 
 export default App;
