@@ -1,6 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 export const UserLogin = ({}) => {
+  const WhiteBtnFunction = (e, name) => {
+    alert(`${name} was clicked`);
+  };
+  const LoginBtnFunction = (e, name) => {
+    alert(`${name} was clicked`);
+  };
   return (
     <NewRootRoot>
       <Login>
@@ -26,21 +32,41 @@ export const UserLogin = ({}) => {
             </Element8>
           </FlexRow>
           <Text1 margin={`0px 0px 2px 6px`}>아이디</Text1>
-          <WhiteRectangle />
+          <Id />
           <Text1 margin={`0px 0px 1px 3px`}>비밀번호</Text1>
-          <WhiteRectangle1 />
+          <PasswordWrite />
           <FlexRow1>
             <RadioWithLabel>
+              <Radio1
+                src={`https://file.rendit.io/n/6dGvxhRB1uhwG4bh2iXM.svg`}
+              />
               <Radio1
                 src={`https://file.rendit.io/n/JXYQOMUdqMH4vu2pwhl3.svg`}
               />
               <Text3>아이디 기억</Text3>
             </RadioWithLabel>
-            <Text4 margin={`1px 19px 0px 0px`}>회원가입</Text4>
-            <Text4 margin={`1px 20px 0px 0px`}>아이디 찾기</Text4>
-            <Text4 margin={`1px 0px 0px 0px`}>비밀번호 찾기</Text4>
+            <WhiteBtn
+              onClick={(e) => WhiteBtnFunction(e, "SignUp")}
+              margin={`0px 10px 0px 0px`}
+            >
+              <Text4 width={`73px`}>회원가입</Text4>
+            </WhiteBtn>
+            <WhiteBtn
+              onClick={(e) => WhiteBtnFunction(e, "LookForID")}
+              margin={`0px 10px 0px 0px`}
+            >
+              <Text4 width={`70px`}>아이디 찾기</Text4>
+            </WhiteBtn>
+            <WhiteBtn
+              onClick={(e) => WhiteBtnFunction(e, "LookForPW")}
+              margin={`0`}
+            >
+              <Text4 width={`78px`}>비밀번호 찾기</Text4>
+            </WhiteBtn>
           </FlexRow1>
-          <SpringGreenText>로그인</SpringGreenText>
+          <LoginBtn onClick={(e) => LoginBtnFunction(e, "LoginBtn")}>
+            <Text7>로그인</Text7>
+          </LoginBtn>
         </WhiteFlexColumn>
       </Login>
     </NewRootRoot>
@@ -50,21 +76,21 @@ const Column = styled.div`
   position: absolute;
 `;
 const Text1 = styled.div`
-  font-size: 20px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-size: 15px;
+  font-family: Inter;
+  font-weight: 500;
   align-self: flex-start;
   margin: ${(props) => props.margin};
 `;
 const Text4 = styled.div`
   text-align: center;
-  font-size: 15px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-size: 11px;
+  font-family: Inter;
+  font-weight: 500;
   margin: ${(props) => props.margin};
 `;
 const NewRootRoot = styled.div`
-  width: 1440px;
+  width: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -107,7 +133,7 @@ const Element8 = styled.div`
   height: 15px;
   position: relative;
 `;
-const WhiteRectangle = styled.div`
+const Id = styled.input`
   border-color: #096c24;
   border-style: solid;
   width: 406px;
@@ -118,7 +144,10 @@ const WhiteRectangle = styled.div`
   margin: 0px 0px 36px 0px;
   border-width: 1px;
 `;
-const WhiteRectangle1 = styled.div`
+
+const PasswordWrite = styled.input.attrs((props) => ({
+  type: "password",
+}))`
   border-color: #096c25;
   border-style: solid;
   width: 406px;
@@ -151,21 +180,52 @@ const Radio1 = styled.img`
   height: 20px;
 `;
 const Text3 = styled.div`
-  font-size: 15px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-size: 11px;
+  font-family: Inter;
+  font-weight: 500;
   line-height: 20px;
 `;
-const SpringGreenText = styled.div`
+
+const WhiteBtn = styled.button`
+  background-color: #ffffff;
   display: flex;
-  font-size: 15px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
-  width: 411px;
-  height: 17px;
-  background-color: #e0ffc1;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  padding: 0px;
+  border-width: 0px;
+  box-sizing: content-box;
+  cursor: pointer;
+  &: hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+  }
+  margin: ${(props) => props.margin};
+`;
+const LoginBtn = styled.button`
+  background-color: #e0ffc1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   border-radius: 10px;
-  padding: 18px 0px 16px 0px;
+  padding: 0px;
+  border-width: 0px;
+  box-sizing: content-box;
+  cursor: pointer;
+  &: hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+  }
+`;
+
+const Text7 = styled.div`
+  text-align: center;
+  width: 410px;
+  height: 52px;
+  display: flex;
+  font-size: 13px;
+  font-family: Inter;
+  font-weight: 700;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
