@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./login.css";
 
-import { doLogin } from "./api/Users";
+import { doLogin } from "../../api/Users";
 
 function LoginForm() {
   const [id, setId] = useState("");
@@ -16,11 +16,9 @@ function LoginForm() {
 
           localStorage.setItem("accessToken", accessToken);
 
-          setAuthToken();
-
           window.location.href = "/";
         },
-        () => console.log("로그인 실패"),
+        () => console.log("로그인 실패")
       );
     } catch (e) {
       alert("Failed to login");

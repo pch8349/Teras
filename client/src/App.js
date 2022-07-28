@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/index";
 import LoginForm from "./pages/Login/index";
 import RouteGuard from "./pages/RouteGuard";
+import Classroom from "./pages/Classroom/index";
 
 function App() {
   const [user, setUser] = useState();
@@ -13,8 +14,14 @@ function App() {
   return (
     <Router>
       <Routes>
-        <RouteGuard path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={
+            localStorage.getItem("accessToken") ? <Home /> : <LoginForm />
+          }
+        />
         <Route path="/login" element={<LoginForm />} />
+        <Route path="/classroom" element={<Classroom />} />
       </Routes>
     </Router>
   );

@@ -1,9 +1,9 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Navigate } from "react-router-dom";
 
 const RouteGuard = ({ component: Component, ...rest }) => {
   function hasJWT() {
-    const authenticated = false;
+    let authenticated = false;
 
     //check user has JWT token
     localStorage.getItem("accessToken")
@@ -20,7 +20,7 @@ const RouteGuard = ({ component: Component, ...rest }) => {
         hasJWT() ? (
           <Component {...props} />
         ) : (
-          <Redirect to={{ pathname: "/login" }} />
+          <Navigate to={{ pathname: "/login" }} />
         )
       }
     />
