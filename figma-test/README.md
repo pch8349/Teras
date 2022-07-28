@@ -1,3 +1,8 @@
+# Webfontloader 설치를 위한 명령어
+
+npm install styled-components
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
