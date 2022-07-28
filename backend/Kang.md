@@ -251,3 +251,6 @@ $ sudo service nginx reload
 $ sudo service nginx restart
 ```
 
+
+
+![openvidu_back](images/openvidu_back.PNG)
