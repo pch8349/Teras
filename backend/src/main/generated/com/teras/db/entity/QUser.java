@@ -21,10 +21,24 @@ public class QUser extends EntityPathBase<User> {
 
     public final QBaseEntity _super = new QBaseEntity(this);
 
+    public final EnumPath<com.teras.common.model.column.TerasAuthority> authority = createEnum("authority", com.teras.common.model.column.TerasAuthority.class);
+
+    public final StringPath classCode = createString("classCode");
+
+    public final StringPath email = createString("email");
+
+    public final StringPath emergencyPhoneNumber = createString("emergencyPhoneNumber");
+
     //inherited
     public final NumberPath<Long> id = _super.id;
 
+    public final StringPath name = createString("name");
+
     public final StringPath password = createString("password");
+
+    public final StringPath phoneNumber = createString("phoneNumber");
+
+    public final StringPath subjectCode = createString("subjectCode");
 
     public final StringPath userId = createString("userId");
 
