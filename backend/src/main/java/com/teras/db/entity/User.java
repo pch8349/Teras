@@ -1,9 +1,6 @@
 package com.teras.db.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,7 +15,9 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class User extends BaseEntity{
+@Table(name = "user")
+public class User{
+	@Id
 	@Column(name = "userId", unique = true, nullable = false)
     String userId;
 
@@ -36,8 +35,14 @@ public class User extends BaseEntity{
     @Column(name = "phoneNumber", nullable = false, length = 13)
     String phoneNumber;
     
-    @Column(name = "classCode")
-    String classCode;
+    @Column(name = "schoolCode", nullable = false)
+    String schoolCode;
+    
+    @Column(name = "grade", nullable = true)
+    String grade;
+    
+    @Column(name = "class", nullable = true)
+    String userClass;
     
     @Enumerated(EnumType.STRING)
     @Column(name = "authority", nullable = false, length = 12)

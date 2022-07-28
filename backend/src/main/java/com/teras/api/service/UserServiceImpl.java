@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 		
 		user.setPhoneNumber(userRegisterInfo.getPhoneNumber());
 		
-		user.setClassCode(userRegisterInfo.getClassCode());
+		user.setSchoolCode(userRegisterInfo.getSchoolCode());
 		
 		System.out.println(TerasAuthority.valueOf("STUDENT"));
 		
