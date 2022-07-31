@@ -1,5 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import Checkbox from "@mui/material/Checkbox";
+
+const label = { inputProps: { "aria-label": "Checkbox demo" } };
+
 export const UserLogin = ({}) => {
   const WhiteBtnFunction = (e, name) => {
     alert(`${name} was clicked`);
@@ -7,6 +11,10 @@ export const UserLogin = ({}) => {
   const LoginBtnFunction = (e, name) => {
     alert(`${name} was clicked`);
   };
+  const IdRememberCheck = (e, name, check) => {
+    alert(`${name} was clicked`);
+  };
+
   return (
     <NewRootRoot>
       <Login>
@@ -32,11 +40,16 @@ export const UserLogin = ({}) => {
             </Element8>
           </FlexRow>
           <Text1 margin={`0px 0px 2px 6px`}>아이디</Text1>
-          <Id />
+          <IdForm />
           <Text1 margin={`0px 0px 1px 3px`}>비밀번호</Text1>
-          <PasswordWrite />
+          <PwForm />
           <FlexRow1>
             <RadioWithLabel>
+              <Checkbox {...label} />
+              <Text3>아이디 기억</Text3>
+            </RadioWithLabel>
+
+            {/* <RadioWithLabel onClick={(e) => IdRememberCheck(e, "IdRemember")}>
               <Radio1
                 src={`https://file.rendit.io/n/6dGvxhRB1uhwG4bh2iXM.svg`}
               />
@@ -44,7 +57,7 @@ export const UserLogin = ({}) => {
                 src={`https://file.rendit.io/n/JXYQOMUdqMH4vu2pwhl3.svg`}
               />
               <Text3>아이디 기억</Text3>
-            </RadioWithLabel>
+            </RadioWithLabel> */}
             <WhiteBtn
               onClick={(e) => WhiteBtnFunction(e, "SignUp")}
               margin={`0px 10px 0px 0px`}
@@ -133,19 +146,19 @@ const Element8 = styled.div`
   height: 15px;
   position: relative;
 `;
-const Id = styled.input`
-  border-color: #096c24;
+const IdForm = styled.input`
+  border-color: #096c25;
   border-style: solid;
   width: 406px;
   height: 46px;
-  background-color: #fdfdfd;
+  background-color: #ffffff;
   align-self: flex-end;
   border-radius: 5px;
   margin: 0px 0px 36px 0px;
   border-width: 1px;
 `;
 
-const PasswordWrite = styled.input.attrs((props) => ({
+const PwForm = styled.input.attrs((props) => ({
   type: "password",
 }))`
   border-color: #096c25;

@@ -1,4 +1,4 @@
-import { UserLogin } from "./components/user/UserLogin";
+import AppRouter from "./components/Router";
 
 function App() {
   document.body.style.backgroundColor = "#f5f5f5";
@@ -6,7 +6,11 @@ function App() {
   document.body.style.width = "100%";
 
   // eslint-disable-next-line react/jsx-pascal-case
-  return <UserLogin />;
+  return (
+    <>
+      <AppRouter />
+    </>
+  );
 }
 
 export default App;
