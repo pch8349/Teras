@@ -88,7 +88,8 @@ public class NoticeController {
 		@ApiResponse(code = 404, message = "게시글 없음"),
 		@ApiResponse(code = 500, message = "서버 오류")
 	})
-	@ApiImplicitParam(name = "noticeId", value = "notice seq", )
+	@ApiImplicitParam(name = "noticeId", value = "notice seq", required = true, dateType = "Long")
+	@GetMapping("/{noticeId}")
 
 	
 	
