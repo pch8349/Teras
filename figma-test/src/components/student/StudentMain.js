@@ -1,16 +1,23 @@
 import React from "react";
 import styled from "styled-components";
+
 export const StudentMain = ({}) => {
+  const SpringGreenFlexColumnFunction = (e, name) => {
+    alert(`${name} was clicked`);
+  };
+  const PrimaryButton1Function = (e, name) => {
+    alert(`${name} was clicked`);
+  };
   return (
     <ElementRoot>
       <FlexColumn>
         <Removebgpreview
-          src={`https://file.rendit.io/n/2BqvUH1tphlvF6ArNoAC.png`}
+          src={`https://file.rendit.io/n/LlrfTwSM75sTWA8yro15.png`}
         />
         <Element1>
           <FlexRow>
             <Element3
-              src={`https://file.rendit.io/n/rPviyB3UwoIdBObHTcQn.png`}
+              src={`https://file.rendit.io/n/F0LqG9UDVX0qug2hjXpB.png`}
             />
             <FlexColumn1>
               <Text58>박 찬 혁</Text58>
@@ -22,15 +29,27 @@ export const StudentMain = ({}) => {
             <Text61>내정보보기</Text61>
             <Text60>학생</Text60>
           </FlexRow1>
-          <SpringGreenText>등교하기</SpringGreenText>
+          <SpringGreenFlexColumn
+            onClick={(e) =>
+              SpringGreenFlexColumnFunction(e, "SpringGreenFlexColumn")
+            }
+          >
+            <Element67>입력</Element67>
+          </SpringGreenFlexColumn>
         </Element1>
-        <GreenYellowText>수업 입실</GreenYellowText>
+        <PrimaryButton1
+          onClick={(e) => PrimaryButton1Function(e, "PrimaryButton1")}
+        >
+          <SpringGreenFlexColumn1>
+            <Element68>수업 입실</Element68>
+          </SpringGreenFlexColumn1>
+        </PrimaryButton1>
         <Element70>
           <WhiteFlexColumn>
             <Text63 color={`#706d6d`}>조례</Text63>
             <FlexRow2>
               <Image1
-                src={`https://file.rendit.io/n/1Qmgc1aJ5MN2sP303vwX.png`}
+                src={`https://file.rendit.io/n/zojb21bBSrxeT2eo2vQ0.png`}
               />
               <Text64>물리</Text64>
             </FlexRow2>
@@ -47,16 +66,16 @@ export const StudentMain = ({}) => {
       </FlexColumn>
       <FlexColumn2>
         <FlexRow3>
-          <Image2 src={`https://file.rendit.io/n/8m84zvOWkGIw8rItMZcn.svg`} />
+          <Image2 src={`https://file.rendit.io/n/OXwYIUGswYC160F6kPpg.svg`} />
           <Text72>설정</Text72>
-          <Image3 src={`https://file.rendit.io/n/1QUbFfNsG3IiINh8pahW.svg`} />
+          <Image3 src={`https://file.rendit.io/n/ajrYFfmRUTsElBbcHbSV.svg`} />
           <Text73>로그아웃</Text73>
         </FlexRow3>
         <Element71>
           <WhiteText>메인</WhiteText>
           <WhiteFlexColumn1>
             <Text74>자료실</Text74>
-            <Line21 src={`https://file.rendit.io/n/gxdncasTN93jxiiUNZKi.svg`} />
+            <Line21 src={`https://file.rendit.io/n/4mql8NqNXms21ozKoSUA.svg`} />
           </WhiteFlexColumn1>
           <WhiteText1 left={`320px`}>과제</WhiteText1>
           <WhiteText2 left={`426px`}>성적관리</WhiteText2>
@@ -66,7 +85,7 @@ export const StudentMain = ({}) => {
           <WhiteText1 left={`107px`}>공지</WhiteText1>
           <WhiteFlexRow>
             <IconIOSArrowLeft
-              src={`https://file.rendit.io/n/nF4WaWjfxFYqmquBi0k9.svg`}
+              src={`https://file.rendit.io/n/Rsck4IUhcdmwMrozWyp1.svg`}
             />
             <FlexColumn3>
               <WhiteFlexColumn2>
@@ -79,35 +98,35 @@ export const StudentMain = ({}) => {
                   <Text78>운영자</Text78>
                 </FlexRow5>
                 <Line6
-                  src={`https://file.rendit.io/n/KsCFRUacgSk9kOX19BUq.svg`}
+                  src={`https://file.rendit.io/n/Sdy2XbISltOAZblk1v5A.svg`}
                 />
                 <FlexRow5 margin={`0px 0px 10px 0px`}>
                   <Text77>[안내] 자유게시판 활용 안내</Text77>
                   <Text78>운영자</Text78>
                 </FlexRow5>
                 <Line6
-                  src={`https://file.rendit.io/n/KsCFRUacgSk9kOX19BUq.svg`}
+                  src={`https://file.rendit.io/n/Sdy2XbISltOAZblk1v5A.svg`}
                 />
                 <FlexRow5 margin={`0px 0px 10px 0px`}>
                   <Text77>[안내] 자유게시판 활용 안내</Text77>
                   <Text78>운영자</Text78>
                 </FlexRow5>
                 <Line6
-                  src={`https://file.rendit.io/n/KsCFRUacgSk9kOX19BUq.svg`}
+                  src={`https://file.rendit.io/n/Sdy2XbISltOAZblk1v5A.svg`}
                 />
                 <FlexRow5 margin={`0px 0px 10px 0px`}>
                   <Text77>[안내] 자유게시판 활용 안내</Text77>
                   <Text78>운영자</Text78>
                 </FlexRow5>
                 <Line6
-                  src={`https://file.rendit.io/n/KsCFRUacgSk9kOX19BUq.svg`}
+                  src={`https://file.rendit.io/n/Sdy2XbISltOAZblk1v5A.svg`}
                 />
                 <FlexRow5 margin={`0px 0px 10px 0px`}>
                   <Text77>[안내] 자유게시판 활용 안내</Text77>
                   <Text78>운영자</Text78>
                 </FlexRow5>
                 <Line6
-                  src={`https://file.rendit.io/n/KsCFRUacgSk9kOX19BUq.svg`}
+                  src={`https://file.rendit.io/n/Sdy2XbISltOAZblk1v5A.svg`}
                 />
                 <FlexRow5 margin={`0`}>
                   <Text77>[안내] 자유게시판 활용 안내</Text77>
@@ -206,7 +225,7 @@ export const StudentMain = ({}) => {
                 </FlexRow4>
                 <Element72>
                   <Line11
-                    src={`https://file.rendit.io/n/qmGBKVHYYEuPyHYiA1c5.svg`}
+                    src={`https://file.rendit.io/n/nKa5vkpCboueeH7a1Pag.svg`}
                   />
                   <Text93 left={`23px`}>수학</Text93>
                   <Text93 left={`138px`}>한국사</Text93>
@@ -223,13 +242,13 @@ export const StudentMain = ({}) => {
                   <OuterSpaceRectangle />
                   <BlackRectangle />
                   <Line12
-                    src={`https://file.rendit.io/n/dUPJNuuDbKWoChErxYBk.svg`}
+                    src={`https://file.rendit.io/n/u3Oyy3RpRXl16OHAiau9.svg`}
                   />
                   <Arrow
-                    src={`https://file.rendit.io/n/mgL9O8WAPUYVLfwhAEiv.svg`}
+                    src={`https://file.rendit.io/n/0Xciy3jnYPEQ3PeqMke5.svg`}
                   />
                   <Arrow1
-                    src={`https://file.rendit.io/n/M3KmGWnjePq6li7T64Nx.svg`}
+                    src={`https://file.rendit.io/n/liGTYzD2fxxGQaYl6PMn.svg`}
                   />
                 </Element72>
               </WhiteFlexColumn3>
@@ -240,90 +259,90 @@ export const StudentMain = ({}) => {
                 </FlexRow12>
                 <FlexRow13>
                   <MaleUser
-                    src={`https://file.rendit.io/n/Jojkd1aYcnqM4tphqNbV.png`}
+                    src={`https://file.rendit.io/n/kXLlWbiZUgn1jeqpLIkS.png`}
                   />
                   <Text102 alignSelf={`flex-start`}>운영자</Text102>
                 </FlexRow13>
                 <Line5
-                  src={`https://file.rendit.io/n/KsCFRUacgSk9kOX19BUq.svg`}
+                  src={`https://file.rendit.io/n/Sdy2XbISltOAZblk1v5A.svg`}
                 />
                 <FlexRow14>
                   <Text103>[안내] 자유게시판 활용 안내</Text103>
                   <MaleUser1
-                    src={`https://file.rendit.io/n/Jojkd1aYcnqM4tphqNbV.png`}
+                    src={`https://file.rendit.io/n/kXLlWbiZUgn1jeqpLIkS.png`}
                   />
                   <Text102 alignSelf={`inherit`}>운영자</Text102>
                 </FlexRow14>
                 <Line
-                  src={`https://file.rendit.io/n/KsCFRUacgSk9kOX19BUq.svg`}
+                  src={`https://file.rendit.io/n/Sdy2XbISltOAZblk1v5A.svg`}
                 />
                 <FlexRow14>
                   <Text103>[안내] 자유게시판 활용 안내</Text103>
                   <MaleUser1
-                    src={`https://file.rendit.io/n/Jojkd1aYcnqM4tphqNbV.png`}
+                    src={`https://file.rendit.io/n/kXLlWbiZUgn1jeqpLIkS.png`}
                   />
                   <Text102 alignSelf={`inherit`}>운영자</Text102>
                 </FlexRow14>
                 <Line
-                  src={`https://file.rendit.io/n/KsCFRUacgSk9kOX19BUq.svg`}
+                  src={`https://file.rendit.io/n/Sdy2XbISltOAZblk1v5A.svg`}
                 />
                 <FlexRow14>
                   <Text103>[안내] 자유게시판 활용 안내</Text103>
                   <MaleUser1
-                    src={`https://file.rendit.io/n/Jojkd1aYcnqM4tphqNbV.png`}
+                    src={`https://file.rendit.io/n/kXLlWbiZUgn1jeqpLIkS.png`}
                   />
                   <Text102 alignSelf={`inherit`}>운영자</Text102>
                 </FlexRow14>
                 <Line
-                  src={`https://file.rendit.io/n/KsCFRUacgSk9kOX19BUq.svg`}
+                  src={`https://file.rendit.io/n/Sdy2XbISltOAZblk1v5A.svg`}
                 />
                 <FlexRow14>
                   <Text103>[안내] 자유게시판 활용 안내</Text103>
                   <MaleUser1
-                    src={`https://file.rendit.io/n/Jojkd1aYcnqM4tphqNbV.png`}
+                    src={`https://file.rendit.io/n/kXLlWbiZUgn1jeqpLIkS.png`}
                   />
                   <Text102 alignSelf={`inherit`}>운영자</Text102>
                 </FlexRow14>
                 <Line
-                  src={`https://file.rendit.io/n/KsCFRUacgSk9kOX19BUq.svg`}
+                  src={`https://file.rendit.io/n/Sdy2XbISltOAZblk1v5A.svg`}
                 />
                 <FlexRow14>
                   <Text103>[안내] 자유게시판 활용 안내</Text103>
                   <MaleUser1
-                    src={`https://file.rendit.io/n/Jojkd1aYcnqM4tphqNbV.png`}
+                    src={`https://file.rendit.io/n/kXLlWbiZUgn1jeqpLIkS.png`}
                   />
                   <Text102 alignSelf={`inherit`}>운영자</Text102>
                 </FlexRow14>
                 <Line4
-                  src={`https://file.rendit.io/n/KsCFRUacgSk9kOX19BUq.svg`}
+                  src={`https://file.rendit.io/n/Sdy2XbISltOAZblk1v5A.svg`}
                 />
               </WhiteFlexColumn4>
             </FlexColumn5>
             <IconArrowRight
-              src={`https://file.rendit.io/n/oyQ2lNk9en0TGU2RrG5O.svg`}
+              src={`https://file.rendit.io/n/3mEfSJXPqttyuUs5l9UA.svg`}
             />
           </WhiteFlexRow>
           <Line20
-            src={`https://file.rendit.io/n/gxdncasTN93jxiiUNZKi.svg`}
+            src={`https://file.rendit.io/n/4mql8NqNXms21ozKoSUA.svg`}
             left={`107px`}
           />
           <Line20
-            src={`https://file.rendit.io/n/gxdncasTN93jxiiUNZKi.svg`}
+            src={`https://file.rendit.io/n/4mql8NqNXms21ozKoSUA.svg`}
             left={`319px`}
           />
           <Line20
-            src={`https://file.rendit.io/n/gxdncasTN93jxiiUNZKi.svg`}
+            src={`https://file.rendit.io/n/4mql8NqNXms21ozKoSUA.svg`}
             left={`425px`}
           />
           <Line20
-            src={`https://file.rendit.io/n/gxdncasTN93jxiiUNZKi.svg`}
+            src={`https://file.rendit.io/n/4mql8NqNXms21ozKoSUA.svg`}
             left={`531px`}
           />
           <Line20
-            src={`https://file.rendit.io/n/gxdncasTN93jxiiUNZKi.svg`}
+            src={`https://file.rendit.io/n/4mql8NqNXms21ozKoSUA.svg`}
             left={`637px`}
           />
-          <Line26 src={`https://file.rendit.io/n/6VZ0eVLGT3ed93vNpaxd.svg`} />
+          <Line26 src={`https://file.rendit.io/n/LmVYOwj2S3SUvjDHng8N.svg`} />
         </Element71>
       </FlexColumn2>
     </ElementRoot>
@@ -331,31 +350,31 @@ export const StudentMain = ({}) => {
 };
 const Text60 = styled.div`
   font-size: 13px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
 `;
 const Text63 = styled.div`
   font-size: 24px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
   margin: 0px 0px 18px 0px;
   color: ${(props) => props.color};
 `;
 const Text65 = styled.div`
   font-size: 24px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
   margin: 0px 0px 14px 0px;
 `;
 const Text73 = styled.div`
   font-size: 20px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
 `;
 const WhiteText1 = styled.div`
   display: flex;
   font-size: 24px;
-  font-family: GangwonEduAll;
+  font-family: GangwonEduAll OTF;
   font-weight: 300;
   color: #6b6b6b;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -372,7 +391,7 @@ const WhiteText1 = styled.div`
 const WhiteText2 = styled.div`
   display: flex;
   font-size: 24px;
-  font-family: GangwonEduAll;
+  font-family: GangwonEduAll OTF;
   font-weight: 300;
   color: #6b6b6b;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -395,8 +414,8 @@ const FlexRow4 = styled.div`
 `;
 const Text75 = styled.div`
   font-size: 20px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
   align-self: flex-end;
   margin: ${(props) => props.margin};
 `;
@@ -415,13 +434,13 @@ const FlexRow5 = styled.div`
 const Text77 = styled.div`
   width: 238px;
   font-size: 16px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
 `;
 const Text78 = styled.div`
   font-size: 16px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
 `;
 const Line6 = styled.img`
   width: 312px;
@@ -480,16 +499,16 @@ const Text10 = styled.div`
 `;
 const Text93 = styled.div`
   font-size: 15px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
   position: absolute;
   top: 218px;
   left: ${(props) => props.left};
 `;
 const Text102 = styled.div`
   font-size: 16px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
   margin: 2px 0px 0px 0px;
   align-self: ${(props) => props.alignSelf};
 `;
@@ -504,8 +523,8 @@ const FlexRow14 = styled.div`
 const Text103 = styled.div`
   width: 238px;
   font-size: 16px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
   margin: 2px 6px 0px 0px;
 `;
 const MaleUser1 = styled.img`
@@ -542,23 +561,22 @@ const FlexColumn = styled.div`
   flex-direction: column;
   justify-content: center;
   flex-grow: 1;
-  align-items: flex-end;
+  align-items: center;
 `;
 const Removebgpreview = styled.img`
   width: 254px;
   height: 105px;
-  align-self: center;
   margin: 0px 0px 63px 0px;
 `;
 const Element1 = styled.div`
-  height: 135px;
-  background-image: url("https://file.rendit.io/n/5JNyENN4cMjZJMzOgW54.svg");
+  height: 130px;
+  background-image: url("https://file.rendit.io/n/0GEUvcpkkMsAYXj9cIZo.svg");
   background-size: cover;
+  align-self: flex-end;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  padding: 11px 24px 11px 20px;
-  margin: 0px 19px 8px 0px;
+  padding: 11px 25px 16px 19px;
+  margin: 0px 19px 13px 0px;
 `;
 const FlexRow = styled.div`
   display: flex;
@@ -566,6 +584,7 @@ const FlexRow = styled.div`
   justify-content: flex-start;
   gap: 31px;
   align-items: center;
+  padding: 0px 1px;
   margin: 0px 0px 1px 0px;
 `;
 const Element3 = styled.img`
@@ -582,14 +601,14 @@ const FlexColumn1 = styled.div`
 `;
 const Text58 = styled.div`
   font-size: 16px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
   margin: 0px 0px 17px 0px;
 `;
 const Text59 = styled.div`
   font-size: 13px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
   align-self: center;
   margin: 0px 0px 2px 0px;
 `;
@@ -600,46 +619,83 @@ const FlexRow1 = styled.div`
   justify-content: flex-start;
   gap: 47px;
   align-items: flex-start;
-  padding: 0px 11px;
-  margin: 0px 0px 14px 0px;
+  padding: 0px 12px;
+  margin: 0px 0px 17px 0px;
 `;
 const Text61 = styled.div`
   font-size: 10px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
   align-self: flex-end;
 `;
-const SpringGreenText = styled.div`
+const SpringGreenFlexColumn = styled.button`
+  background-color: #e0ffc1;
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  padding: 0px;
+  border-width: 0px;
+  box-sizing: content-box;
+  cursor: pointer;
+  &: hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+  }
+`;
+const Element67 = styled.div`
+  text-align: center;
+  width: 166px;
+  height: 24px;
   display: flex;
   font-size: 12px;
   font-family: GangwonEduAll;
   font-weight: 700;
-  align-self: center;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  width: 39px;
-  height: 14px;
-  background-color: #e0ffc1;
-  flex-direction: row;
-  border-radius: 5px;
-  padding: 5px 67px 5px 60px;
+  color: #363636;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
-const GreenYellowText = styled.div`
+const PrimaryButton1 = styled.button`
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  margin: 0px 0px 12px 0px;
+  padding: 0px;
+  border-width: 0px;
+  background: none;
+  box-sizing: content-box;
+  cursor: pointer;
+  &: hover {
+    opacity: 70%;
+  }
+`;
+const SpringGreenFlexColumn1 = styled.div`
+  background-color: #e0ffc1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+`;
+const Element68 = styled.div`
+  text-align: center;
+  width: 129px;
+  height: 38px;
   display: flex;
   font-size: 20px;
   font-family: GangwonEduAll;
   font-weight: 700;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  width: 129px;
-  height: 23px;
-  background-color: #f1e9a2;
-  flex-direction: row;
+  color: #363636;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  border-radius: 5px;
-  padding: 9px 0px 7px 0px;
-  margin: 0px 59px 16px 0px;
 `;
 const Element70 = styled.div`
-  align-self: stretch;
   height: 445px;
   position: relative;
   min-width: 254px;
@@ -673,15 +729,15 @@ const Image1 = styled.img`
 `;
 const Text64 = styled.div`
   font-size: 24px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
   align-self: flex-start;
 `;
 const AlmondText = styled.div`
   display: flex;
   font-size: 24px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
   border-color: #edf139;
   border-style: solid;
   width: 191px;
@@ -696,14 +752,14 @@ const AlmondText = styled.div`
 `;
 const Text66 = styled.div`
   font-size: 24px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
   margin: 0px 0px 16px 0px;
 `;
 const Text70 = styled.div`
   font-size: 24px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
 `;
 const Text71 = styled.div`
   font-size: 24px;
@@ -736,8 +792,8 @@ const Image2 = styled.img`
 `;
 const Text72 = styled.div`
   font-size: 20px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
   margin: 0px 62px 0px 0px;
 `;
 const Image3 = styled.img`
@@ -755,8 +811,8 @@ const Element71 = styled.div`
 const WhiteText = styled.div`
   display: flex;
   font-size: 24px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   width: 107px;
   height: 27px;
@@ -781,7 +837,7 @@ const WhiteFlexColumn1 = styled.div`
 `;
 const Text74 = styled.div`
   font-size: 24px;
-  font-family: GangwonEduAll;
+  font-family: GangwonEduAll OTF;
   font-weight: 300;
   color: #6b6b6b;
 `;
@@ -792,7 +848,7 @@ const Line21 = styled.img`
 const WhiteText5 = styled.div`
   display: flex;
   font-size: 24px;
-  font-family: GangwonEduAll;
+  font-family: GangwonEduAll OTF;
   font-weight: 300;
   color: #6b6b6b;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -943,8 +999,8 @@ const Text99 = styled.div`
   width: 28px;
   height: 14px;
   font-size: 15px;
-  font-family: GangwonEduAll;
-  font-weight: 700;
+  font-family: GangwonEduAll OTF;
+  font-weight: 300;
   position: absolute;
   top: 218px;
   left: 268px;
