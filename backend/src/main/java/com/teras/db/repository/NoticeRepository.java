@@ -10,6 +10,6 @@ import com.teras.db.entity.Notice;
 @Repository
 public interface NoticeRepository extends JpaRepository<Notice, Long>{
 
-	List<Notice> findAllByClssCode();
+	List<Notice> findAllByClassCode(String classCode);
 
 }
