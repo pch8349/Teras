@@ -39,7 +39,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @Api(value = "공지사항 API", tags = {"Notice"})
 @AllArgsConstructor
 @RestController
-@RequestMapping("{classCode}/notice")
+@RequestMapping("/notice")
 public class NoticeController {
 	
 	@Autowired
@@ -134,6 +134,7 @@ public class NoticeController {
 		notice.setTitle(noticePostReq.getTitle());
 		notice.setContent(noticePostReq.getContent());
 		notice.setUpdateDate(LocalDate.now());
+		noticeRepository.save(notice);
 		return new ResponseEntity(HttpStatus.OK);
 	}
 	
