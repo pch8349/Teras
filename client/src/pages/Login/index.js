@@ -12,8 +12,9 @@ function LoginForm() {
       await doLogin(
         { id, password },
         (response) => {
-          const accessToken = response.data.token;
+          const accessToken = response.data.accessToken;
 
+          alert(accessToken);
           localStorage.setItem("accessToken", accessToken);
 
           window.location.href = "/";

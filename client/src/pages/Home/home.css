@@ -1,0 +1,67 @@
+.mainFlexContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.mainGridContainer {
+  display: grid;
+  grid-template-columns: 350px 1000px;
+  grid-template-rows: 150px 800px;
+  margin-top: 20px;
+}
+
+.header {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  background-color: red;
+}
+
+.sideBarGridContainer {
+  display: grid;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-template-rows: 270px 530px;
+}
+
+.profileContainer {
+  grid-row-start: 1;
+  grid-row-end: 2;
+  background-color: yellow;
+}
+
+.timeTableGridContainer {
+  display: grid;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-template-rows: 80px 450px;
+}
+
+.classRoomButtonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  background-color: aqua;
+}
+
+.timeTableContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  background-color: blue;
+}
+
+.dashboardContainer {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  background-color: green;
+}
