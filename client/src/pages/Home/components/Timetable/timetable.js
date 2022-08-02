@@ -13,7 +13,7 @@ function TimeTable({ rows }) {
   return (
     <TableContainer
       sx={{
-        width: 300,
+        width: 230,
       }}
       component={Paper}
     >

@@ -10,12 +10,26 @@
   margin-top: 20px;
 }
 
-.header {
+.headerGridContainer {
+  display: grid;
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 2;
-  background-color: red;
+  grid-template-columns: 400px 950px;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.navBar {
+  grid-column-start: 2;
+  grid-column-end: 3;
 }
 
 .sideBarGridContainer {
@@ -24,13 +38,15 @@
   grid-column-end: 2;
   grid-row-start: 2;
   grid-row-end: 3;
-  grid-template-rows: 270px 530px;
+  grid-template-rows: 250px 550px;
 }
 
 .profileContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   grid-row-start: 1;
   grid-row-end: 2;
-  background-color: yellow;
 }
 
 .timeTableGridContainer {
@@ -46,7 +62,6 @@
   align-items: center;
   grid-row-start: 1;
   grid-row-end: 2;
-  background-color: aqua;
 }
 
 .timeTableContainer {
@@ -55,13 +70,48 @@
   align-items: center;
   grid-row-start: 2;
   grid-row-end: 3;
-  background-color: blue;
 }
 
-.dashboardContainer {
+.dashBoardFlexContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 2;
   grid-row-end: 3;
-  background-color: green;
+}
+
+.dashBoardContainer {
+  display: grid;
+  grid-template-rows: 50px 700px;
+  width: 980px;
+  height: 750px;
+}
+
+.navTabContainer {
+  display: flex;
+  align-items: stretch;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.componentContainer {
+  grid-row-start: 2;
+  grid-row-end: 3;
+  background-color: white;
+}
+
+.navTabButton {
+  flex-grow: 1;
+  background-color: #e0ffc1;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-width: 0 thin;
+  border-color: #f4f4f4;
+}
+
+.selectedTab {
+  background-color: white;
+  border-color: white;
 }
