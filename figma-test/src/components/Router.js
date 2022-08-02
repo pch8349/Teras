@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { UserLogin } from "./user/UserLogin";
 import { StudentMain } from "./student/StudentMain";
 import { SignUp, UserSelect } from "./user/SignUp";
+import { Test } from "./Test";
 
 const AppRouter = () => {
   return (

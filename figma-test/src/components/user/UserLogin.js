@@ -2,23 +2,23 @@ import React from "react";
 import styled from "styled-components";
 import Checkbox from "@mui/material/Checkbox";
 import {
-  Column,
-  Text1,
-  Text4,
-  NewRootRoot,
-  Login,
-  WhiteFlexColumn,
-  Removebgpreview,
+  NewRoot,
+  BackForm,
+  LoginContent,
+  LogoForm,
   FlexRow,
-  Element8,
+  EmptyPart,
   IdForm,
   PwForm,
   FlexRow1,
   RadioWithLabel,
-  WhiteBtn,
-  LoginBtn,
-  Text7
-} from "../../styles/LoginStyle"
+} from "../../styles/LoginStyle";
+import {
+  TextBigInter,
+  TextSmallInter,
+  TextBtnInter,
+} from "../../styles/LoginText";
+import { LoginBtn, WhiteBtn } from "../../styles/LoginBtn";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -34,72 +34,46 @@ export const UserLogin = ({}) => {
   };
 
   return (
-    <NewRootRoot>
-      <Login>
-        <WhiteFlexColumn>
-          <Removebgpreview
-            src={`https://file.rendit.io/n/hqghxg3SfioHvsa6lVy3.png`}
-          />
+    <NewRoot>
+      <BackForm>
+        <LoginContent>
+          <LogoForm src={`https://file.rendit.io/n/hqghxg3SfioHvsa6lVy3.png`} />
           <FlexRow>
-            <Element8>
-              {[
-                {
-                  childText: ``,
-                },
-                {
-                  childText: ``,
-                },
-                {
-                  childText: ``,
-                },
-              ].map((data) => (
-                <Column>{data.childText}</Column>
-              ))}
-            </Element8>
+            <EmptyPart></EmptyPart>
           </FlexRow>
-          <Text1 margin={`0px 0px 2px 6px`}>아이디</Text1>
-          <IdForm />
-          <Text1 margin={`0px 0px 1px 6px`}>비밀번호</Text1>
-          <PwForm />
+          <TextBigInter>아이디</TextBigInter>
+          <IdForm placeholder="아이디를 입력하세요" />
+          <TextBigInter>비밀번호</TextBigInter>
+          <PwForm placeholder="비밀번호를 입력하세요" />
           <FlexRow1>
             <RadioWithLabel>
               <Checkbox {...label} />
-              <Text4>아이디 기억</Text4>
+              <TextSmallInter>아이디 기억</TextSmallInter>
             </RadioWithLabel>
-
-            {/* <RadioWithLabel onClick={(e) => IdRememberCheck(e, "IdRemember")}>
-              <Radio1
-                src={`https://file.rendit.io/n/6dGvxhRB1uhwG4bh2iXM.svg`}
-              />
-              <Radio1
-                src={`https://file.rendit.io/n/JXYQOMUdqMH4vu2pwhl3.svg`}
-              />
-              <Text3>아이디 기억</Text3>
-            </RadioWithLabel> */}
-            <WhiteBtn 
+            <WhiteBtn
               onClick={(e) => WhiteBtnFunction(e, "SignUp")}
               margin={`0px 10px 0px 0px`}
             >
-              <Text4 width={`73px`}>회원가입</Text4>
+              <TextSmallInter>회원가입</TextSmallInter>
             </WhiteBtn>
             <WhiteBtn
               onClick={(e) => WhiteBtnFunction(e, "LookForID")}
               margin={`0px 10px 0px 0px`}
             >
-              <Text4 width={`70px`}>아이디 찾기</Text4>
+              <TextSmallInter>아이디 찾기</TextSmallInter>
             </WhiteBtn>
             <WhiteBtn
               onClick={(e) => WhiteBtnFunction(e, "LookForPW")}
               margin={`0`}
             >
-              <Text4 width={`78px`}>비밀번호 찾기</Text4>
+              <TextSmallInter>비밀번호 찾기</TextSmallInter>
             </WhiteBtn>
           </FlexRow1>
           <LoginBtn onClick={(e) => LoginBtnFunction(e, "LoginBtn")}>
-            <Text7>로그인</Text7>
+            <TextBtnInter>로그인</TextBtnInter>
           </LoginBtn>
-        </WhiteFlexColumn>
-      </Login>
-    </NewRootRoot>
+        </LoginContent>
+      </BackForm>
+    </NewRoot>
   );
 };
