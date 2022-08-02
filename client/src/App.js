@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/index";
 import LoginForm from "./pages/Login/index";
 import RouteGuard from "./pages/RouteGuard";
-import Classroom from "./pages/Classroom/index";
+import Classroom from "./pages/Classroom/index2";
 
 function App() {
   const [user, setUser] = useState();

@@ -58,9 +58,6 @@
 
 .goalBox {
   flex: 8 1 0;
-  background-color: white;
-  border-radius: 25px;
-  height: 50px;
-  width: 500px;
-  line-height: 50px;
+  display: flex;
+  justify-content: center;
 }
