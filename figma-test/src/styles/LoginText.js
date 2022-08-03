@@ -9,14 +9,17 @@ const TextBigInter = styled.div`
 `;
 const TextSmallInter = styled.div`
   text-align: center;
-  font-size: 11px;
+  font-size: 12px;
   font-family: Inter;
   font-weight: 500;
+  &: visited, &link {
+    text-decoration: none;
+  }
 `;
 
 const TextBtnInter = styled.div`
   text-align: center;
-  width: 420px;
+  width: 450px;
   height: 52px;
   display: flex;
   font-size: 13px;
@@ -32,5 +35,23 @@ const TextColorArt = styled.div`
   align-self: flex-end;
   font-size: 12px;
 `;
+const TextSmallGreen = styled.div`
+  text-align: center;
+  width: 71px;
+  height: 32px;
+  display: flex;
+  font-size: 13px;
+  font-family: Inter;
+  color: #363636;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
-export { TextBigInter, TextSmallInter, TextBtnInter, TextColorArt };
+export {
+  TextBigInter,
+  TextSmallInter,
+  TextBtnInter,
+  TextColorArt,
+  TextSmallGreen,
+};

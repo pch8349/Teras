@@ -4,13 +4,21 @@ import { UserLogin } from "./user/UserLogin";
 import { StudentMain } from "./student/StudentMain";
 import { SignUp, UserSelect } from "./user/SignUp";
 import { Test } from "./Test";
+import { SignUpFin } from "./user/SignUpFin";
+import { useEffect, useState } from 'react';
 
 const AppRouter = () => {
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    
+  }, []);
   return (
     <Router>
       <Routes>
         <Route path="/login" element={<UserLogin />} />
         <Route path="/signUp" element={<SignUp />} />
+        <Route path="/signupfin" element={<SignUpFin />} />
       </Routes>
       <Routes>
         <Route path="/main" element={<StudentMain />} />

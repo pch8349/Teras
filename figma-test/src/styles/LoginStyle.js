@@ -34,13 +34,14 @@ const BackForm = styled.div`
 const LoginContent = styled.div`
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   height: 807px;
+  width: 450px;
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   border-radius: 10px;
-  padding: 76px 181px 76px 168px;
+  padding: 76px 150px 76px 150px;
 `;
 const LogoForm = styled.img`
   width: 292px;
@@ -50,26 +51,28 @@ const LogoForm = styled.img`
 const FlexRow = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  margin: 0px 0px 27px 0px;
+  justify-content: start;
+  margin: 0px 0px 0px 0px;
+  align-self: stretch;
+  gap: 35px;
+  align-items: flex-end;
 `;
 const EmptyPart = styled.div`
   width: 0;
-  height: 15px;
+  height: 30px;
   position: relative;
 `;
-const IdForm = styled.input.attrs({
-  placeholderTextColor: "red",
-})`
+const IdForm = styled.input`
   border-color: #096c25;
   border-style: solid;
-  width: 420px;
-  height: 30px;
+  width: 450px;
+  min-height: 35px;
   background-color: #ffffff;
   align-self: center;
   border-radius: 5px;
-  margin: 0px 0px 36px 0px;
+  margin: 0px 0px 0px 0px;
   border-width: 1px;
+  font-size: 15px;
 `;
 
 const PwForm = styled.input.attrs((props) => ({
@@ -77,19 +80,21 @@ const PwForm = styled.input.attrs((props) => ({
 }))`
   border-color: #096c25;
   border-style: solid;
-  width: 420px;
-  height: 30px;
+  width: 450px;
+  min-height: 35px;
   background-color: #ffffff;
   align-self: center;
   border-radius: 5px;
   margin: 0px 0px 0px 0px;
   border-width: 1px;
+  font-size: 15px;
 `;
 const FlexRow1 = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: flex-start;
+  gap: 150px;
   margin: 0px 0px 19px 0px;
 `;
 const RadioWithLabel = styled.div`
@@ -107,6 +112,21 @@ const Radio1 = styled.img`
   height: 20px;
 `;
 
+const LinkContainer = styled.div`
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0px;
+  border-width: 0px;
+  box-sizing: content-box;
+  cursor: pointer;
+  &: hover {
+    text-decoration: none;
+  }
+`;
+
 export {
   TextBigInter,
   TextSmallInter,
@@ -121,4 +141,5 @@ export {
   FlexRow1,
   RadioWithLabel,
   Radio1,
+  LinkContainer,
 };

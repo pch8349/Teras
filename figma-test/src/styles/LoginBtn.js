@@ -16,7 +16,7 @@ const WhiteBtn = styled.button`
   margin: ${(props) => props.margin};
 `;
 
-const LoginBtn = styled.button`
+const GreenBtn = styled.button`
   background-color: #e0ffc1;
   display: flex;
   flex-direction: column;
@@ -32,4 +32,4 @@ const LoginBtn = styled.button`
   }
 `;
 
-export { LoginBtn, WhiteBtn };
+export { GreenBtn, WhiteBtn };

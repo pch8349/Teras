@@ -49,7 +49,7 @@ export const DropDown = ({}) => {
   };
 
   return (
-    <Box sx={{ minWidth: 424 }}>
+    <Box sx={{ minWidth: 450 }}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">선택하세요</InputLabel>
         <Select
