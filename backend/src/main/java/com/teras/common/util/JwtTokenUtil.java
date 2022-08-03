@@ -20,6 +20,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.SignatureGenerationException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.teras.db.entity.User;
 
 /**
  * jwt 토큰 유틸 정의.
@@ -48,9 +49,12 @@ public class JwtTokenUtil {
 		return JWT.require(Algorithm.HMAC512(secretKey.getBytes())).withIssuer(ISSUER).build();
 	}
 
-	public static String getToken(String userId) {
+	public static String getToken(User user) {
 		Date expires = JwtTokenUtil.getTokenExpiration(expirationTime);
-		return JWT.create().withSubject(userId).withExpiresAt(expires).withIssuer(ISSUER)
+		return JWT.create().withClaim("id", user.getUserId()).withClaim("name", user.getName())
+				.withClaim("email", user.getEmail()).withClaim("phoneNumber", user.getPhoneNumber())
+				.withClaim("classCode", user.getSchoolCode()).withClaim("authority", user.getAuthority().toString())
+				.withExpiresAt(expires).withIssuer(ISSUER)
 				.withIssuedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()))
 				.sign(Algorithm.HMAC512(secretKey.getBytes()));
 	}
