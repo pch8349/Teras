@@ -90,12 +90,14 @@ const PwForm = styled.input.attrs((props) => ({
   font-size: 15px;
 `;
 const FlexRow1 = styled.div`
+text-align: center;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   gap: 150px;
   margin: 0px 0px 19px 0px;
+
 `;
 const RadioWithLabel = styled.div`
   display: flex;

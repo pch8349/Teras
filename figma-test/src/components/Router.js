@@ -21,7 +21,7 @@ const AppRouter = () => {
         <Route path="/signupfin" element={<SignUpFin />} />
       </Routes>
       <Routes>
-        <Route path="/main" element={<StudentMain />} />
+        <Route path="/" element={<StudentMain />} />
       </Routes>
     </Router>
   );

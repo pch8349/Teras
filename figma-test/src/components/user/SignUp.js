@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import {
@@ -20,6 +20,8 @@ import {
 } from "../../styles/LoginText";
 import { DropDown } from "../../styles/DropDown";
 import { GreenBtn } from "../../styles/LoginBtn";
+import { signUp } from "../../api/user";
+import { ClassNames } from "@emotion/react";
 
 //영어 대,소문자, 0~9, -_ 이렇게 가능함을 나타냄. 3~23자 제한
 const USER_REGEX = /^[a-zA-Z][a-zA-z0-9-_]{3,23}$/;
@@ -27,15 +29,45 @@ const USER_REGEX = /^[a-zA-Z][a-zA-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 export const SignUp = ({}) => {
-  const SpringGreenFlexColumnFunction = (e, name) => {
-    alert(`${name} was clicked`);
+  const [role, setRole] = useState("");
+  const [id, setId] = useState("");
+  const [pw, setPw] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const body = {
+    id: id,
+    password: pw,
+    name: name,
+    email: email,
+    phoneNumber: phone,
+    authority: role,
+    classCode: "S000003540",
   };
-  const BackBtn = (e, name) => {
-    alert(`${name} was clicked`);
-  };
-  const [role, setRole] = React.useState("");
-  const handleChange = (event) => {
-    setRole(event.target.value);
+
+  const NewUser = async (e) => {
+    console.log(body);
+    e.preventDefault();
+    try{
+      console.log("여기까진");
+      // const response = await signUp(body);
+      // console.log(response?.data);
+      // console.log(JSON.stringify(body));
+      await signUp(body, ()=> {
+        console.log("성공")
+      }, () => {
+        console.log("실패")
+      })
+      // .then((response) => {const accessToken = response.data.accessToken;
+      //   alert(accessToken);
+      //   console.log("회원가입 성공");
+        
+      //   window.location.href="/";
+      //   },
+      //     () => {console.log("가입 실패!")}
+      // );
+    } catch (error) {console.log("실패")}
   };
   return (
     <NewRoot>
@@ -44,8 +76,11 @@ export const SignUp = ({}) => {
           <Logofixed
             src={`https://file.rendit.io/n/GuXE32OOzWWWXqrS8jTY.png`}
           />
-          <DropDown />
-          {/* <PwFormmargin /> */}
+          <DropDown 
+            setValue={setRole} // 하위 컴포넌트에서 전달한 값 받음
+            value={role} 
+            onChange={({target: {value} }) => setRole(value)}
+          />
           <FlexRow>
             <EmptyPart></EmptyPart>
           </FlexRow>
@@ -58,7 +93,10 @@ export const SignUp = ({}) => {
               {/* <TextColorArt colot={`#486ed0`}>*사용 가능한 아이디입니다</TextColorArt> */}
             </FlexColumn>
           </FlexRow>
-          <IdForm />
+          <IdForm 
+            value={id} 
+            onChange={({target: {value} }) => setId(value)}
+          />
           <EmptyPart />
           <FlexRow>
             <TextBigInter>비밀번호 입력</TextBigInter>
@@ -66,7 +104,10 @@ export const SignUp = ({}) => {
               *특수문자, 대문자, 소문자, 숫자를 포함한 12자리 이상
             </TextColorArt>
           </FlexRow>
-          <PwForm />
+          <PwForm 
+            value={pw} 
+            onChange={({target: {value} }) => setPw(value)}
+          />
           <EmptyPart />
           <FlexRow>
             <TextBigInter>비밀번호 재입력</TextBigInter>
@@ -75,17 +116,26 @@ export const SignUp = ({}) => {
           <PwForm />
           <EmptyPart />
           <TextBigInter>이름</TextBigInter>
-          <IdForm />
+          <IdForm 
+          value={name} 
+          onChange={({target: {value} }) => setName(value)}
+          />
           <EmptyPart />
           <FlexRow>
             <TextBigInter>이메일</TextBigInter>
           </FlexRow>
-          <IdForm />
+          <IdForm 
+          value={email} 
+          onChange={({target: {value} }) => setEmail(value)}
+          />
           <EmptyPart />
           <FlexRow>
             <TextBigInter>핸드폰 번호</TextBigInter>
           </FlexRow>
-          <IdForm />
+          <IdForm 
+          value={phone} 
+          onChange={({target: {value} }) => setPhone(value)}
+          />
           <EmptyPart />
           <FlexRow1>
             <LinkContainer>
@@ -96,7 +146,7 @@ export const SignUp = ({}) => {
                 <TextSmallInter>뒤로가기</TextSmallInter>
               </Link>
             </LinkContainer>
-            <GreenBtn onClick={(e) => SpringGreenFlexColumnFunction(e, "입력")}>
+            <GreenBtn onClick={NewUser}>
               <TextSmallGreen>입력</TextSmallGreen>
             </GreenBtn>
           </FlexRow1>

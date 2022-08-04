@@ -41,11 +41,9 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const DropDown = ({}) => {
-  const [role, setRole] = React.useState("");
-
+export const DropDown = (props) => {
   const handleChange = (event) => {
-    setRole(event.target.value);
+    props.setValue(event.target.value); // 하위 컴포넌트에서 상위 컴포넌트로 값 전달
   };
 
   return (
@@ -55,13 +53,12 @@ export const DropDown = ({}) => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={role}
           label="Role"
           onChange={handleChange}
           input={<BootstrapInput />}
         >
-          <MenuItem value={10}>학생</MenuItem>
-          <MenuItem value={20}>교사</MenuItem>
+          <MenuItem value={"STUDENT"}>학생</MenuItem>
+          <MenuItem value={"TEACHER"}>교사</MenuItem>
         </Select>
       </FormControl>
     </Box>
