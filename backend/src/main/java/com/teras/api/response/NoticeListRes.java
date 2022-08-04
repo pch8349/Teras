@@ -1,9 +1,9 @@
 package com.teras.api.response;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+import com.teras.db.entity.ClassEntity;
 import com.teras.db.entity.Notice;
-import com.teras.db.entity.User;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -24,13 +24,10 @@ public class NoticeListRes {
 	private String content;
 	
 	@ApiModelProperty(name = "Class Code", example = "반코드")
-	private String classCode;
+	private ClassEntity classCode;
 	
 	@ApiModelProperty(name = "Notice CreateDate", example = "2022-08-01")
-	private LocalDate createDate;
-	
-	@ApiModelProperty(name = "Notice UpdateDate", example = "2022-08-01")
-	private LocalDate updateDate;
+	private LocalDateTime createDate;
 	
 	@ApiModelProperty(name = "Notice UserId", example = "minji")
 	private String userId;
@@ -43,10 +40,8 @@ public class NoticeListRes {
 		this.title = entity.getTitle();
 		this.content = entity.getContent();
 		this.classCode = entity.getClassCode();
-		this.createDate = entity.getCreateDate();
-		this.updateDate = entity.getUpdateDate();
-		User user = entity.getUser();
-		this.userId = user.getUserId();
-		this.name = user.getName();
+		this.createDate = entity.getCreatedDate();
+		this.userId = entity.getUserId().getUserId();
+		this.name = entity.getUserId().getName();
 	}
 }

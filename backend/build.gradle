@@ -3,8 +3,6 @@ import org.apache.tools.ant.filters.ReplaceTokens
 buildscript{
     ext {
         springBootVer = '2.4.5'
-        querydslVer = '4.4.0'
-        querydslPluginVer = '1.0.10'
         springDependencyMgmtVer = '1.0.11'
         springLoadedVer = '1.2.8'
 //        nodePluginVer = '1.3.1'
@@ -17,7 +15,6 @@ buildscript{
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVer}"
         classpath "io.spring.gradle:dependency-management-plugin:${springDependencyMgmtVer}.RELEASE"
         classpath "org.springframework:springloaded:${springLoadedVer}.RELEASE"
-        classpath "gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:${querydslPluginVer}"
 //        classpath "com.github.node-gradle:gradle-node-plugin:3.1.0"
     }
 }
@@ -31,7 +28,6 @@ plugins {
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'eclipse'
 // apply plugin: 'com.github.node-gradle.node'
-apply plugin: 'com.ewerk.gradle.plugins.querydsl'
 
 
 repositories {
@@ -92,29 +88,6 @@ project.ext.set("build.date", buildTime())
 //    }
 //}
 
-def querydslDir = 'src/main/generated'
-querydsl {
-    library = "com.querydsl:querydsl-apt"
-    jpa = true
-    querydslSourcesDir = querydslDir
-}
-
-sourceSets {
-    main {
-        java {
-            srcDirs = ['src/main/java', querydslDir]
-        }
-    }
-}
-
-compileQuerydsl {
-    options.annotationProcessorPath = configurations.querydsl
-}
-
-configurations {
-    querydsl.extendsFrom compileClasspath
-}
-//[��]
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -132,9 +105,6 @@ dependencies {
     implementation('commons-io:commons-io:2.6')
     implementation("org.apache.commons:commons-collections4:4.4")
     implementation("org.apache.commons:commons-lang3:3.9")
-
-    implementation("com.querydsl:querydsl-jpa:${querydslVer}")
-    implementation("com.querydsl:querydsl-apt:${querydslVer}")
 
     implementation("org.springframework.boot:spring-boot-starter-mustache")
     implementation('org.webjars.bower:jquery:3.3.1')

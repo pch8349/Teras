@@ -53,7 +53,7 @@ public class JwtTokenUtil {
 		Date expires = JwtTokenUtil.getTokenExpiration(expirationTime);
 		return JWT.create().withClaim("id", user.getUserId()).withClaim("name", user.getName())
 				.withClaim("email", user.getEmail()).withClaim("phoneNumber", user.getPhoneNumber())
-				.withClaim("classCode", user.getSchoolCode()).withClaim("authority", user.getAuthority().toString())
+				.withClaim("classCode", user.getClassCode().getClassCode()).withClaim("authority", user.getAuthority().toString())
 				.withExpiresAt(expires).withIssuer(ISSUER)
 				.withIssuedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()))
 				.sign(Algorithm.HMAC512(secretKey.getBytes()));

@@ -1,6 +1,6 @@
 package com.teras.db.entity;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,54 +12,39 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
+@Builder
 @Table(name = "notice")
 public class Notice {
-	
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "noticeNo", unique = true, nullable = false)
-	private Long noticeNo;
-	
-	@Column(name = "tilte", nullable = false, length = 100)
-	private String title;
-	
-	@Column(name = "content", nullable = false, length = 500)
-	private String content;
-	
-	@Column(name = "classCode", nullable = false)
-	private String classCode;
-	
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "noticeNo", nullable = false)
+	long noticeNo;
+
+	@Column(name = "title", nullable = false)
+	String title;
+
+	@Column(name = "content", nullable = false)
+	String content;
+
 	@CreatedDate
-	@Column(name = "createDate", updatable = false)
-	private LocalDate createDate;
-	
-	@LastModifiedDate
-	@Column(name = "updateDate", updatable = true)
-	private LocalDate updateDate;
-	
+	@Column(name = "createDate", nullable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	Timestamp createdDate;
+
 	@ManyToOne
 	@JoinColumn(name = "userId", nullable = false)
-	private User user;
-	
-	@Builder
-	public Notice(String title, String content, String classCode, LocalDate createDate, LocalDate updateDate, User user) {
-		this.title = title;
-		this.content = content;
-		this.classCode = classCode;
-		this.createDate = createDate;
-		this.updateDate = updateDate;
-		this.user = user;
-	}
-	
+	User userId;
+
+	@ManyToOne
+	@JoinColumn(name = "classCode", nullable = false)
+	ClassEntity classCode;
+
+	@ManyToOne
+	@JoinColumn(name = "uuid", nullable = true)
+	Attachment uuid;
 }
