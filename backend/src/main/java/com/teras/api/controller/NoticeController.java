@@ -1,5 +1,7 @@
 package com.teras.api.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -13,10 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teras.api.request.NoticeRegisterPostReq;
+import com.teras.api.response.NoticeListGetRes;
 import com.teras.api.service.NoticeService;
 import com.teras.api.service.UserService;
+import com.teras.common.auth.SsafyUserDetails;
 import com.teras.common.model.response.BaseResponseBody;
+import com.teras.db.Dto.NoticeDto;
+import com.teras.db.entity.ClassEntity;
 import com.teras.db.entity.Notice;
+import com.teras.db.entity.User;
 import com.teras.db.repository.NoticeRepository;
 
 import io.swagger.annotations.Api;
@@ -59,14 +66,25 @@ public class NoticeController {
 	@ApiResponses({ @ApiResponse(code = 200, message = "조회 성공"), @ApiResponse(code = 500, message = "서버 오류") })
 
 	@GetMapping()
-	public ResponseEntity<? extends BaseResponseBody> getList(@ApiIgnore Authentication authentication) {
+	public ResponseEntity<? extends NoticeListGetRes> getList(@ApiIgnore Authentication authentication) {
+		System.out.println("noticeList");
+		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+		String userId = userDetails.getUsername();
+		User user = userService.getUserByUserId(userId);
 
-		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+		ClassEntity classEntity = user.getClassCode();
+
+		List<NoticeDto> list = noticeService.getNoticeList(classEntity);
+
+		return ResponseEntity.status(200).body(NoticeListGetRes.of(200, "SUCCESS", list));
 	}
 
 	@ApiOperation(value = "특정 게시글 조회", notes = "특정 공지사항을 조회한다.")
-	@ApiResponses({ @ApiResponse(code = 200, message = "조회 성공"), @ApiResponse(code = 404, message = "게시글 없음"),
-			@ApiResponse(code = 500, message = "서버 오류") })
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "조회 성공"),
+		@ApiResponse(code = 404, message = "게시글 없음"),
+		@ApiResponse(code = 500, message = "서버 오류")
+		})
 	@ApiImplicitParam(name = "noticeNo", value = "notice seq", required = true, dataType = "Long")
 	@GetMapping("/{noticeNo}")
 	public ResponseEntity getNotice(@PathVariable Long noticeNo) {
@@ -75,9 +93,13 @@ public class NoticeController {
 	}
 
 	@ApiOperation(value = "공지사항 수정", notes = "특정 공지사항을 수정한다.")
-	@ApiResponses({ @ApiResponse(code = 200, message = "수정 성공"), @ApiResponse(code = 401, message = "인증 실패"),
-			@ApiResponse(code = 403, message = "권한 없음"), @ApiResponse(code = 404, message = "게시글 없음"),
-			@ApiResponse(code = 500, message = "서버 오류") })
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "수정 성공"),
+		@ApiResponse(code = 401, message = "인증 실패"),
+		@ApiResponse(code = 403, message = "권한 없음"),
+		@ApiResponse(code = 404, message = "게시글 없음"),
+		@ApiResponse(code = 500, message = "서버 오류")
+	})
 	@ApiImplicitParam(name = "noticeNo", value = "notice seq", required = true, dataType = "Long")
 	@PutMapping("/{noticeNo}")
 	public ResponseEntity editNotice(@ApiIgnore Authentication authentication,

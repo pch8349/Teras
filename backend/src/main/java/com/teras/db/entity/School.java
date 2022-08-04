@@ -15,6 +15,9 @@ public class School {
 	@Column(name = "schoolCode", unique = true, nullable = false)
 	String schoolCode;
 
-	@Column(name = "schoolName", unique = true, nullable = false)
+	@Column(name = "schoolName", nullable = false)
 	String schoolName;
+	
+	@Column(name = "schoolAddress", nullable = false)
+	String schoolAddress;
 }

@@ -2,8 +2,7 @@ package com.teras.db.entity;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import com.teras.common.model.column.TerasAuthority;
 
 import lombok.*;
@@ -37,7 +36,8 @@ public class User {
 	String phoneNumber;
 
 	@ManyToOne
-	@JoinColumn(name = "classCode", nullable = true)
+	@JsonBackReference
+	@JoinColumn(name = "classCode", referencedColumnName = "classCode",nullable = true)
 	ClassEntity classCode;
 
 	@Enumerated(EnumType.STRING)

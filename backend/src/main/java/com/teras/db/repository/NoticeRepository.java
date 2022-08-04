@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.teras.db.entity.ClassEntity;
 import com.teras.db.entity.Notice;
 
 @Repository
@@ -17,8 +18,8 @@ public interface NoticeRepository extends JpaRepository<Notice, Integer> {
 
 	Optional<List<Notice>> findAllByOrderByNoticeNoDesc();
 
-	Optional<List<Notice>> findAllByClassCode(String classCode);
-
 	@Query(value = "SELECT * FROM notice WHERE :type like '%:word%'", nativeQuery = true)
 	Optional<List<Notice>> findNoticeByType(@Param("type") String type, @Param("word") String word);
+
+	List<Notice> findAllByClassCode(ClassEntity classEntity);
 }

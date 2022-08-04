@@ -13,9 +13,13 @@ import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Getter
 @Builder
@@ -37,14 +41,20 @@ public class Notice {
 	Timestamp createdDate;
 
 	@ManyToOne
-	@JoinColumn(name = "userId", nullable = false)
-	User userId;
+	@JoinColumn(name = "user_id", nullable = false)
+	User user;
 
 	@ManyToOne
 	@JoinColumn(name = "classCode", nullable = false)
 	ClassEntity classCode;
 
 	@ManyToOne
-	@JoinColumn(name = "uuid", nullable = true)
-	Attachment uuid;
+	@JoinColumn(name = "attach", nullable = true)
+	Attachment attach;
+
+	@Override
+	public String toString() {
+		return "Notice [noticeNo=" + noticeNo + ", title=" + title + ", content=" + content + ", createdDate="
+				+ createdDate + ", user=" + user + ", classCode=" + classCode + ", attach=" + attach + "]";
+	}
 }

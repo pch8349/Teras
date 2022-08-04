@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +27,7 @@ public class ClassEntity {
 	@Column(name = "classCode", nullable = false)
     String classCode;
 	
+	@JsonManagedReference
     @OneToMany(mappedBy = "classCode")
     List<User> users = new ArrayList<>();
 	
