@@ -14,12 +14,13 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route
+        {/* <Route
           path="/"
           element={
             localStorage.getItem("accessToken") ? <Home /> : <LoginForm />
           }
-        />
+        /> */}
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/classroom" element={<Classroom />} />
       </Routes>

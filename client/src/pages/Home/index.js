@@ -72,6 +72,7 @@ function Home() {
                   height: 50,
                 }}
                 variant="contained"
+                onClick={() => (window.location.href = "/classroom")}
               >
                 강의실 입장
               </Button>
