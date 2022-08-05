@@ -342,13 +342,13 @@ function VideoContainer() {
           {publisher !== undefined ? (
             <div id="main-video" className="col-md-6">
               <UserVideoComponent streamManager={publisher} />
-              {/* <input
-                  className="btn btn-large btn-success"
-                  type="button"
-                  id="buttonSwitchCamera"
-                  onClick={this.switchCamera}
-                  value="Switch Camera"
-                /> */}
+              <input
+                className="btn btn-large btn-success"
+                type="button"
+                id="buttonSwitchCamera"
+                onClick={this.switchCamera}
+                value="Switch Camera"
+              />
             </div>
           ) : null}
           <div id="video-container" className="col-md-6">
