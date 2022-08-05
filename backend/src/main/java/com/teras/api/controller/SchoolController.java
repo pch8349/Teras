@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teras.api.request.ClassRegisterPostReq;
+import com.teras.api.response.ClassRegisterPostRes;
 import com.teras.api.response.ClassSearchGetRes;
 import com.teras.api.response.SchoolSearchGetRes;
 import com.teras.api.service.SchoolService;
-import com.teras.common.model.response.BaseResponseBody;
 import com.teras.db.entity.ClassEntity;
 import com.teras.db.entity.School;
 
@@ -33,10 +33,10 @@ public class SchoolController {
 	}
 	
 	@PostMapping()
-	public ResponseEntity<? extends BaseResponseBody> registerClass(@RequestBody ClassRegisterPostReq registerInfo) {
-		schoolService.createClassEntity(registerInfo);
+	public ResponseEntity<? extends ClassRegisterPostRes> registerClass(@RequestBody ClassRegisterPostReq registerInfo) {
+		ClassEntity classEntity = schoolService.createClassEntity(registerInfo);
 		
-		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+		return ResponseEntity.status(200).body(ClassRegisterPostRes.of(200, "SUCCESS", classEntity.getClassCode()));
 	}
 	
 	@GetMapping("/class")

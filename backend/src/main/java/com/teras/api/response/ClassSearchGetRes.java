@@ -5,11 +5,13 @@ import java.util.List;
 import com.teras.common.model.response.BaseResponseBody;
 import com.teras.db.entity.ClassEntity;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@ApiModel("ClassSearchGetRes")
 public class ClassSearchGetRes extends BaseResponseBody {
 	List<ClassEntity> list;
 
