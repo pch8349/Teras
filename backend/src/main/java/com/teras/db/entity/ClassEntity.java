@@ -13,13 +13,12 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Getter
 @Table(name = "class")
 public class ClassEntity {
@@ -35,9 +34,9 @@ public class ClassEntity {
     @JoinColumn(name = "schoolCode", nullable = true)
     School schoolCode;
     
-    @Column(name = "userClass", nullable = false)
-    String userClass;
+    @Column(name = "classNumber", nullable = false)
+    String classNumber;
     
-    @Column(name = "userGrade", nullable = false, length = 13)
-    String userGrade;
+    @Column(name = "gradeNumber", nullable = false, length = 13)
+    String gradeNumber;
 }

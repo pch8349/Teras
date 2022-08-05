@@ -34,17 +34,6 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
-//	@GetMapping()
-//	public String test(String pw) {
-//		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//		System.out.println(pw);
-//		String encrypted_pw = encoder.encode(pw);
-//		System.out.println(encrypted_pw);
-//		if(encoder.matches(pw, encrypted_pw))
-//			return "accept: " + encrypted_pw;
-//		return "wrong";
-//	}
-	
 	@PostMapping()
 	@ApiOperation(value = "회원 가입", notes = "<strong>아이디와 패스워드</strong>를 통해 회원가입 한다.") 
     @ApiResponses({

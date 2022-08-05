@@ -12,6 +12,7 @@ import com.teras.db.entity.School;
 
 @Repository
 public interface SchoolRepository extends JpaRepository<School, String> {
+	Optional<School> findBySchoolCode(String schoolCode);
 	
 	Optional<List<School>> findBySchoolNameContains(String schoolCode);
 }
