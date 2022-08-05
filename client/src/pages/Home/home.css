@@ -109,9 +109,20 @@
   border-top-right-radius: 10px;
   border-width: 0 thin;
   border-color: #f4f4f4;
+  text-decoration: none;
+  text-align: center;
+  padding: 12px;
+  filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+
 }
 
 .selectedTab {
   background-color: white;
   border-color: white;
+  text-decoration: none;
+  text-align: center;
+  font-weight: bold;
+  display:box !important;
+  box-shadow: 5px !important;
+  filter: none;
 }

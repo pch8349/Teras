@@ -15,8 +15,9 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* home이랑 userlogin이 같은 곳에 달려있다. 홈에서 accessToken이 없을때 로그인페이지로 redirect 되게 만들어야 된다. */}
         <Route
-          path="/"
+          path="/*"
           element={
             localStorage.getItem("accessToken") ? <Home /> : <UserLogin />
           }
