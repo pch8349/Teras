@@ -20,6 +20,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.SignatureGenerationException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.teras.db.entity.User;
 
 /**
  * jwt 토큰 유틸 정의.
@@ -31,7 +32,7 @@ public class JwtTokenUtil {
 
 	public static final String TOKEN_PREFIX = "Bearer ";
 	public static final String HEADER_STRING = "Authorization";
-	public static final String ISSUER = "ssafy.com";
+	public static final String ISSUER = "i7a706.p.ssafy.io";
 
 	@Autowired
 	public JwtTokenUtil(@Value("${jwt.secret}") String secretKey, @Value("${jwt.expiration}") Integer expirationTime) {
@@ -48,9 +49,9 @@ public class JwtTokenUtil {
 		return JWT.require(Algorithm.HMAC512(secretKey.getBytes())).withIssuer(ISSUER).build();
 	}
 
-	public static String getToken(String userId) {
+	public static String getToken(User user) {
 		Date expires = JwtTokenUtil.getTokenExpiration(expirationTime);
-		return JWT.create().withSubject(userId).withExpiresAt(expires).withIssuer(ISSUER)
+		return JWT.create().withSubject(user.getUserId()).withExpiresAt(expires).withIssuer(ISSUER)
 				.withIssuedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()))
 				.sign(Algorithm.HMAC512(secretKey.getBytes()));
 	}
