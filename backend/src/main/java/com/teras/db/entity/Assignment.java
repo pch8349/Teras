@@ -9,15 +9,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.Getter;
+import lombok.*;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Getter
+@Builder
 @Table(name = "assignment")
 public class Assignment {
 	@Id
 	@Column(name = "assignNo", nullable = false)
-    int assignNo;
+    long assignNo;
 	
 	@Column(name = "title", nullable = false)
     String title;

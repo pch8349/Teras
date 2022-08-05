@@ -19,5 +19,5 @@ public class TimeTable {
 
 	@ManyToOne
 	@JoinColumn(name = "subjectCode", nullable = true)
-	Subject subjectCode;
+	SubjectDetail subjectCode;
 }

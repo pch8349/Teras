@@ -42,22 +42,19 @@ import springfox.documentation.annotations.ApiIgnore;
 public class NoticeController {
 
 	@Autowired
-	UserService userService;
-
-	@Autowired
 	NoticeService noticeService;
-
-	@Autowired
-	NoticeRepository noticeRepository;
 
 	@ApiOperation(value = "공지사항 작성", notes = "사용자가 공지사항을 작성한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "작성 성공"), @ApiResponse(code = 401, message = "인증 실패"),
 			@ApiResponse(code = 500, message = "서버 오류") })
 	@PostMapping()
-	public ResponseEntity<? extends BaseResponseBody> register(
+	public ResponseEntity<? extends BaseResponseBody> register(@ApiIgnore Authentication authentication,
 			@RequestBody @ApiParam(value = "공지사항 내용", required = true) NoticeRegisterPostReq registerInfo) {
-
-		Notice notice = noticeService.createNotice(registerInfo);
+		
+		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+		String userId = userDetails.getUsername();
+		
+		Notice notice = noticeService.createNotice(registerInfo, userId);
 
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
 	}
@@ -70,21 +67,15 @@ public class NoticeController {
 		System.out.println("noticeList");
 		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
 		String userId = userDetails.getUsername();
-		User user = userService.getUserByUserId(userId);
 
-		ClassEntity classEntity = user.getClassCode();
-
-		List<NoticeDto> list = noticeService.getNoticeList(classEntity);
+		List<NoticeDto> list = noticeService.getNoticeList(userId);
 
 		return ResponseEntity.status(200).body(NoticeListGetRes.of(200, "SUCCESS", list));
 	}
 
 	@ApiOperation(value = "특정 게시글 조회", notes = "특정 공지사항을 조회한다.")
-	@ApiResponses({
-		@ApiResponse(code = 200, message = "조회 성공"),
-		@ApiResponse(code = 404, message = "게시글 없음"),
-		@ApiResponse(code = 500, message = "서버 오류")
-		})
+	@ApiResponses({ @ApiResponse(code = 200, message = "조회 성공"), @ApiResponse(code = 404, message = "게시글 없음"),
+			@ApiResponse(code = 500, message = "서버 오류") })
 	@ApiImplicitParam(name = "noticeNo", value = "notice seq", required = true, dataType = "Long")
 	@GetMapping("/{noticeNo}")
 	public ResponseEntity getNotice(@PathVariable Long noticeNo) {
@@ -93,13 +84,9 @@ public class NoticeController {
 	}
 
 	@ApiOperation(value = "공지사항 수정", notes = "특정 공지사항을 수정한다.")
-	@ApiResponses({
-		@ApiResponse(code = 200, message = "수정 성공"),
-		@ApiResponse(code = 401, message = "인증 실패"),
-		@ApiResponse(code = 403, message = "권한 없음"),
-		@ApiResponse(code = 404, message = "게시글 없음"),
-		@ApiResponse(code = 500, message = "서버 오류")
-	})
+	@ApiResponses({ @ApiResponse(code = 200, message = "수정 성공"), @ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 403, message = "권한 없음"), @ApiResponse(code = 404, message = "게시글 없음"),
+			@ApiResponse(code = 500, message = "서버 오류") })
 	@ApiImplicitParam(name = "noticeNo", value = "notice seq", required = true, dataType = "Long")
 	@PutMapping("/{noticeNo}")
 	public ResponseEntity editNotice(@ApiIgnore Authentication authentication,

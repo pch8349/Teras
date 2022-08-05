@@ -8,7 +8,7 @@ import com.teras.db.entity.ClassEntity;
 import com.teras.db.entity.Notice;
 
 public interface NoticeService {
-	Notice createNotice(NoticeRegisterPostReq noticeRegisterInfo);
+	Notice createNotice(NoticeRegisterPostReq noticeRegisterInfo, String userId);
 	
-	List<NoticeDto> getNoticeList(ClassEntity classEntity);
+	List<NoticeDto> getNoticeList(String userId);
 }
