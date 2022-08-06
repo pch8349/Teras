@@ -2,6 +2,7 @@ package com.teras.api.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teras.api.request.NoticeRegisterPostReq;
+import com.teras.common.auth.SsafyUserDetails;
 import com.teras.db.Dto.NoticeDto;
 import com.teras.db.entity.ClassEntity;
 import com.teras.db.entity.Notice;
+import com.teras.db.entity.User;
 import com.teras.db.repository.AttachmentRepository;
 import com.teras.db.repository.ClassEntityRepository;
 import com.teras.db.repository.NoticeRepository;
@@ -59,6 +62,29 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		
 		return list;
+	}
+	
+	@Override
+	public NoticeDto getNotice(long noticeNo) {
+		Notice notice = noticeRepository.findById(noticeNo).orElse(null);
+		if(notice == null)
+			return null;
+	
+		return new NoticeDto(notice);
+	}
+	
+	@Override
+	public NoticeDto editNotice(long noticeNo, User user) {
+
+		Notice notice = noticeRepository.findById(noticeNo).orElse(null);
+		if(notice == null) {
+			return null;
+		}
+		if(!notice.getUser().equals(user)) {
+			return null;
+		}
+		
+		notice.update(NoticeDto.getTitle(), NoticeDto.getContent());
 	}
 
 }
