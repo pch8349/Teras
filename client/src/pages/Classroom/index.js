@@ -17,7 +17,6 @@ function Classroom() {
           <div className="goalBox"></div>
         </div>
         <VideoContainer />
-        <div className="footer"></div>
       </div>
     </div>
   );

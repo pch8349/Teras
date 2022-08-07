@@ -9,7 +9,7 @@ function UserVideoComponent({ streamManager }) {
   };
 
   return (
-    <div>
+    <>
       {streamManager !== undefined ? (
         <div className="streamcomponent">
           <OpenViduVideoComponent streamManager={streamManager} />
@@ -18,7 +18,7 @@ function UserVideoComponent({ streamManager }) {
           </div>
         </div>
       ) : null}
-    </div>
+    </>
   );
 }
 

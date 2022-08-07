@@ -2,78 +2,62 @@ import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import React, { useEffect, useState } from "react";
 import UserVideoComponent from "./UserVideoComponent";
+import { useSelector, useDispatch } from "react-redux";
+import { setSessionName, setUserName } from "../../../../reducers/openvidu";
+import "./UserVideo.css";
 
 const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 function VideoContainer() {
-  const [mySessionId, setMySessionId] = useState("SessionA");
-  const [myUserName, setMyUserName] = useState(
-    "Participant" + Math.floor(Math.random() * 100)
-  );
+  // dispatch를 사용하기 위한 준비
+  const dispatch = useDispatch();
+
+  // store에 접근하여 state 가져오기
+  const { userName, sessionName } = useSelector((state) => state.openvidu);
+
+  const [mySessionId, setMySessionId] = useState(sessionName);
+  const [myUserName, setMyUserName] = useState(userName);
   const [session, setSession] = useState();
   const [mainStreamManager, setMainStreamManager] = useState();
   const [publisher, setPublisher] = useState();
   const [subscribers, setSubscribers] = useState([]);
-  const [currentVideoDevice, setCurrentVideoDevice] = useState(undefined);
+  const [currentVideoDevice, setCurrentVideoDevice] = useState();
   const [OV, setOV] = useState(null);
 
   useEffect(() => {
+    // mount시 세션 초기화
     window.addEventListener("beforeunload", onbeforeunload);
+    // OpenVidu 객체 생성
+    setOV(new OpenVidu());
   }, []);
 
-  const onbeforeunload = (event) => {
-    leaveSession();
-  };
-
-  const handleChangeSessionId = (e) => {
-    setMySessionId(e.target.value);
-  };
-
-  const handleChangeUserName = (e) => {
-    setMyUserName(e.target.value);
-  };
-
-  const handleMainVideoStream = (stream) => {
-    if (mainStreamManager !== stream) {
-      setMainStreamManager(stream);
-    }
-  };
-
-  const deleteSubscriber = (streamManager) => {
-    let subscriberList = subscribers;
-    let index = subscriberList.indexOf(streamManager, 0);
-    if (index > -1) {
-      subscriberList.splice(index, 1);
-      setSubscribers(subscriberList);
-    }
-  };
+  useEffect(() => {
+    // OpenVidu 객체 생성 후 세션 생성
+    if (OV !== null) setSession(OV.initSession());
+  }, [OV]);
 
   useEffect(() => {
     if (session === undefined) return;
 
-    // --- 2) Init a session ---
-
     var mySession = session;
 
-    // --- 3) Specify the actions when events take place in the session ---
-
-    // On every new Stream received...
+    // 새로운 subscriber가 세션 참가 시 state update 후 렌더링
     mySession.on("streamCreated", (event) => {
       // Subscribe to the Stream to receive it. Second parameter is undefined
       // so OpenVidu doesn't create an HTML video by its own
       var subscriber = mySession.subscribe(event.stream, undefined);
-      var subscriberList = subscribers;
-      subscriberList.push(subscriber);
 
-      // Update the state with the new subscribers
-      setSubscribers(subscriberList);
+      setSubscribers([...subscribers, subscriber]);
     });
 
-    // On every Stream destroyed...
+    // subscriber가 세션 떠날 시 state update 후 렌더링
     mySession.on("streamDestroyed", (event) => {
-      // Remove the stream from 'subscribers' array
-      deleteSubscriber(event.stream.streamManager);
+      setSubscribers(
+        subscribers.filter((subscriber) => {
+          return subscriber !== event.stream.streamManager;
+        })
+      );
     });
 
     // On every asynchronous exception...
@@ -132,19 +116,26 @@ function VideoContainer() {
     });
   }, [session]);
 
-  useEffect(() => {
-    if (OV !== null) setSession(OV.initSession());
-  }, [OV]);
-
-  const joinSession = (e) => {
-    e.preventDefault();
-    // --- 1) Get an OpenVidu object ---
-    setOV(new OpenVidu());
+  const onbeforeunload = (event) => {
+    leaveSession();
   };
 
-  const leaveSession = () => {
-    // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
+  const handleChangeSessionId = (e) => {
+    setMySessionId(e.target.value);
+  };
 
+  const handleChangeUserName = (e) => {
+    setMyUserName(e.target.value);
+  };
+
+  const handleMainVideoStream = (stream) => {
+    if (mainStreamManager !== stream) {
+      setMainStreamManager(stream);
+    }
+  };
+
+  // 세션 나가기
+  const leaveSession = () => {
     const mySession = session;
 
     if (mySession) {
@@ -152,15 +143,16 @@ function VideoContainer() {
     }
 
     // Empty all properties...
-    setOV(null);
+    // setOV(null);
+    // setSession(undefined);
+    // setSubscribers([]);
+    // setMySessionId("SessionA");
+    // setMyUserName("Participant" + Math.floor(Math.random() * 100));
+    // setMainStreamManager(undefined);
+    // setPublisher(undefined);
+    // setCurrentVideoDevice(undefined);
 
-    setSession(undefined);
-    setSubscribers([]);
-    setMySessionId("SessionA");
-    setMyUserName("Participant" + Math.floor(Math.random() * 100));
-    setMainStreamManager(undefined);
-    setPublisher(undefined);
-    setCurrentVideoDevice(undefined);
+    window.location.href = "/";
   };
 
   const switchCamera = async () => {
@@ -198,6 +190,7 @@ function VideoContainer() {
       console.error(e);
     }
   };
+
   /**
    * --------------------------
    * SERVER-SIDE RESPONSIBILITY
@@ -287,91 +280,49 @@ function VideoContainer() {
   };
 
   return (
-    <div className="container">
-      {session === undefined ? (
-        <div id="join">
-          <div id="join-dialog" className="jumbotron vertical-center">
-            <h1> Join a video session </h1>
-            <form className="form-group" onSubmit={joinSession}>
-              <p>
-                <label>Participant: </label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="userName"
-                  value={myUserName}
-                  onChange={handleChangeUserName}
-                  required
-                />
-              </p>
-              <p>
-                <label> Session: </label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="sessionId"
-                  value={mySessionId}
-                  onChange={handleChangeSessionId}
-                  required
-                />
-              </p>
-              <p className="text-center">
-                <input
-                  className="btn btn-lg btn-success"
-                  name="commit"
-                  type="submit"
-                  value="JOIN"
-                />
-              </p>
-            </form>
+    <div className="mainContainer">
+      <div className="videoContainer">
+        {publisher !== undefined ? (
+          <div className="teacherVideoContainer">
+            <UserVideoComponent streamManager={publisher} />
           </div>
-        </div>
-      ) : (
-        <div id="session">
-          <div id="session-header">
-            <h1 id="session-title">{mySessionId}</h1>
-            <input
-              className="btn btn-large btn-danger"
-              type="button"
-              id="buttonLeaveSession"
-              onClick={leaveSession}
-              value="Leave session"
-            />
-          </div>
-
-          {publisher !== undefined ? (
-            <div id="main-video" className="col-md-6">
-              <UserVideoComponent streamManager={publisher} />
-              <input
-                className="btn btn-large btn-success"
-                type="button"
-                id="buttonSwitchCamera"
-                onClick={this.switchCamera}
-                value="Switch Camera"
-              />
+        ) : null}
+        <div className="studentVideosContainer">
+          {mainStreamManager !== undefined ? (
+            <div
+              className="studentVideoContainer"
+              onClick={() => handleMainVideoStream(mainStreamManager)}
+            >
+              <UserVideoComponent streamManager={mainStreamManager} />
             </div>
           ) : null}
-          <div id="video-container" className="col-md-6">
-            {mainStreamManager !== undefined ? (
-              <div
-                className="stream-container col-md-6 col-xs-6"
-                onClick={() => handleMainVideoStream(mainStreamManager)}
-              >
-                <UserVideoComponent streamManager={mainStreamManager} />
-              </div>
-            ) : null}
-            {subscribers.map((sub, i) => (
-              <div
-                key={i}
-                className="stream-container col-md-6 col-xs-6"
-                onClick={() => handleMainVideoStream(sub)}
-              >
-                <UserVideoComponent streamManager={sub} />
-              </div>
-            ))}
-          </div>
+          {subscribers.map((sub, i) => (
+            <div
+              key={i}
+              className="studentVideoContainer"
+              onClick={() => handleMainVideoStream(sub)}
+            >
+              <UserVideoComponent streamManager={sub} />
+            </div>
+          ))}
         </div>
-      )}
+      </div>
+      <div className="buttonContainer">
+        <input
+          className="btn btn-large btn-danger"
+          type="button"
+          id="buttonLeaveSession"
+          onClick={leaveSession}
+          value="Leave session"
+        />
+        <input
+          className="btn btn-large btn-success"
+          type="button"
+          id="buttonSwitchCamera"
+          onClick={switchCamera}
+          value="Switch Camera"
+        />
+      </div>
     </div>
   );
 }

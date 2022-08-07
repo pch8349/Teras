@@ -5,33 +5,22 @@
 
 .classroomGridContainer {
   display: grid;
-  grid-template-columns: 700px 400px;
-  grid-template-rows: 100px 580px 100px;
+  grid-template-rows: 100px 700px;
   margin-top: 20px;
 }
 
 .header {
   display: flex;
   align-items: center;
-  grid-column-start: 1;
-  grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 2;
 }
 
-.videoContainer {
-  grid-column-start: 1;
-  grid-column-end: 3;
+.mainContainer {
   grid-row-start: 2;
   grid-row-end: 3;
-}
-
-.footer {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 3;
-  grid-row-end: 4;
-  background-color: blue;
+  display: grid;
+  grid-template-rows: 600px 100px;
 }
 
 .subjectBox {
