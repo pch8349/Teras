@@ -95,7 +95,7 @@ public class RoomController {
         // 검색할 방이 존재하는지 확인
         Room room = roomService.findRoom(findRoomReq);
         String roomId = room.getRoomId();
-        Integer gameType = room.getGameType();
+        Integer Roomtype = room.getGameType();
 
         // 검색하는 방이 존재하지 않을 경우
         if (this.mapSessions.get(roomId) == null) {
