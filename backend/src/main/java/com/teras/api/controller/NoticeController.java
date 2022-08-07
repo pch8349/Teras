@@ -118,8 +118,13 @@ public class NoticeController {
 		String userId = userDetails.getUsername();
 		User user = userService.getUserByUserId(userId);
 		
-		NoticeDto notice = noticeService.editNotice(noticeNo, user);
-		
+		String isNoticeEdited = noticeService.editNotice(noticeNo, user, noticePostReq);
+		if(isNoticeEdited == null) {
+			return ResponseEntity.status(204).body(BaseResponseBody.of(204, "NO_CONTENT"));
+		}
+		if(isNoticeEdited == "forbidden") {
+			return ResponseEntity.status(403).body(BaseResponseBody.of(403, "FORBIDDEN"));
+		}
 
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
 	}
@@ -133,8 +138,19 @@ public class NoticeController {
 		@ApiResponse(code = 500, message = "서버 오류") })
 	@ApiImplicitParam(name = "noticeNo", value = "notice seq", required = true, dataType = "Long")
 	@DeleteMapping("/{noticeNo}")
-	public ResponseEntity delete(@ApiIgnore Authentication authentication, @PathVariable Long noticeNo) {
+	public ResponseEntity deleteNotice(@ApiIgnore Authentication authentication, @PathVariable Long noticeNo) {
 
+		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+		String userId = userDetails.getUsername();
+		User user = userService.getUserByUserId(userId);
+		
+		String isNoticeDeleted = noticeService.deleteNotice(noticeNo, user);
+		if(isNoticeDeleted == null) {
+			return ResponseEntity.status(204).body(BaseResponseBody.of(204, "NO_CONTENT"));
+		}
+		if(isNoticeDeleted == "forbidden") {
+			return ResponseEntity.status(403).body(BaseResponseBody.of(403, "FORBIDDEN"));
+		}
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
 	}
 }

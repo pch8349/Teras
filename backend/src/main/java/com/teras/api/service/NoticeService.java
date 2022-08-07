@@ -12,7 +12,9 @@ public interface NoticeService {
 	
 	NoticeDto getNotice(long noticeNo);
 	
-	NoticeDto editNotice(long noticeNo, User user);
+	String editNotice(long noticeNo, User user, NoticeRegisterPostReq noticePostReq);
+	
+	String deleteNotice(long noticeNo, User user);
 	
 	List<NoticeDto> getNoticeList(ClassEntity classEntity);
 }

@@ -28,33 +28,40 @@ public class Notice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "noticeNo", nullable = false)
-	long noticeNo;
+	private long noticeNo;
 
 	@Column(name = "title", nullable = false)
-	String title;
+	private String title;
 
 	@Column(name = "content", nullable = false)
 	String content;
 
 	@CreatedDate
 	@Column(name = "createDate", nullable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	Timestamp createdDate;
+	private Timestamp createdDate;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
-	User user;
+	private User user;
 
 	@ManyToOne
 	@JoinColumn(name = "classCode", nullable = false)
-	ClassEntity classCode;
+	private ClassEntity classCode;
 
 	@ManyToOne
 	@JoinColumn(name = "attach", nullable = true)
-	Attachment attach;
+	private Attachment attach;
 
 	@Override
 	public String toString() {
 		return "Notice [noticeNo=" + noticeNo + ", title=" + title + ", content=" + content + ", createdDate="
 				+ createdDate + ", user=" + user + ", classCode=" + classCode + ", attach=" + attach + "]";
+	}
+
+	public void update(String title, String content) {
+		// TODO Auto-generated method stub
+		this.title = title;
+		this.content = content;
+		
 	}
 }
