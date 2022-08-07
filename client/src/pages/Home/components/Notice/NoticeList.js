@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import NoticeItem from "./NoticeItem";
 import Pagination from "react-js-pagination";
-import { getNoticeTotalCount, getNoticeList } from '../../../../api/notice';
+import { getNotice, getNoticeList } from '../../../../api/notice';
 
 
 
@@ -62,10 +62,11 @@ function NoticeList() {
       useState(true);
     const [page, setPage] = useState(0);
     
+
     useEffect(() => {
         if (isTotalItemsCountLoading) {
-          getNoticeTotalCount().then((res) => {
-            setTotalItemsCount(res.data.totalNoticeCount);
+          getNotice().then((res) => {
+            setTotalItemsCount(res.data.length());
             setIsTotalItemsCountLoading(false);
           });
         } else {
@@ -90,6 +91,7 @@ function NoticeList() {
     setIsLoading(true);
     };
     
+    
     return (
     <div>
         <Title>공지사항</Title>
@@ -101,12 +103,11 @@ function NoticeList() {
             </ButtonContainer>
             <StyledTable>
           <colgroup>
-            <StyledCol width="7%"></StyledCol>
+            <StyledCol width="10%"></StyledCol>
             <StyledCol width="15%"></StyledCol>
-            <StyledCol width="42%"></StyledCol>
-            <StyledCol width="13%"></StyledCol>
-            <StyledCol width="7%"></StyledCol>
-            <StyledCol width="16%"></StyledCol>
+            <StyledCol width="45%"></StyledCol>
+            <StyledCol width="15%"></StyledCol>
+            <StyledCol width="15%"></StyledCol>
           </colgroup>
           <thead>
             <tr>
@@ -114,7 +115,6 @@ function NoticeList() {
               <StyledTh>구분</StyledTh>
               <StyledTh>제목</StyledTh>
               <StyledTh>작성자</StyledTh>
-              <StyledTh>조회수</StyledTh>
               <StyledTh>등록일</StyledTh>
             </tr>
           </thead>
