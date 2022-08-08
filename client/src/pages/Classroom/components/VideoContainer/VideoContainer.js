@@ -272,6 +272,14 @@ function VideoContainer() {
     });
   };
 
+  const handleMicButton = () => {
+    setMicOn(!micOn);
+  };
+
+  const handleVideoButton = () => {
+    setVideoOn(!videoOn);
+  };
+
   return (
     <div className="mainContainer">
       <div className="videoContainer">
@@ -301,14 +309,17 @@ function VideoContainer() {
         </div>
       </div>
       <div className="buttonContainer">
-        <div className="classroomButton greenButton">
+        <div className="classroomButton greenButton" onClick={handleMicButton}>
           {micOn ? (
             <MicIcon fontSize="large" />
           ) : (
             <MicOffIcon fontSize="large" />
           )}
         </div>
-        <div className="classroomButton greenButton">
+        <div
+          className="classroomButton greenButton"
+          onClick={handleVideoButton}
+        >
           {videoOn ? (
             <VideocamIcon fontSize="large" />
           ) : (

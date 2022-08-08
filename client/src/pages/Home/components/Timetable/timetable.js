@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -10,6 +10,11 @@ import {
 } from "@mui/material";
 
 function TimeTable({ rows }) {
+  useEffect(() => {
+    let today = new Date();
+    let day = today.getDay();
+  });
+
   return (
     <TableContainer
       sx={{
