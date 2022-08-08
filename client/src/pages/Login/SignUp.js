@@ -113,6 +113,8 @@ const SignUp = ({}) => {
           <IdForm
             value={id}
             onChange={({ target: { value } }) => setId(value)}
+            required
+            aria-invalid={validId ? "false" : "true"}
           />
           <EmptyPart />
           <FlexRow>
