@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import {
@@ -43,11 +43,13 @@ const SignUp = ({}) => {
   const [validPw, setValidPw] = useState(false);
   const [validMatch, setValidMatch] = useState(false);
 
-  useEffect(() => {
-    // 사용자 아이디 유효성검사
-    const result = USER_REGEX.test(id); // username validcheck
-    setValidId(result);
-  }, [id]);
+  // useEffect(() => {
+  //   // 사용자 아이디 유효성검사
+  //   const result = USER_REGEX.test(id); // username validcheck
+  //   setValidId(result);
+  //   console.log(validId);
+  //   console.log(id);
+  // }, [id]);
 
   useEffect(() => {
     // 비밀번호 유효성 검사
@@ -55,7 +57,7 @@ const SignUp = ({}) => {
     setValidPw(result); // 비밀번호 유효성(길이, 특수문자 등) 검사
     const match = pw === matchpw;
     setValidMatch(match); // 비밀번호 매칭 검사
-  });
+  }, [pw, matchpw]);
 
   const body = {
     id: id,
@@ -69,9 +71,10 @@ const SignUp = ({}) => {
 
   const NewUser = async (e) => {
     console.log(body);
+    console.log(validId);
     e.preventDefault();
     try {
-      console.log("여기까진");
+      console.log("입력버튼");
       await signUp(
         body,
         () => {
@@ -86,6 +89,21 @@ const SignUp = ({}) => {
       console.log("실패");
     }
   };
+  const getDropDownValue = (role) => {
+    setRole(role);
+    console.log(role);
+  };
+
+  // 유효성 체크. useCallBack은 함수의 재사용을 위함
+  const onValidCheck = useCallback((e) => {
+    if (e[0].id === "id") {
+      const result = USER_REGEX.test(e[0].value);
+      setValidId(result);
+      console.log(validId);
+      console.log(e[0].value);
+    }
+  }, []);
+
   return (
     <NewRoot>
       <BackForm>
@@ -94,9 +112,11 @@ const SignUp = ({}) => {
             src={`https://file.rendit.io/n/GuXE32OOzWWWXqrS8jTY.png`}
           />
           <DropDown
-            setValue={setRole} // 하위 컴포넌트에서 전달한 값 받음
-            value={role}
-            onChange={({ target: { value } }) => setRole(value)}
+            arr={[
+              { id: "TEACHER", name: "교사" },
+              { id: "STUDENT", name: "학생" },
+            ]} // 배열로 선택할 값 전달
+            getDropDownValue={getDropDownValue} // 자식 컴포넌트에서 보낸 값 받기 위함
           />
           <FlexRow>
             <EmptyPart></EmptyPart>
@@ -105,17 +125,22 @@ const SignUp = ({}) => {
             <TextBigInter>아이디 입력</TextBigInter>
             <FlexColumn>
               <TextColorArt color={`#ea5757`}>
-                *사용 중인 아이디입니다
+                *유효하지 않은 아이디입니다.
               </TextColorArt>
               {/* <TextColorArt colot={`#486ed0`}>*사용 가능한 아이디입니다</TextColorArt> */}
             </FlexColumn>
           </FlexRow>
           <IdForm
             value={id}
-            onChange={({ target: { value } }) => setId(value)}
-            required
-            aria-invalid={validId ? "false" : "true"}
+            onChange={({ target: { value } }) => {
+              setId(value);
+              onValidCheck([{ id: "id", value: value }]);
+            }}
           />
+          <p
+            id="uidnote"
+            className={id && !validId ? "instructions" : "offscreen"}
+          ></p>
           <EmptyPart />
           <FlexRow>
             <TextBigInter>비밀번호 입력</TextBigInter>

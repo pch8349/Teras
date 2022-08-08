@@ -7,6 +7,7 @@ import SignUp from "./pages/Login/SignUp";
 import SignUpFin from "./pages/Login/SignUpFin";
 import Classroom from "./pages/Classroom/index";
 import ClassMake from "./pages/Login/ClassMake";
+import Test from "./test/Test";
 
 function App() {
   const [user, setUser] = useState();
@@ -24,6 +25,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/test" element={<Test />} />
         <Route path="/*" element={token ? <Home /> : <UserLogin />} />
         <Route path="/login" element={<UserLogin />} />
         <Route path="/signup" element={<SignUp />} />

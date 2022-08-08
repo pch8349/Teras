@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -41,11 +41,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const DropDown = (props) => {
-  const handleChange = (event) => {
-    props.setValue(event.target.value); // 하위 컴포넌트에서 상위 컴포넌트로 값 전달
-  };
-
+export const DropDown = ({ arr, getDropDownValue }) => {
   return (
     <Box sx={{ minWidth: 450 }}>
       <FormControl fullWidth>
@@ -54,11 +50,21 @@ export const DropDown = (props) => {
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           label="Role"
-          onChange={handleChange}
+          // onChange={handleChange}
           input={<BootstrapInput />}
         >
-          <MenuItem value={"STUDENT"}>학생</MenuItem>
-          <MenuItem value={"TEACHER"}>교사</MenuItem>
+          {arr.map(
+            //상위에서 보낸 값 배열로 해서 받은거 map을 이용해 반복
+            (posi) => (
+              <MenuItem
+                key={posi.id}
+                value={posi.id}
+                onClick={() => getDropDownValue(posi.id)}
+              >
+                {posi.name}
+              </MenuItem>
+            )
+          )}
         </Select>
       </FormControl>
     </Box>
