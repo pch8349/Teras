@@ -32,4 +32,20 @@ const GreenBtn = styled.button`
   }
 `;
 
-export { GreenBtn, WhiteBtn };
+const YellowBtn = styled.button`
+  background-color: #F1E9A3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  padding: 0px;
+  border-width: 0px;
+  box-sizing: content-box;
+  cursor: pointer;
+  &: hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+  }
+`;
+
+export { GreenBtn, WhiteBtn, YellowBtn };

@@ -33,7 +33,7 @@ const BackForm = styled.div`
 `;
 const LoginContent = styled.div`
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  height: 807px;
+  height: flex;
   width: 450px;
   background-color: #ffffff;
   display: flex;
@@ -90,14 +90,13 @@ const PwForm = styled.input.attrs((props) => ({
   font-size: 15px;
 `;
 const FlexRow1 = styled.div`
-text-align: center;
+  text-align: center;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 150px;
   margin: 0px 0px 19px 0px;
-
 `;
 const RadioWithLabel = styled.div`
   display: flex;
