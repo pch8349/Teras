@@ -17,14 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.teras.api.request.NoticeRegisterPostReq;
 import com.teras.api.response.NoticeListGetRes;
 import com.teras.api.service.NoticeService;
-import com.teras.api.service.UserService;
 import com.teras.common.auth.SsafyUserDetails;
 import com.teras.common.model.response.BaseResponseBody;
-import com.teras.db.Dto.NoticeDto;
-import com.teras.db.entity.ClassEntity;
+import com.teras.db.dto.NoticeDto;
 import com.teras.db.entity.Notice;
-import com.teras.db.entity.User;
-import com.teras.db.repository.NoticeRepository;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

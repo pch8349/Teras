@@ -10,12 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teras.api.request.NoticeRegisterPostReq;
-import com.teras.db.Dto.NoticeDto;
-import com.teras.db.entity.ClassEntity;
+import com.teras.db.dto.NoticeDto;
 import com.teras.db.entity.Notice;
 import com.teras.db.entity.User;
 import com.teras.db.repository.AttachmentRepository;
-import com.teras.db.repository.ClassEntityRepository;
 import com.teras.db.repository.NoticeRepository;
 import com.teras.db.repository.UserRepository;
 

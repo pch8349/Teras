@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teras.api.request.AssignRegisterPostReq;
-import com.teras.db.Dto.AssignmentDto;
+import com.teras.db.dto.AssignmentDto;
 import com.teras.db.entity.Assignment;
-import com.teras.db.entity.ClassEntity;
 import com.teras.db.entity.SubjectDetail;
 import com.teras.db.entity.User;
 import com.teras.db.repository.AssignmentRepository;
@@ -43,7 +42,8 @@ public class AssignServiceImpl implements AssignService {
 
 		List<AssignmentDto> list = new ArrayList<AssignmentDto>();
 
-		for (Assignment assign : assignmentRepository.findByClassCodeAndSubjectCode(user.getClassCode(), subject).get()) {
+		for (Assignment assign : assignmentRepository.findByClassCodeAndSubjectCode(user.getClassCode(), subject)
+				.get()) {
 			list.add(new AssignmentDto(assign));
 		}
 
@@ -53,13 +53,10 @@ public class AssignServiceImpl implements AssignService {
 	@Override
 	public Assignment createAssign(AssignRegisterPostReq registerInfo, String userId) {
 		User user = userRepository.findByUserId(userId).get();
-		
+
 		Assignment assign = Assignment.builder().title(registerInfo.getTitle()).content(registerInfo.getContent())
-				.deadline(registerInfo.getDeadLine())
-				.classCode(user.getClassCode())
-				.subjectCode(user.getSubjectCode())
-				.userId(user)
-				.uuid(attachmentRepository.findByUuid(registerInfo.getUuid()).get()).build();
+				.deadline(registerInfo.getDeadLine()).classCode(user.getClassCode()).subjectCode(user.getSubjectCode())
+				.userId(user).uuid(attachmentRepository.findByUuid(registerInfo.getUuid()).get()).build();
 		return assignmentRepository.save(assign);
 	}
 
