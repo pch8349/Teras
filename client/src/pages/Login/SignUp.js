@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import {
@@ -20,7 +20,7 @@ import {
 } from "./styles/LoginText";
 import { DropDown } from "./styles/DropDown";
 import { GreenBtn } from "./styles/LoginBtn";
-import { signUp } from '../../api/users';
+import { signUp } from "../../api/users";
 import { ClassNames } from "@emotion/react";
 
 //영어 대,소문자, 0~9, -_ 이렇게 가능함을 나타냄. 3~23자 제한
@@ -32,9 +32,30 @@ const SignUp = ({}) => {
   const [role, setRole] = useState("");
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
+  const [matchpw, setMatchPw] = useState("");
+  const [schoolcode, setSchoolCode] = useState("");
+  const [classcode, setClassCode] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+
+  const [validId, setValidId] = useState(false);
+  const [validPw, setValidPw] = useState(false);
+  const [validMatch, setValidMatch] = useState(false);
+
+  useEffect(() => {
+    // 사용자 아이디 유효성검사
+    const result = USER_REGEX.test(id); // username validcheck
+    setValidId(result);
+  }, [id]);
+
+  useEffect(() => {
+    // 비밀번호 유효성 검사
+    const result = PWD_REGEX.test(pw);
+    setValidPw(result); // 비밀번호 유효성(길이, 특수문자 등) 검사
+    const match = pw === matchpw;
+    setValidMatch(match); // 비밀번호 매칭 검사
+  });
 
   const body = {
     id: id,
@@ -43,7 +64,7 @@ const SignUp = ({}) => {
     email: email,
     phoneNumber: phone,
     authority: role,
-    classCode: "S000003540",
+    classCode: "S0000035400103",
   };
 
   const NewUser = async (e) => {
@@ -61,14 +82,6 @@ const SignUp = ({}) => {
           console.log("실패");
         }
       );
-      // .then((response) => {const accessToken = response.data.accessToken;
-      //   alert(accessToken);
-      //   console.log("회원가입 성공");
-
-      //   window.location.href="/";
-      //   },
-      //     () => {console.log("가입 실패!")}
-      // );
     } catch (error) {
       console.log("실패");
     }

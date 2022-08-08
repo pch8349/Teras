@@ -25,23 +25,23 @@ const UserLogin = ({}) => {
   const [id, setId] = useState("");
   const [password, setPw] = useState("");
   const [success, setSuccess] = useState(true);
+  const [ischecked, setIsChecked] = useState(false);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(id, password);
     setSuccess(false);
-    // console.log(success);
     try {
       await doLogin(
         { id, password },
         (response) => {
           const accessToken = response.data.accessToken;
-
-          console.log(accessToken);
-          console.log("하이");
-          localStorage.setItem("accessToken", accessToken);
+          if (ischecked) {
+            localStorage.setItem("accessToken", accessToken);
+          } else {
+            sessionStorage.setItem("accessToken", accessToken);
+          }
           setSuccess(true);
-
+          console.log("성공");
           window.location.href = "/";
         },
         () => {
@@ -76,7 +76,11 @@ const UserLogin = ({}) => {
             />
             <FlexRow1>
               <RadioWithLabel>
-                <Checkbox {...label} />
+                <Checkbox
+                  checked={ischecked}
+                  onChange={() => setIsChecked(!ischecked)}
+                  {...label}
+                />
                 <TextSmallInter>아이디 기억</TextSmallInter>
               </RadioWithLabel>
               <LinkContainer>
