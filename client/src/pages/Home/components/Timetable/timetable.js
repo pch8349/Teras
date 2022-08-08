@@ -13,14 +13,14 @@ function TimeTable({ rows }) {
   return (
     <TableContainer
       sx={{
-        width: 230,
+        width: 250,
       }}
       component={Paper}
     >
       <Table aria-label="timeTable">
         <TableHead>
           <TableRow>
-            <TableCell align="center">시간표</TableCell>
+            <TableCell align="center">오늘의 시간표</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
