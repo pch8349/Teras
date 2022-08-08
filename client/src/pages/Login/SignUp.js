@@ -114,16 +114,17 @@ const SignUp = ({}) => {
 
   const idUnderLine = () => {
     console.log("i'm here");
-    if(flag===1){
+    if(flag==="1"){
+      console.log("아닛!");
       return <TextColorArt color={`#ea5757`}>
       *이미 사용중인 아이디입니다.
     </TextColorArt>
     } else if(validId) {
-      <TextColorArt color={`#ea5757`}>
+      return <TextColorArt color={`#ea5757`}>
                 *아이디 길이는 4~22자 내로 가능합니다
               </TextColorArt>
     } else{
-      <TextColorArt color={`#0087FF`}>*사용 가능한 아이디입니다</TextColorArt>
+      return <TextColorArt color={`#0087FF`}>*사용 가능한 아이디입니다</TextColorArt>
     }
   }
 
@@ -175,7 +176,7 @@ const SignUp = ({}) => {
               )} else{
                 (<TextColorArt color={`#0087FF`}>*사용 가능한 아이디입니다</TextColorArt>)
               } */}
-              {idUnderLine}
+              {idUnderLine()}
             </FlexColumn>
           </FlexRow>
           <FlexRow>
