@@ -1,10 +1,10 @@
-export const SETSESSIONNAME = "OPENVIDU/SETSESSIONNAME";
+const SETUSERID = "USER/SETUSERID";
 
-export const SETUSERNAME = "OPENVIDU/SETUSERNAME";
+const SETUSERNAME = "USER/SETUSERNAME";
 
-export const setSessionName = (sessionName) => ({
-  type: SETSESSIONNAME,
-  sessionName,
+export const setUserId = (userId) => ({
+  type: SETUSERID,
+  userId,
 });
 
 export const setUserName = (userName) => ({
@@ -13,16 +13,16 @@ export const setUserName = (userName) => ({
 });
 
 const initalState = {
-  sessionName: "sessionA",
+  userId: "sessionA",
   userName: "김민성",
 };
 
-const openvidu = (state = initalState, action) => {
+const user = (state = initalState, action) => {
   switch (action.type) {
-    case SETSESSIONNAME:
+    case SETUSERID:
       return {
         ...state,
-        sessionName: action.sessionName,
+        userId: action.userId,
       };
     case SETUSERNAME:
       return {
@@ -36,4 +36,4 @@ const openvidu = (state = initalState, action) => {
   }
 };
 
-export default openvidu;
+export default user;

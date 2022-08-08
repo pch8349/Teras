@@ -2,22 +2,23 @@ import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import React, { useEffect, useState } from "react";
 import UserVideoComponent from "./UserVideoComponent";
-import { useSelector, useDispatch } from "react-redux";
-import { setSessionName, setUserName } from "../../../../reducers/openvidu";
 import "./UserVideo.css";
+import CloseIcon from "@mui/icons-material/Close";
+import MicIcon from "@mui/icons-material/Mic";
+import MicOffIcon from "@mui/icons-material/MicOff";
+import VideocamIcon from "@mui/icons-material/Videocam";
+import VideocamOffIcon from "@mui/icons-material/VideocamOff";
+import ScreenShareIcon from "@mui/icons-material/ScreenShare";
 
 const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 function VideoContainer() {
-  // dispatch를 사용하기 위한 준비
-  const dispatch = useDispatch();
+  const mySessionId = localStorage.getItem("userId");
+  const myUserName = localStorage.getItem("userName");
 
-  // store에 접근하여 state 가져오기
-  const { userName, sessionName } = useSelector((state) => state.openvidu);
-
-  const [mySessionId, setMySessionId] = useState(sessionName);
-  const [myUserName, setMyUserName] = useState(userName);
+  const [micOn, setMicOn] = useState(false);
+  const [videoOn, setVideoOn] = useState(false);
   const [session, setSession] = useState();
   const [mainStreamManager, setMainStreamManager] = useState();
   const [publisher, setPublisher] = useState();
@@ -116,16 +117,8 @@ function VideoContainer() {
     });
   }, [session]);
 
-  const onbeforeunload = (event) => {
+  const onbeforeunload = () => {
     leaveSession();
-  };
-
-  const handleChangeSessionId = (e) => {
-    setMySessionId(e.target.value);
-  };
-
-  const handleChangeUserName = (e) => {
-    setMyUserName(e.target.value);
   };
 
   const handleMainVideoStream = (stream) => {
@@ -308,20 +301,26 @@ function VideoContainer() {
         </div>
       </div>
       <div className="buttonContainer">
-        <input
-          className="btn btn-large btn-danger"
-          type="button"
-          id="buttonLeaveSession"
-          onClick={leaveSession}
-          value="Leave session"
-        />
-        <input
-          className="btn btn-large btn-success"
-          type="button"
-          id="buttonSwitchCamera"
-          onClick={switchCamera}
-          value="Switch Camera"
-        />
+        <div className="classroomButton greenButton">
+          {micOn ? (
+            <MicIcon fontSize="large" />
+          ) : (
+            <MicOffIcon fontSize="large" />
+          )}
+        </div>
+        <div className="classroomButton greenButton">
+          {videoOn ? (
+            <VideocamIcon fontSize="large" />
+          ) : (
+            <VideocamOffIcon fontSize="large" />
+          )}
+        </div>
+        <div className="classroomButton greenButton">
+          <ScreenShareIcon fontSize="large" />
+        </div>
+        <div className="classroomButton redButton" onClick={leaveSession}>
+          <CloseIcon fontSize="large" />
+        </div>
       </div>
     </div>
   );

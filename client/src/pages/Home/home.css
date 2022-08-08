@@ -28,6 +28,8 @@
 }
 
 .navBar {
+  display: flex;
+  flex-direction: row-reverse;
   grid-column-start: 2;
   grid-column-end: 3;
 }
@@ -112,8 +114,8 @@
   text-decoration: none;
   text-align: center;
   padding: 12px;
-  filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
-
+  filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07))
+    drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
 }
 
 .selectedTab {
@@ -122,7 +124,7 @@
   text-decoration: none;
   text-align: center;
   font-weight: bold;
-  display:box !important;
+  display: box !important;
   box-shadow: 5px !important;
   filter: none;
 }

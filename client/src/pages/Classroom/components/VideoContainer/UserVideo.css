@@ -43,9 +43,36 @@ p {
 
 .streamcomponent {
   width: 100%;
+  overflow: hidden;
+  border-radius: 10px;
 }
 
 .buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   grid-row-start: 2;
   grid-row-end: 3;
+}
+
+.classroomButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  margin: 0 10px;
+}
+
+:hover .classroomButton {
+  cursor: pointer;
+}
+
+.greenButton {
+  background-color: #69c561;
+}
+
+.redButton {
+  background-color: #ea5050;
 }
