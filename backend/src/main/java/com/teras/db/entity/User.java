@@ -36,7 +36,6 @@ public class User {
 	String phoneNumber;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "classCode", referencedColumnName = "classCode",nullable = true)
 	ClassEntity classCode;
 

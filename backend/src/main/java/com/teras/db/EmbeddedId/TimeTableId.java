@@ -22,12 +22,12 @@ public class TimeTableId implements Serializable {
 	ClassEntity classCode;
 
 	@Column(name = "day", nullable = false)
-	String day;
+	int day;
 
 	@Column(name = "period", nullable = false)
 	int period;
 
-	public TimeTableId(ClassEntity classCode, String day, int period) {
+	public TimeTableId(ClassEntity classCode, int day, int period) {
 		this.classCode = classCode;
 		this.day = day;
 		this.period = period;

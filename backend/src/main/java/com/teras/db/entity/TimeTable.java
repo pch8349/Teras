@@ -18,6 +18,6 @@ public class TimeTable {
 	TimeTableId timeTableId;
 
 	@ManyToOne
-	@JoinColumn(name = "subjectCode", nullable = true)
-	Subject subjectCode;
+	@JoinColumn(name = "subjectCode", nullable = false)
+	SubjectDetail subjectCode;
 }
