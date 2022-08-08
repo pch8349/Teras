@@ -7,13 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teras.api.request.UserRegisterPostReq;
+import com.teras.api.response.UserIdCheckGetRes;
 import com.teras.api.response.UserRes;
 import com.teras.api.service.UserService;
 import com.teras.common.auth.SsafyUserDetails;
 import com.teras.common.model.response.BaseResponseBody;
+import com.teras.db.Dto.UserDto;
 import com.teras.db.entity.User;
 
 import io.swagger.annotations.Api;
@@ -51,6 +54,15 @@ public class UserController {
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 	
+	@GetMapping("/idcheck")
+	public ResponseEntity<? extends UserIdCheckGetRes> idCheck(@RequestParam String id) {
+		
+		int flag = userService.idCheck(id);
+		
+		return ResponseEntity.status(200).body(UserIdCheckGetRes.of(200, "SUCCESS", flag));
+	}
+	
+	
 	@GetMapping()
 	@ApiOperation(value = "회원 본인 정보 조회", notes = "로그인한 회원 본인의 정보를 응답한다.") 
     @ApiResponses({
@@ -68,6 +80,6 @@ public class UserController {
 		String userId = userDetails.getUsername();
 		User user = userService.getUserByUserId(userId);
 		
-		return ResponseEntity.status(200).body(UserRes.of(user));
+		return ResponseEntity.status(200).body(UserRes.of(new UserDto(user)));
 	}
 }
