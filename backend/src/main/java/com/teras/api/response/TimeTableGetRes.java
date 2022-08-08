@@ -3,7 +3,7 @@ package com.teras.api.response;
 import java.util.List;
 
 import com.teras.common.model.response.BaseResponseBody;
-import com.teras.db.Dto.TimeTableDto;
+import com.teras.db.dto.TimeTableDto;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;

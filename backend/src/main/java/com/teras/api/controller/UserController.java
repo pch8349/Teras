@@ -16,7 +16,7 @@ import com.teras.api.response.UserRes;
 import com.teras.api.service.UserService;
 import com.teras.common.auth.SsafyUserDetails;
 import com.teras.common.model.response.BaseResponseBody;
-import com.teras.db.Dto.UserDto;
+import com.teras.db.dto.UserDto;
 import com.teras.db.entity.User;
 
 import io.swagger.annotations.Api;

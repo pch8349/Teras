@@ -1,6 +1,6 @@
 package com.teras.api.response;
 
-import com.teras.db.Dto.UserDto;
+import com.teras.db.dto.UserDto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

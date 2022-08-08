@@ -1,4 +1,4 @@
-package com.teras.db.EmbeddedId;
+package com.teras.db.embeddedId;
 
 import java.io.Serializable;
 import java.util.Objects;

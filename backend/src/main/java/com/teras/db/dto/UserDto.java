@@ -1,4 +1,4 @@
-package com.teras.db.Dto;
+package com.teras.db.dto;
 
 import com.teras.db.entity.User;
 

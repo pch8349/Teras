@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.teras.db.EmbeddedId.TimeTableId;
+import com.teras.db.embeddedId.TimeTableId;
 import com.teras.db.entity.ClassEntity;
 import com.teras.db.entity.TimeTable;
 
