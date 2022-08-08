@@ -1,199 +1,527 @@
 package io.openvidu.mvc.java;
 
-import io.openvidu.mvc.java.request.FindRoomReq;
-import io.openvidu.mvc.java.request.LeaveRoomReq;
-import io.openvidu.mvc.java.request.MakeRoomReq;
-import io.openvidu.mvc.java.request.QuickRoomReq;
-import io.openvidu.mvc.java.response.RoomRes;
-import io.openvidu.mvc.java.service.RoomService;
-//import io.openvidu.mvc.java.db.entity.Room;
-//import io.openvidu.mvc.java.error.exception.InvalidValueException;
-//import io.openvidu.mvc.java.error.exception.custom.RoomStatusIsNotAvailableException;
-//import io.openvidu.mvc.java.error.exception.custom.RoomNotFoundException;
-//import io.openvidu.mvc.java.util.RandomNumberUtil;
-import io.openvidu.java.client.*;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-//import io.openvidu.mvc.java.error.ErrorResponse;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.security.access.prepost.PreAuthorize;
-
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+
+// json
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+//import com.google.gson.JsonElement;
+import com.google.gson.stream.JsonReader;
+import java.io.FileReader;
+// import java.io.FileNotFoundException;
+import java.util.Map;
+import java.util.Set;
+
+import io.openvidu.java.client.ConnectionProperties;
+import io.openvidu.java.client.ConnectionType;
+import io.openvidu.java.client.OpenVidu;
+import io.openvidu.java.client.OpenViduHttpException;
+import io.openvidu.java.client.OpenViduJavaClientException;
+import io.openvidu.java.client.OpenViduRole;
+import io.openvidu.java.client.Recording;
+import io.openvidu.java.client.RecordingProperties;
+import io.openvidu.java.client.Session;
+
+// unzip
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 
-@Api(value = "방 관리 API", tags = {"Room"})
 @RestController
-@RequestMapping("/api/rooms")
+@RequestMapping()
 public class RoomController {
 
-    private final int LIMIT = 6;
-    private final RoomService roomService;
+	// OpenVidu object as entrypoint of the SDK
+	private OpenVidu openVidu;
 
-    // 오픈비두 객체 SDK
-    private OpenVidu openVidu;
+	// Collection to pair session names and OpenVidu Session objects
+	private Map<String, Session> mapSessions = new ConcurrentHashMap<>();
+	// Collection to pair session names and tokens (the inner Map pairs tokens and
+	// role associated)
+	private Map<String, Map<String, OpenViduRole>> mapSessionNamesTokens = new ConcurrentHashMap<>();
+	// Collection to pair session names and recording objects
+	private Map<String, Boolean> sessionRecordings = new ConcurrentHashMap<>();
 
-    // 방 관리
-    private Map<String, Integer> mapSessions = new ConcurrentHashMap<>();
+	// URL where our OpenVidu server is listening
+	private String OPENVIDU_URL;
+	// Secret shared with our OpenVidu server
+	private String SECRET;
 
-    // 오픈비두 서버 관련 변수
-    private String OPENVIDU_URL;
-    private String SECRET;
+	// room 생성 시 정보
+	String sName, nName;
+	
+	public RoomController(@Value("${openvidu.secret}") String secret, @Value("${openvidu.url}") String openviduUrl) {
+		this.SECRET = secret;
+		this.OPENVIDU_URL = openviduUrl;
+		this.openVidu = new OpenVidu(OPENVIDU_URL, SECRET);
+	}
 
-    // RoomController에 접근할 때마다 오픈비두 서버 관련 변수를 얻어옴
-    @Autowired
-    public RoomController(RoomService roomService, @Value("${openvidu.secret}") String secret, @Value("${openvidu.url}") String openviduUrl) {
-        this.roomService = roomService;
+	/*******************/
+	/*** Create Room ***/
+	/*** @throws URISyntaxException *****************/
+	@RequestMapping(value = "/createRoom", method = RequestMethod.GET)
+	public ResponseEntity<?> getRoom(@RequestParam Map<String, String> sessionName, @RequestParam Map<String, String> nickName) throws URISyntaxException {
+		// 만들 방 정보 받아오기	
+		sName = (String) sessionName.get("sessionName");
+//		nName = (String) nickName.get("nickName");
+//		System.out.println("sessionName: " + sName + ", nickName: " + nName);
+		System.out.println("sessionName: " + sName);
+		
+		// Json 형태로 저장
+		Gson gson = new Gson();
+		JsonObject json = new JsonObject();
+		json.addProperty("sessionName", sName);
+//		json.addProperty("nickName", nName);
+		System.out.println(json);
+		
+		// redirect하면서 데이터 전달
+		URI uri = new URI("https://i7a706.p.ssafy.io:8080/");
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setLocation(uri);
+//		httpHeaders.add("sessinInfo", sName + "," + nName);
+		httpHeaders.add("sessinInfo", sName);
 
-        this.SECRET = secret;
-        this.OPENVIDU_URL = openviduUrl;
-        this.openVidu = new OpenVidu(OPENVIDU_URL, SECRET);
-    }
+		return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+	}
+	
+	/*******************/
+	/*** Session API ***/
+	/*******************/
 
-    @PostMapping("")
-    @ApiOperation(value = "방을 만들 때 사용", notes = "<strong>방 만들기</strong>을 통해 세션과 토큰을 생성 후 토큰, 방이름 => password 없을시, 빈문자열 넣기")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "방 만들기 성공"),
-            @ApiResponse(code = 400, message = "input 오류", response = ErrorResponse.class),
-            @ApiResponse(code = 401, message = "토큰 만료 or 토큰 없음 or 토큰 오류 -> 권한 인증 오류", response = ErrorResponse.class),
-            @ApiResponse(code = 500, message = "서버 에러", response = ErrorResponse.class)
-    })
-    
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<RoomRes> makeRoom(@RequestBody MakeRoomReq makeRoomReq) throws OpenViduJavaClientException, OpenViduHttpException {
-        // 방 번호 난수 생성
-        String roomId = RandomNumberUtil.getRandomNumber();
+	@RequestMapping(value = "/api/get-token", method = RequestMethod.POST)
+	public ResponseEntity<JsonObject> getToken(@RequestBody Map<String, Object> sessionNameParam) {
 
-        // 방 관리 map에 저장
-        this.mapSessions.put(roomId, 1);
+		System.out.println("Getting sessionId and token | {sessionName}=" + sessionNameParam);
 
-        // DB 저장
-        roomService.makeRoom(roomId, makeRoomReq);
+		// The video-call to connect ("TUTORIAL")
+		String sessionName = (String) sessionNameParam.get("sessionName");
 
-        return ResponseEntity.ok(roomService.getRoomRes(roomId, makeRoomReq.getGameType()));
-    }
+		// Role associated to this user
+		OpenViduRole role = OpenViduRole.PUBLISHER;
 
-    @PostMapping("/search")
-    @ApiOperation(value = "방을 검색할 때 사용", notes = "<strong>방 검색</strong>을 통해 검색하는 방이 존재한다면 토큰, 방이름  => password 없을시, 빈문자열 넣기")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "방 검색 성공"),
-            @ApiResponse(code = 400, message = "input 오류", response = ErrorResponse.class),
-            @ApiResponse(code = 401, message = "토큰 만료 or 토큰 없음 or 토큰 오류 -> 권한 인증 오류", response = ErrorResponse.class),
-            @ApiResponse(code = 404, message = "방 정보가 없습니다.", response = ErrorResponse.class),
-            @ApiResponse(code = 409, message = "방 접속 불가능 상태", response = ErrorResponse.class),
-            @ApiResponse(code = 500, message = "서버 에러", response = ErrorResponse.class)
-    })
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<RoomRes> findRoom(@RequestBody FindRoomReq findRoomReq) throws OpenViduJavaClientException, OpenViduHttpException {
-        // 검색할 방이 존재하는지 확인
-        Room room = roomService.findRoom(findRoomReq);
-        String roomId = room.getRoomId();
-        Integer Roomtype = room.getGameType();
+		// Build connectionProperties object with the serverData and the role
+		ConnectionProperties connectionProperties = new ConnectionProperties.Builder().type(ConnectionType.WEBRTC)
+				.role(role).data("user_data").build();
 
-        // 검색하는 방이 존재하지 않을 경우
-        if (this.mapSessions.get(roomId) == null) {
-            throw new RoomNotFoundException(roomId);
-        }
-        // 인원초과일 경우
-        if (this.mapSessions.get(roomId) >= LIMIT) {
-            throw new RoomStatusIsNotAvailableException(room.getStatus());
-        }
+		JsonObject responseJson = new JsonObject();
 
-        // 방 관리 map에 저장
-        this.mapSessions.put(roomId, this.mapSessions.get(roomId) + 1);
+		if (this.mapSessions.get(sessionName) != null) {
+			// Session already exists
+			System.out.println("Existing session " + sessionName);
+			try {
 
-        return ResponseEntity.ok(roomService.getRoomRes(roomId, Roomtype));
-    }
+				// Generate a new token with the recently created connectionProperties
+				String token = this.mapSessions.get(sessionName).createConnection(connectionProperties).getToken();
 
-    @PostMapping("/quick")
-    @ApiOperation(value = "빠른 시작을 할 때 사용", notes = "<strong>빠른 시작</strong>을 통해 선택한 종목의 방이 있으면 반환하고 없다면 새로 생성 후 토큰, 방이름 반환")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "빠른 시작 성공"),
-            @ApiResponse(code = 400, message = "input 오류", response = ErrorResponse.class),
-            @ApiResponse(code = 401, message = "토큰 만료 or 토큰 없음 or 토큰 오류 -> 권한 인증 오류", response = ErrorResponse.class),
-            @ApiResponse(code = 500, message = "서버 에러", response = ErrorResponse.class)
-    })
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<RoomRes> quickRoom(@RequestBody QuickRoomReq quickRoomReq) throws OpenViduJavaClientException, OpenViduHttpException {
-        List<String> roomIds = roomService.quickRoom(quickRoomReq);
+				// Update our collection storing the new token
+				this.mapSessionNamesTokens.get(sessionName).put(token, role);
 
-        /************ 참가할 방이 존재한다면 ************/
-        if (!roomIds.isEmpty()) {
-            int min = LIMIT;
-            String minConnRoomId = null;
+				// Prepare the response with the token
+				responseJson.addProperty("0", token);
 
-            // 해당 종목의 방마다 참가할 수 있는지 확인
-            for (String roomId : roomIds) {
-                // 검색하는 방이 존재하지 않거나 인원초과일 경우
-                if (this.mapSessions.get(roomId) == null || this.mapSessions.get(roomId) >= LIMIT) continue;
+				// Return the response to the client
+				return new ResponseEntity<>(responseJson, HttpStatus.OK);
 
-                if (min > mapSessions.get(roomId)) {
-                    min = mapSessions.get(roomId);
-                    minConnRoomId = roomId;
-                }
-            }
+			} catch (OpenViduJavaClientException e1) {
+				// If internal error generate an error message and return it to client
+				return getErrorResponse(e1);
+			} catch (OpenViduHttpException e2) {
+				if (404 == e2.getStatus()) {
+					// Invalid sessionId (user left unexpectedly). Session object is not valid
+					// anymore. Clean collections and continue as new session
+					this.mapSessions.remove(sessionName);
+					this.mapSessionNamesTokens.remove(sessionName);
+				}
+			}
+		}
 
-            // 참가할 수 있다면
-            if (minConnRoomId != null) {
-                // 방 관리 map에 저장
-                this.mapSessions.put(minConnRoomId, this.mapSessions.get(minConnRoomId) + 1);
+		// New session
+		System.out.println("New session " + sessionName);
+		try {
 
-                return ResponseEntity.ok(roomService.getRoomRes(minConnRoomId, quickRoomReq.getGameType()));
-            }
-        }
-        /************ 참가할 방이 존재하지 않다면 ************/
-        // 방 번호 난수 생성
-        String roomId = RandomNumberUtil.getRandomNumber();
+			// Create a new OpenVidu Session
+			Session session = this.openVidu.createSession();
+			// Generate a new token with the recently created connectionProperties
+			String token = session.createConnection(connectionProperties).getToken();
 
-        // 방 관리 map에 저장
-        this.mapSessions.put(roomId, 1);
+			// Store the session and the token in our collections
+			this.mapSessions.put(sessionName, session);
+			this.mapSessionNamesTokens.put(sessionName, new ConcurrentHashMap<>());
+			this.mapSessionNamesTokens.get(sessionName).put(token, role);
 
-        // DB 저장
-        roomService.makeRoom(roomId, quickRoomReq);
+			// Prepare the response with the sessionId and the token
+			responseJson.addProperty("0", token);
 
-        return ResponseEntity.ok(roomService.getRoomRes(roomId, quickRoomReq.getGameType()));
-    }
+			// Return the response to the client
+			return new ResponseEntity<>(responseJson, HttpStatus.OK);
 
-    @PutMapping("")
-    @ApiOperation(value = "참가자가 방을 나갈 경우 사용", notes = "<strong>방 나가기</strong>를 통해 방 정보 OFF로 변경 및 방 관리 map에서 해당 정보 삭제")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "방 나가기 성공"),
-            @ApiResponse(code = 400, message = "input 오류", response = ErrorResponse.class),
-            @ApiResponse(code = 401, message = "토큰 만료 or 토큰 없음 or 토큰 오류 -> 권한 인증 오류", response = ErrorResponse.class),
-            @ApiResponse(code = 404, message = "방 정보가 없습니다.", response = ErrorResponse.class),
-            @ApiResponse(code = 500, message = "서버 에러", response = ErrorResponse.class)
-    })
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity leaveRoom(@RequestBody LeaveRoomReq leaveRoomReq) {
-        String roomId = leaveRoomReq.getRoomId();
+		} catch (Exception e) {
+			// If error generate an error message and return it to client
+			return getErrorResponse(e);
+		}
+	}
 
-        // 나가려는 방이 없다면
-        if (this.mapSessions.get(roomId) == null || this.mapSessions.get(roomId) == null) {
-            throw new RoomNotFoundException(roomId);
-        }
+	@RequestMapping(value = "/api/remove-user", method = RequestMethod.POST)
+	public ResponseEntity<JsonObject> removeUser(@RequestBody Map<String, Object> sessionNameToken) throws Exception {
 
-        int cnt = this.mapSessions.get(roomId);
-        
-        // 마지막 참가자라면
-        if (cnt == 1) {
-            // 방 관리 map에서 삭제
-            this.mapSessions.remove(roomId);
-            
-            // DB에서 OFF로 업데이트
-            roomService.updateStatus(roomId);
-        } else {
-            // 방 관리 map에서 인원수 갱신
-            this.mapSessions.put(roomId, cnt - 1);
-        }
+		System.out.println("Removing user | {sessionName, token}=" + sessionNameToken);
 
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+		// Retrieve the params from BODY
+		String sessionName = (String) sessionNameToken.get("sessionName");
+		String token = (String) sessionNameToken.get("token");
+
+		// If the session exists
+		if (this.mapSessions.get(sessionName) != null && this.mapSessionNamesTokens.get(sessionName) != null) {
+
+			// If the token exists
+			if (this.mapSessionNamesTokens.get(sessionName).remove(token) != null) {
+				// User left the session
+				if (this.mapSessionNamesTokens.get(sessionName).isEmpty()) {
+					// Last user left: session must be removed
+					this.mapSessions.remove(sessionName);
+				}
+				return new ResponseEntity<>(HttpStatus.OK);
+			} else {
+				// The TOKEN wasn't valid
+				System.out.println("Problems in the app server: the TOKEN wasn't valid");
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+
+		} else {
+			// The SESSION does not exist
+			System.out.println("Problems in the app server: the SESSION does not exist");
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@RequestMapping(value = "/api/close-session", method = RequestMethod.DELETE)
+	public ResponseEntity<JsonObject> closeSession(@RequestBody Map<String, Object> sessionName) throws Exception {
+		// Retrieve the param from BODY
+		String session = (String) sessionName.get("sessionName");
+		
+		System.out.println("Closing session | {sessionName}=" + session);
+
+		// If the session exists
+		if (this.mapSessions.get(session) != null && this.mapSessionNamesTokens.get(session) != null) {
+			Session s = this.mapSessions.get(session);
+			s.close();
+			this.mapSessions.remove(session);
+			this.mapSessionNamesTokens.remove(session);
+			this.sessionRecordings.remove(s.getSessionId());
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			// The SESSION does not exist
+			System.out.println("Problems in the app server: the SESSION does not exist");
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@RequestMapping(value = "/api/fetch-info", method = RequestMethod.POST)
+	public ResponseEntity<JsonObject> fetchInfo(@RequestBody Map<String, Object> sessionName) {
+		try {
+			System.out.println("Fetching session info | {sessionName}=" + sessionName);
+
+			// Retrieve the param from BODY
+			String session = (String) sessionName.get("sessionName");
+
+			// If the session exists
+			if (this.mapSessions.get(session) != null && this.mapSessionNamesTokens.get(session) != null) {
+				Session s = this.mapSessions.get(session);
+				boolean changed = s.fetch();
+				System.out.println("Any change: " + changed);
+				return new ResponseEntity<>(this.sessionToJson(s), HttpStatus.OK);
+			} else {
+				// The SESSION does not exist
+				System.out.println("Problems in the app server: the SESSION does not exist");
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
+			e.printStackTrace();
+			return getErrorResponse(e);
+		}
+	}
+
+	@RequestMapping(value = "/api/fetch-all", method = RequestMethod.GET)
+	public ResponseEntity<?> fetchAll() {
+		try {
+			System.out.println("Fetching all session info");
+			boolean changed = this.openVidu.fetch();
+			System.out.println("Any change: " + changed);
+			JsonArray jsonArray = new JsonArray();
+			for (Session s : this.openVidu.getActiveSessions()) {
+				jsonArray.add(this.sessionToJson(s));
+			}
+			return new ResponseEntity<>(jsonArray, HttpStatus.OK);
+		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
+			e.printStackTrace();
+			return getErrorResponse(e);
+		}
+	}
+
+	@RequestMapping(value = "/api/force-disconnect", method = RequestMethod.DELETE)
+	public ResponseEntity<JsonObject> forceDisconnect(@RequestBody Map<String, Object> params) {
+		try {
+			// Retrieve the param from BODY
+			String session = (String) params.get("sessionName");
+			String connectionId = (String) params.get("connectionId");
+
+			// If the session exists
+			if (this.mapSessions.get(session) != null && this.mapSessionNamesTokens.get(session) != null) {
+				Session s = this.mapSessions.get(session);
+				s.forceDisconnect(connectionId);
+				return new ResponseEntity<>(HttpStatus.OK);
+			} else {
+				// The SESSION does not exist
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
+			e.printStackTrace();
+			return getErrorResponse(e);
+		}
+	}
+
+	@RequestMapping(value = "/api/force-unpublish", method = RequestMethod.DELETE)
+	public ResponseEntity<JsonObject> forceUnpublish(@RequestBody Map<String, Object> params) {
+		try {
+			// Retrieve the param from BODY
+			String session = (String) params.get("sessionName");
+			String streamId = (String) params.get("streamId");
+
+			// If the session exists
+			if (this.mapSessions.get(session) != null && this.mapSessionNamesTokens.get(session) != null) {
+				Session s = this.mapSessions.get(session);
+				s.forceUnpublish(streamId);
+				return new ResponseEntity<>(HttpStatus.OK);
+			} else {
+				// The SESSION does not exist
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
+			e.printStackTrace();
+			return getErrorResponse(e);
+		}
+	}
+
+	/*******************/
+	/** Recording API **/
+	/*******************/
+
+	@RequestMapping(value = "/api/recording/start", method = RequestMethod.POST)
+	public ResponseEntity<?> startRecording(@RequestBody Map<String, Object> params) {
+		String sessionId = (String) params.get("session");
+		Recording.OutputMode outputMode = Recording.OutputMode.valueOf((String) params.get("outputMode"));
+		boolean hasAudio = (boolean) params.get("hasAudio");
+		boolean hasVideo = (boolean) params.get("hasVideo");
+
+		RecordingProperties properties = new RecordingProperties.Builder().outputMode(outputMode).hasAudio(hasAudio)
+				.hasVideo(hasVideo).build();
+
+		System.out.println("Starting recording for session " + sessionId + " with properties {outputMode=" + outputMode
+				+ ", hasAudio=" + hasAudio + ", hasVideo=" + hasVideo + "}");
+
+		try {
+			Recording recording = this.openVidu.startRecording(sessionId, properties);
+			// url 확인 출력
+			System.out.println("start recording: " + recording.getUrl());
+			this.sessionRecordings.put(sessionId, true);
+			return new ResponseEntity<>(recording, HttpStatus.OK);
+		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value = "/api/recording/stop", method = RequestMethod.POST)
+	public ResponseEntity<?> stopRecording(@RequestBody Map<String, Object> params) throws IOException {
+		String recordingId = (String) params.get("recording");
+		String connectionId = (String) params.get("connectionId");
+		
+		System.out.println("Stoping recording | {recordingId}=" + recordingId);
+		System.out.println("Stoping recording | {connectionId}=" + connectionId);
+		
+		try {
+			Recording recording = this.openVidu.stopRecording(recordingId);
+			System.out.println("stop recording - url: " + recording.getUrl());
+
+			String sessionId = recording.getSessionId();
+			System.out.println("stop recording - sessionid: " + sessionId);
+			
+			// upzip
+			String zipPath = File.separator + "opt" + File.separator + "openvidu" + File.separator + "recordings" + File.separator + sessionId + File.separator + sessionId + ".zip";
+			File zipFile = new File(zipPath);
+			// 압축 해제 위치 = 해제한 파일 위치 >> 그래야 openvidu에서 제공하는 delete 기능 사용
+			String upzipDir = File.separator + "opt" + File.separator + "openvidu" + File.separator + "recordings" + File.separator + sessionId + File.separator;
+			
+			ZipInputStream zis = new ZipInputStream(new FileInputStream(zipPath));
+			ZipEntry ze = zis.getNextEntry();
+			
+			while(ze!=null){
+					String entryName = ze.getName();
+					System.out.print("Extracting " + entryName + " -> " + upzipDir + File.separator +  entryName + "...");
+					File f = new File(upzipDir + File.separator +  entryName);
+					//create all folder needed to store in correct relative path.
+					f.getParentFile().mkdirs();
+					FileOutputStream fos = new FileOutputStream(f);
+					int len;
+					byte buffer[] = new byte[1024];
+					while ((len = zis.read(buffer)) > 0) {
+						fos.write(buffer, 0, len);
+					}
+					fos.close();  
+					System.out.println("OK!");
+					ze = zis.getNextEntry();         
+			}
+			zis.closeEntry();
+			zis.close();
+
+			// 녹화본 정보가 담긴 json 파일 읽기
+			Gson gson = new Gson();
+			String jsonPath = File.separator + "opt" + File.separator + "openvidu" + File.separator + "recordings" + File.separator + sessionId + File.separator + sessionId + ".json";
+			JsonReader recordJson = new JsonReader(new FileReader(jsonPath));
+			JsonObject jsonObject = gson.fromJson(recordJson, JsonObject.class);
+			System.out.println(jsonObject.get("files"));
+			
+			// files 읽어서 params와 같은 connectionId를 갖는 name 가져오기
+			JsonArray recordArray = (JsonArray) jsonObject.get("files");
+			String recordName = "";
+			for(int i = 0; i < recordArray.size(); i++) {
+				JsonObject recordFile = (JsonObject) recordArray.get(i);
+				System.out.println("recordFile: " + recordFile);
+				String curConnectionId = recordFile.get("connectionId").toString().replace("\"", "");
+				System.out.println("curConnectionId: " + curConnectionId);
+				System.out.println(connectionId.equals(curConnectionId));
+				if(connectionId.equals(curConnectionId)) {
+					recordName = (String)recordFile.get("name").toString().replace("\"", "");
+					System.out.println(recordName);
+					break;
+				}
+			}
+			
+			// 사용자 녹화본 url로 변환
+			String uRecordUrl = "https:" + File.separator + File.separator + "i5a204.p.ssafy.io" + File.separator + 
+					"openvidu" + File.separator + "recordings" + File.separator + sessionId + File.separator + recordName;
+			System.out.println("uRecordUrl: " + uRecordUrl);
+			
+			RecordUrlDto urlDto = new RecordUrlDto(recording, uRecordUrl);
+			this.sessionRecordings.remove(recording.getSessionId());
+
+			return new ResponseEntity<>(urlDto, HttpStatus.OK);
+		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value = "/api/recording/delete", method = RequestMethod.DELETE)
+	public ResponseEntity<?> deleteRecording(@RequestBody Map<String, Object> params) {
+		String recordingId = (String) params.get("recording");
+
+		System.out.println("Deleting recording | {recordingId}=" + recordingId);
+
+		try {
+			this.openVidu.deleteRecording(recordingId);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value = "/api/recording/get/{recordingId}", method = RequestMethod.GET)
+	public ResponseEntity<?> getRecording(@PathVariable(value = "recordingId") String recordingId) {
+
+		System.out.println("Getting recording | {recordingId}=" + recordingId);
+
+		try {
+			Recording recording = this.openVidu.getRecording(recordingId);
+			// url 확인 출력
+			System.out.println("get recording: " + recording.getUrl());
+			return new ResponseEntity<>(recording, HttpStatus.OK);
+		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(value = "/api/recording/list", method = RequestMethod.GET)
+	public ResponseEntity<?> listRecordings() {
+
+		System.out.println("Listing recordings");
+
+		try {
+			List<Recording> recordings = this.openVidu.listRecordings();
+
+			return new ResponseEntity<>(recordings, HttpStatus.OK);
+		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	private ResponseEntity<JsonObject> getErrorResponse(Exception e) {
+		JsonObject json = new JsonObject();
+		json.addProperty("cause", e.getCause().toString());
+		json.addProperty("error", e.getMessage());
+		json.addProperty("exception", e.getClass().getCanonicalName());
+		return new ResponseEntity<>(json, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	protected JsonObject sessionToJson(Session session) {
+		Gson gson = new Gson();
+		JsonObject json = new JsonObject();
+		json.addProperty("sessionId", session.getSessionId());
+		json.addProperty("customSessionId", session.getProperties().customSessionId());
+		json.addProperty("recording", session.isBeingRecorded());
+		json.addProperty("mediaMode", session.getProperties().mediaMode().name());
+		json.addProperty("recordingMode", session.getProperties().recordingMode().name());
+		json.add("defaultRecordingProperties",
+				gson.toJsonTree(session.getProperties().defaultRecordingProperties()).getAsJsonObject());
+		JsonObject connections = new JsonObject();
+		connections.addProperty("numberOfElements", session.getConnections().size());
+		JsonArray jsonArrayConnections = new JsonArray();
+		session.getConnections().forEach(con -> {
+			JsonObject c = new JsonObject();
+			c.addProperty("connectionId", con.getConnectionId());
+			c.addProperty("role", con.getRole().name());
+			c.addProperty("token", con.getToken());
+			c.addProperty("clientData", con.getClientData());
+			c.addProperty("serverData", con.getServerData());
+			JsonArray pubs = new JsonArray();
+			con.getPublishers().forEach(p -> {
+				pubs.add(gson.toJsonTree(p).getAsJsonObject());
+			});
+			JsonArray subs = new JsonArray();
+			con.getSubscribers().forEach(s -> {
+				subs.add(s);
+			});
+			c.add("publishers", pubs);
+			c.add("subscribers", subs);
+			jsonArrayConnections.add(c);
+		});
+		connections.add("content", jsonArrayConnections);
+		json.add("connections", connections);
+		return json;
+	}
+
 }

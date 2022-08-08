@@ -20,6 +20,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web:2.1.4.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.1.4.RELEASE'
     implementation 'org.springframework.boot:spring-boot-devtools:2.1.4.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'io.openvidu:openvidu-java-client:2.21.1'
     testImplementation 'junit:junit:4.12'
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.6.1'
