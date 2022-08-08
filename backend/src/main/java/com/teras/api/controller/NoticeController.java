@@ -15,12 +15,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teras.api.request.NoticeRegisterPostReq;
+import com.teras.api.response.NoticeGetRes;
 import com.teras.api.response.NoticeListGetRes;
 import com.teras.api.service.NoticeService;
+import com.teras.api.service.UserService;
 import com.teras.common.auth.SsafyUserDetails;
 import com.teras.common.model.response.BaseResponseBody;
 import com.teras.db.dto.NoticeDto;
 import com.teras.db.entity.Notice;
+import com.teras.db.entity.User;
+import com.teras.db.repository.NoticeRepository;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -36,13 +40,20 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 @RequestMapping("/notice")
 public class NoticeController {
-
+	
+	@Autowired
+	UserService userService;
+	
 	@Autowired
 	NoticeService noticeService;
+	
+	@Autowired
+	NoticeRepository noticeRepository;
 
 	@ApiOperation(value = "공지사항 작성", notes = "사용자가 공지사항을 작성한다.")
-	@ApiResponses({ @ApiResponse(code = 200, message = "작성 성공"), @ApiResponse(code = 401, message = "인증 실패"),
-			@ApiResponse(code = 500, message = "서버 오류") })
+	@ApiResponses({ @ApiResponse(code = 200, message = "작성 성공"),
+					@ApiResponse(code = 401, message = "인증 실패"),
+					@ApiResponse(code = 500, message = "서버 오류") })
 	@PostMapping()
 	public ResponseEntity<? extends BaseResponseBody> register(@ApiIgnore Authentication authentication,
 			@RequestBody @ApiParam(value = "공지사항 내용", required = true) NoticeRegisterPostReq registerInfo) {
@@ -70,13 +81,19 @@ public class NoticeController {
 	}
 
 	@ApiOperation(value = "특정 게시글 조회", notes = "특정 공지사항을 조회한다.")
-	@ApiResponses({ @ApiResponse(code = 200, message = "조회 성공"), @ApiResponse(code = 404, message = "게시글 없음"),
-			@ApiResponse(code = 500, message = "서버 오류") })
+	@ApiResponses({ @ApiResponse(code = 200, message = "조회 성공"),
+					@ApiResponse(code = 404, message = "게시글 없음"),
+					@ApiResponse(code = 500, message = "서버 오류") })
 	@ApiImplicitParam(name = "noticeNo", value = "notice seq", required = true, dataType = "Long")
 	@GetMapping("/{noticeNo}")
-	public ResponseEntity getNotice(@PathVariable Long noticeNo) {
+	public ResponseEntity<? extends BaseResponseBody> getNotice(@PathVariable Long noticeNo) {
 
-		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+		NoticeDto notice = noticeService.getNotice(noticeNo);
+		if(notice == null) {
+			return ResponseEntity.status(204).body(BaseResponseBody.of(204, "NO_CONTENT"));
+		}
+
+		return ResponseEntity.status(200).body(NoticeGetRes.of(200, "SUCCESS", notice));
 	}
 
 	@ApiOperation(value = "공지사항 수정", notes = "특정 공지사항을 수정한다.")
@@ -88,7 +105,20 @@ public class NoticeController {
 	public ResponseEntity editNotice(@ApiIgnore Authentication authentication,
 			@RequestBody @ApiParam(value = "게시글 수정", required = true) NoticeRegisterPostReq noticePostReq,
 			@PathVariable Long noticeNo) {
+		
+		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+		String userId = userDetails.getUsername();
+		User user = userService.getUserByUserId(userId);
+		
+		String isNoticeEdited = noticeService.editNotice(noticeNo, user, noticePostReq);
+		if(isNoticeEdited == null) {
+			return ResponseEntity.status(204).body(BaseResponseBody.of(204, "NO_CONTENT"));
+		}
+		if(isNoticeEdited == "forbidden") {
+			return ResponseEntity.status(403).body(BaseResponseBody.of(403, "FORBIDDEN"));
+		}
 
+		
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
 	}
 
@@ -98,7 +128,18 @@ public class NoticeController {
 			@ApiResponse(code = 500, message = "서버 오류") })
 	@ApiImplicitParam(name = "noticeNo", value = "notice seq", required = true, dataType = "Long")
 	@DeleteMapping("/{noticeNo}")
-	public ResponseEntity delete(@ApiIgnore Authentication authentication, @PathVariable Long noticeNo) {
+	public ResponseEntity deleteNotice(@ApiIgnore Authentication authentication, @PathVariable Long noticeNo) {
+		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+		String userId = userDetails.getUsername();
+		User user = userService.getUserByUserId(userId);
+		
+		String isNoticeDeleted = noticeService.deleteNotice(noticeNo, user);
+		if(isNoticeDeleted == null) {
+			return ResponseEntity.status(204).body(BaseResponseBody.of(204, "NO_CONTENT"));
+		}
+		if(isNoticeDeleted == "forbidden") {
+			return ResponseEntity.status(403).body(BaseResponseBody.of(403, "FORBIDDEN"));
+		}
 
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
 	}
