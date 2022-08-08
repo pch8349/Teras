@@ -264,3 +264,85 @@
 2022-08-08 15:44:24.745  INFO 12772 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
 2022-08-08 15:44:24.747  INFO 12772 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2022-08-08 15:44:24.760  INFO 12772 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-08-08 15:44:24.880  WARN 12772 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-08-08 15:44:25.003 DEBUG 12772 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 26 mappings in 'requestMappingHandlerMapping'
+2022-08-08 15:44:25.042  INFO 12772 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2022-08-08 15:44:25.097 DEBUG 12772 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/] in 'viewControllerHandlerMapping'
+2022-08-08 15:44:25.101 DEBUG 12772 --- [restartedMain] o.s.w.s.h.BeanNameUrlHandlerMapping      : Detected 1 mappings in 'beanNameHandlerMapping'
+2022-08-08 15:44:25.117 DEBUG 12772 --- [restartedMain] o.s.w.s.c.annotation.WebMvcConfigurer    : Default resource handling disabled
+2022-08-08 15:44:25.167 DEBUG 12772 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/**] in 'resourceHandlerMapping'
+2022-08-08 15:44:25.167  INFO 12772 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3867a65a, org.springframework.security.web.context.SecurityContextPersistenceFilter@3a1a35de, org.springframework.security.web.header.HeaderWriterFilter@2cf07932, org.springframework.web.filter.CorsFilter@1c8f53a7, org.springframework.security.web.authentication.logout.LogoutFilter@43831e9f, com.teras.common.auth.JwtAuthenticationFilter@2523d8af, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5ed20ba7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@216441b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2c1ef6b, org.springframework.security.web.session.SessionManagementFilter@2e109e08, org.springframework.security.web.access.ExceptionTranslationFilter@66b761c6, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@28718ca5]
+2022-08-08 15:44:25.181  INFO 12772 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-08-08 15:44:25.186 DEBUG 12772 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-08-08 15:44:25.196 DEBUG 12772 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-08-08 15:44:25.204  WARN 12772 --- [restartedMain] o.s.b.a.m.MustacheAutoConfiguration      : Cannot find template location: classpath:/templates/ (please add some templates, check your Mustache configuration, or set spring.mustache.check-template-location=false)
+2022-08-08 15:44:25.292  INFO 12772 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-08-08 15:44:25.313  INFO 12772 --- [restartedMain] com.teras.TerasApplication               : Started TerasApplication in 1.437 seconds (JVM running for 224.323)
+2022-08-08 15:44:25.315  INFO 12772 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-08-08 15:44:25.344  INFO 12772 --- [http-nio-0.0.0.0-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-08-08 15:44:25.344  INFO 12772 --- [http-nio-0.0.0.0-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-08-08 15:44:25.344 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2022-08-08 15:44:25.344 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2022-08-08 15:44:25.344 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2022-08-08 15:44:25.345 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@45414582
+2022-08-08 15:44:25.346 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@1113b31f
+2022-08-08 15:44:25.346 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-2] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2022-08-08 15:44:25.346  INFO 12772 --- [http-nio-0.0.0.0-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2022-08-08 15:44:25.346 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.teras.api.controller.NoticeController#getNotice(Long)
+2022-08-08 15:44:25.347 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/notice/2", parameters={}
+2022-08-08 15:44:25.347 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.teras.api.controller.NoticeController#getNotice(Long)
+2022-08-08 15:44:25.357 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-08-08 15:44:25.357 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.teras.api.response.NoticeGetRes@656accad]
+2022-08-08 15:44:25.358 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-08-08 15:44:36.055 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.teras.api.controller.NoticeController#editNotice(Authentication, NoticeRegisterPostReq, Long)
+2022-08-08 15:44:36.071 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-3] o.s.web.servlet.DispatcherServlet        : PUT "/notice/6", parameters={}
+2022-08-08 15:44:36.071 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.teras.api.controller.NoticeController#editNotice(Authentication, NoticeRegisterPostReq, Long)
+2022-08-08 15:44:36.073 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.teras.api.request.NoticeRegisterPostReq@3852d3f5]
+2022-08-08 15:44:36.088 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-08-08 15:44:36.088 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.teras.common.model.response.BaseResponseBody@419d7108]
+2022-08-08 15:44:36.089 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-08-08 15:44:39.901 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.teras.api.controller.NoticeController#getList(Authentication)
+2022-08-08 15:44:39.905 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/notice", parameters={}
+2022-08-08 15:44:39.905 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.teras.api.controller.NoticeController#getList(Authentication)
+2022-08-08 15:44:39.915 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-08-08 15:44:39.916 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.teras.api.response.NoticeListGetRes@4a61ae4]
+2022-08-08 15:44:39.917 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-08-08 15:44:50.178 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.teras.api.controller.NoticeController#deleteNotice(Authentication, Long)
+2022-08-08 15:44:50.182 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-5] o.s.web.servlet.DispatcherServlet        : DELETE "/notice/5", parameters={}
+2022-08-08 15:44:50.182 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.teras.api.controller.NoticeController#deleteNotice(Authentication, Long)
+2022-08-08 15:44:50.196 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-08-08 15:44:50.196 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.teras.common.model.response.BaseResponseBody@2786b23a]
+2022-08-08 15:44:50.197 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-08-08 15:44:53.522 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.teras.api.controller.NoticeController#getList(Authentication)
+2022-08-08 15:44:53.526 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/notice", parameters={}
+2022-08-08 15:44:53.527 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.teras.api.controller.NoticeController#getList(Authentication)
+2022-08-08 15:44:53.531 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-08-08 15:44:53.532 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.teras.api.response.NoticeListGetRes@108ef465]
+2022-08-08 15:44:53.532 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-08-08 15:45:34.280 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.teras.api.controller.SchoolController#registerClass(ClassRegisterPostReq)
+2022-08-08 15:45:34.280 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/school", parameters={}
+2022-08-08 15:45:34.281 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.teras.api.controller.SchoolController#registerClass(ClassRegisterPostReq)
+2022-08-08 15:45:34.282 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.teras.api.request.ClassRegisterPostReq@2d3f58e7]
+2022-08-08 15:45:34.295 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-08-08 15:45:34.295 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.teras.api.response.ClassRegisterPostRes@2ba3f4f0]
+2022-08-08 15:45:34.296 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-08-08 15:45:56.202 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.teras.api.controller.UserController#register(UserRegisterPostReq)
+2022-08-08 15:45:56.203 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/users", parameters={}
+2022-08-08 15:45:56.203 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.teras.api.controller.UserController#register(UserRegisterPostReq)
+2022-08-08 15:45:56.205 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.teras.api.request.UserRegisterPostReq@91139d0]
+2022-08-08 15:45:56.301 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-08-08 15:45:56.302 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.teras.common.model.response.BaseResponseBody@58e30abd]
+2022-08-08 15:45:56.304 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-08-08 15:46:02.177 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.teras.api.controller.AuthController#login(UserLoginPostReq)
+2022-08-08 15:46:02.177 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/auth/login", parameters={}
+2022-08-08 15:46:02.178 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.teras.api.controller.AuthController#login(UserLoginPostReq)
+2022-08-08 15:46:02.180 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.teras.api.request.UserLoginPostReq@6005e3f6]
+2022-08-08 15:46:02.256 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-08-08 15:46:02.256 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.teras.api.response.UserLoginPostRes@50ed131a]
+2022-08-08 15:46:02.257 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-08-08 15:46:10.127 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.teras.api.controller.NoticeController#getList(Authentication)
+2022-08-08 15:46:10.134 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/notice", parameters={}
+2022-08-08 15:46:10.135 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.teras.api.controller.NoticeController#getList(Authentication)
+2022-08-08 15:46:10.142 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-08-08 15:46:10.142 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.teras.api.response.NoticeListGetRes@70230ead]
+2022-08-08 15:46:10.143 DEBUG 12772 --- [http-nio-0.0.0.0-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK

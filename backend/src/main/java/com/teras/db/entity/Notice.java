@@ -60,12 +60,4 @@ public class Notice {
 		return "Notice [noticeNo=" + noticeNo + ", title=" + title + ", content=" + content + ", createdDate="
 				+ createdDate + ", user=" + user + ", classCode=" + classCode + ", attach=" + attach + "]";
 	}
-	
-	public void update(String title, String content) {
-		// TODO Auto-generated method stub
-		this.title = title;
-		this.content = content;
-		
-	}
-
 }

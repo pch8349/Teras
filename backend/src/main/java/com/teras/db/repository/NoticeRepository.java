@@ -12,9 +12,9 @@ import com.teras.db.entity.ClassEntity;
 import com.teras.db.entity.Notice;
 
 @Repository
-public interface NoticeRepository extends JpaRepository<Notice, Long> {
+public interface NoticeRepository extends JpaRepository<Notice, Integer> {
 
-	Optional<Notice> findByNoticeNo(long noticeNo);
+	Optional<Notice> findByNoticeNo(int noticeNo);
 
 	Optional<List<Notice>> findAllByOrderByNoticeNoDesc();
 
