@@ -11,6 +11,10 @@ export async function signUp(user, success, fail) {
   await api.post("/users", JSON.stringify(user)).then(success).catch(fail);
 }
 
+export async function userCheck(userId, success, fail){
+  return api.get(`/users/idcheck?id=${userId}`).then(success).catch(fail);
+}
+
 export const getSchool = async (params, success, fail) => {
   return await axios
     .get("/school?schoolName=", { params })

@@ -14,13 +14,12 @@ function App() {
   const [token, setToken] = useState();
   useEffect(() => {
     setToken(
-      localStorage.getItem("accessToken") == "null"
+      localStorage.getItem("accessToken") === null
         ? sessionStorage.getItem("accessToken")
         : localStorage.getItem("accessToken")
     );
     console.log(token);
-  });
-  //const logout = () => setUser(null);
+  }, []);
 
   return (
     <Router>

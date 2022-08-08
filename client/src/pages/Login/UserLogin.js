@@ -29,7 +29,6 @@ const UserLogin = ({}) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setSuccess(false);
     try {
       await doLogin(
         { id, password },
@@ -52,6 +51,10 @@ const UserLogin = ({}) => {
       );
     } catch (error) {}
   };
+
+  useEffect(() => {
+    console.log(success);
+  }, [success]);
 
   return (
     <NewRoot>
