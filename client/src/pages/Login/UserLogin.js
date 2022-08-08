@@ -17,7 +17,7 @@ import {
 } from "./styles/LoginStyle";
 import { TextBigInter, TextSmallInter, TextBtnInter } from "./styles/LoginText";
 import { GreenBtn } from "./styles/LoginBtn";
-import { doLogin } from "../../api/users";
+import { doLogin, getUser } from "../../api/users";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -32,7 +32,7 @@ const UserLogin = ({}) => {
     try {
       await doLogin(
         { id, password },
-        (response) => {
+        async (response) => {
           const accessToken = response.data.accessToken;
           if (ischecked) {
             localStorage.setItem("accessToken", accessToken);
@@ -40,16 +40,29 @@ const UserLogin = ({}) => {
             sessionStorage.setItem("accessToken", accessToken);
           }
           setSuccess(true);
-          console.log("성공");
+
+          try {
+            await getUser(
+              async (response) => {
+                localStorage.setItem("userId", response.data.user.id);
+                localStorage.setItem("userName", response.data.user.name);
+              },
+              (error) => {
+                console.log(error);
+              }
+            );
+          } catch {}
+
           window.location.href = "/";
         },
         () => {
           console.log("로그인 실패");
           setSuccess(false);
-          console.log(success);
         }
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {

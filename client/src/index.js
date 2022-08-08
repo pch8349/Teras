@@ -2,18 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import { createStore } from "redux";
-import { CookiesProvider } from "react-cookie";
+import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-import rootReducer from "./reducers";
+import rootReducer from "./reducers/index";
+import logger from "redux-logger";
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(logger));
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <CookiesProvider>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </CookiesProvider>
+  <Provider store={store}>
+    <App />
+  </Provider>
 );

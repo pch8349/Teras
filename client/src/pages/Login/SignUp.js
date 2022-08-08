@@ -61,7 +61,7 @@ const SignUp = ({}) => {
     e.preventDefault();
     try {
       console.log("입력버튼");
-      if(validId&&validPw&&validMatch){
+      if (validId && validPw && validMatch) {
         await signUp(
           body,
           () => {
@@ -81,22 +81,24 @@ const SignUp = ({}) => {
     setRole(role);
     console.log(role);
   };
-//아이디 중복 검사
-  const IdCheck = async(e) => {
+  //아이디 중복 검사
+  const IdCheck = async (e) => {
     e.preventDefault();
-    try{
+    try {
       await userCheck(
         id,
         (response) => {
           setFlag(response.data.flag);
           console.log("response", flag);
         },
-        () => { console.log("실패")}
+        () => {
+          console.log("실패");
+        }
       );
-    } catch (error){
+    } catch (error) {
       console.log("실패");
     }
-  }
+  };
 
   // 유효성 체크. useCallBack은 함수의 재사용을 위함
   const onValidCheck = useCallback((e) => {
@@ -126,18 +128,19 @@ const SignUp = ({}) => {
     } else{
       return <TextColorArt color={`#0087FF`}>*사용 가능한 아이디입니다</TextColorArt>
     }
-  }
+  };
 
   useEffect(() => {
     console.log(flag);
-  }, [flag])
+  }, [flag]);
 
-  useEffect(() => { // 함수형의 동기를 맞추기 위해 useEffect를 한번 더 사용
-    console.log(validId); 
+  useEffect(() => {
+    // 함수형의 동기를 맞추기 위해 useEffect를 한번 더 사용
+    console.log(validId);
   }, [validId]);
 
   useEffect(() => {
-    console.log(validPw); 
+    console.log(validPw);
   }, [validPw]);
 
   useEffect(() => {
@@ -146,7 +149,7 @@ const SignUp = ({}) => {
 
   useEffect(() => {
     console.log(pw, matchpw);
-    setValidMatch(pw===matchpw);
+    setValidMatch(pw === matchpw);
   }, [pw, matchpw]);
 
   return (
@@ -180,45 +183,50 @@ const SignUp = ({}) => {
             </FlexColumn>
           </FlexRow>
           <FlexRow>
-          <IdForm
-            value={id}
-            onChange={({ target: { value } }) => {
-              setId(value);
-              onValidCheck([{ id: "id", value: value }]);
-            }}
-          />
-          <YellowBtn onClick={IdCheck}>아이디 검사</YellowBtn>
+            <IdForm
+              value={id}
+              onChange={({ target: { value } }) => {
+                setId(value);
+                onValidCheck([{ id: "id", value: value }]);
+              }}
+            />
+            <YellowBtn onClick={IdCheck}>아이디 검사</YellowBtn>
           </FlexRow>
-          
+
           <EmptyPart />
           <FlexRow>
             <TextBigInter>비밀번호 입력</TextBigInter>
             <FlexColumn>
-            {!validPw&&(<TextColorArt color={`#ea5757`}>
-              *특수문자, 대문자, 소문자, 숫자를 포함한 8~24자리
-            </TextColorArt>)}
+              {!validPw && (
+                <TextColorArt color={`#ea5757`}>
+                  *특수문자, 대문자, 소문자, 숫자를 포함한 8~24자리
+                </TextColorArt>
+              )}
             </FlexColumn>
           </FlexRow>
           <PwForm
             value={pw}
             onChange={({ target: { value } }) => {
               setPw(value);
-              onValidCheck([{ id: "pw", value: value}]);
+              onValidCheck([{ id: "pw", value: value }]);
             }}
           />
           <EmptyPart />
           <FlexRow>
             <TextBigInter>비밀번호 재입력</TextBigInter>
             <FlexColumn>
-            {!validMatch&&(<TextColorArt color={`#ea5757`}>
-              *비밀번호가 다릅니다</TextColorArt>)}
+              {!validMatch && (
+                <TextColorArt color={`#ea5757`}>
+                  *비밀번호가 다릅니다
+                </TextColorArt>
+              )}
             </FlexColumn>
           </FlexRow>
-          <PwForm 
+          <PwForm
             value={matchpw}
-            onChange={({ target: {value} }) => {
+            onChange={({ target: { value } }) => {
               setMatchPw(value);
-              onValidCheck([{ id: "matchpw", value: value}]);
+              onValidCheck([{ id: "matchpw", value: value }]);
             }}
           />
           <EmptyPart />
@@ -240,8 +248,11 @@ const SignUp = ({}) => {
           <EmptyPart />
           <FlexRow>
             <TextBigInter>핸드폰 번호</TextBigInter>
-            <FlexColumn><TextColorArt color={`#0087FF`}>*숫자만 입력해 주세요</TextColorArt></FlexColumn>
-            
+            <FlexColumn>
+              <TextColorArt color={`#0087FF`}>
+                *숫자만 입력해 주세요
+              </TextColorArt>
+            </FlexColumn>
           </FlexRow>
           <IdForm
             value={phone}

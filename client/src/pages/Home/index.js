@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./home.css";
 import TimeTable from "./components/Timetable/timetable";
 import { Button } from "@mui/material";
@@ -10,53 +10,51 @@ import Schedule from "./components/Schedule/Schedule";
 import StudyRoom from "./components/StudyRoom/StudyRoom";
 import MyClass from "./components/MyClass/MyClass";
 import Profile from "./components/Profile/Profile";
-import { Route, Routes, NavLink } from "react-router-dom";
-
+import { Route, Routes, NavLink, Link } from "react-router-dom";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 function Home() {
   const navTabs = [
     {
       name: "메인",
       component: <Main />,
-      path: "/main"
+      path: "/main",
     },
     {
       name: "공지",
       component: <Notice />,
-      path: "/notice"
-
+      path: "/notice",
     },
     {
       name: "과제",
       component: <Assignment />,
-      path: "/assignment"
-
+      path: "/assignment",
     },
     {
       name: "성적",
       component: <Grade />,
-      path: "/grade"
-
+      path: "/grade",
     },
     {
       name: "일정",
       component: <Schedule />,
-      path: "/schedule"
-
+      path: "/schedule",
     },
     {
       name: "스터디룸",
       component: <StudyRoom />,
-      path: "/studyroom"
-
+      path: "/studyroom",
     },
     {
       name: "우리반",
       component: <MyClass />,
-      path: "/myclass"
-
+      path: "/myclass",
     },
   ];
+
+  const handleLogOut = () => {
+    localStorage.clear();
+  };
 
   return (
     <div className="mainFlexContainer">
@@ -65,7 +63,14 @@ function Home() {
           <div className="logoContainer">
             <img src={"/Teras_logo_home.png"} alt="terasLogo" height="100" />
           </div>
-          <div className="navBar"></div>
+          <div className="navBar">
+            <Link to="/login">
+              <button onClick={handleLogOut}>
+                로그아웃
+                <LogoutIcon />
+              </button>
+            </Link>
+          </div>
         </div>
         <div className="sideBarGridContainer">
           <div className="profileContainer">
@@ -75,16 +80,17 @@ function Home() {
             <div className="classRoomButtonContainer">
               {/* Link 써서 주소로보내기 */}
               {/*   ex.      <Link to="/signup" className="">회원가입</Link> */}
-              <Button
-                sx={{
-                  width: 200,
-                  height: 50,
-                }}
-                variant="contained"
-                onClick={() => (window.location.href = "/classroom")}
-              >
-                강의실 입장
-              </Button>
+              <Link to="/classroom">
+                <Button
+                  sx={{
+                    width: 200,
+                    height: 50,
+                  }}
+                  variant="contained"
+                >
+                  강의실 입장
+                </Button>
+              </Link>
             </div>
             <div className="timeTableContainer">
               <TimeTable
@@ -98,21 +104,23 @@ function Home() {
             {/* tap 메뉴 div */}
             <div className="navTabContainer">
               {navTabs.map((tab, index) => (
-                  <NavLink
-                    className={({isActive}) => (isActive ? "navTabButton selectedTab": "navTabButton")}
-                    key = {index}
-                    to = {tab.path}
-                    >
-                      {tab.name}
-                  </NavLink>
-                ))}
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "navTabButton selectedTab" : "navTabButton"
+                  }
+                  key={index}
+                  to={tab.path}
+                >
+                  {tab.name}
+                </NavLink>
+              ))}
             </div>
             {/* routing box */}
             <div className="componentContainer">
               <Routes>
                 <Route path="main" element={<Main />} />
                 <Route path="notice/*" element={<Notice />} />
-                <Route path="assignment" element={<Assignment/>} />
+                <Route path="assignment" element={<Assignment />} />
                 <Route path="grade" element={<Grade />} />
                 <Route path="schedule" element={<Schedule />} />
                 <Route path="studyroom" element={<StudyRoom />} />
