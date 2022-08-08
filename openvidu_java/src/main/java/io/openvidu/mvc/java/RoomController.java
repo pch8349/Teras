@@ -87,7 +87,7 @@ public class RoomController {
 	/*** @throws URISyntaxException *****************/
 	@RequestMapping(value = "/createRoom", method = RequestMethod.GET)
 	public ResponseEntity<?> getRoom(@RequestParam Map<String, String> sessionName, @RequestParam Map<String, String> nickName) throws URISyntaxException {
-		// 만들 방 정보 받아오기	
+		// 만들 방 정보 받아오기 => 방 하나만 되어있으므로 수정필요	
 		sName = (String) sessionName.get("sessionName");
 //		nName = (String) nickName.get("nickName");
 //		System.out.println("sessionName: " + sName + ", nickName: " + nName);
@@ -110,9 +110,8 @@ public class RoomController {
 		return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
 	}
 	
-	/*******************/
 	/*** Session API ***/
-	/*******************/
+
 
 	@RequestMapping(value = "/api/get-token", method = RequestMethod.POST)
 	public ResponseEntity<JsonObject> getToken(@RequestBody Map<String, Object> sessionNameParam) {
@@ -332,153 +331,155 @@ public class RoomController {
 	/** Recording API **/
 	/*******************/
 
-	@RequestMapping(value = "/api/recording/start", method = RequestMethod.POST)
-	public ResponseEntity<?> startRecording(@RequestBody Map<String, Object> params) {
-		String sessionId = (String) params.get("session");
-		Recording.OutputMode outputMode = Recording.OutputMode.valueOf((String) params.get("outputMode"));
-		boolean hasAudio = (boolean) params.get("hasAudio");
-		boolean hasVideo = (boolean) params.get("hasVideo");
+//	@RequestMapping(value = "/api/recording/start", method = RequestMethod.POST)
+//	public ResponseEntity<?> startRecording(@RequestBody Map<String, Object> params) {
+//		String sessionId = (String) params.get("session");
+//		Recording.OutputMode outputMode = Recording.OutputMode.valueOf((String) params.get("outputMode"));
+//		boolean hasAudio = (boolean) params.get("hasAudio");
+//		boolean hasVideo = (boolean) params.get("hasVideo");
+//
+//		RecordingProperties properties = new RecordingProperties.Builder().outputMode(outputMode).hasAudio(hasAudio)
+//				.hasVideo(hasVideo).build();
+//
+//		System.out.println("Starting recording for session " + sessionId + " with properties {outputMode=" + outputMode
+//				+ ", hasAudio=" + hasAudio + ", hasVideo=" + hasVideo + "}");
+//
+//		try {
+//			Recording recording = this.openVidu.startRecording(sessionId, properties);
+//			// url 확인 출력
+//			System.out.println("start recording: " + recording.getUrl());
+//			this.sessionRecordings.put(sessionId, true);
+//			return new ResponseEntity<>(recording, HttpStatus.OK);
+//		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
+//			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//		}
+//	}
+//
+//	@RequestMapping(value = "/api/recording/stop", method = RequestMethod.POST)
+//	public ResponseEntity<?> stopRecording(@RequestBody Map<String, Object> params) throws IOException {
+//		String recordingId = (String) params.get("recording");
+//		String connectionId = (String) params.get("connectionId");
+//		
+//		System.out.println("Stoping recording | {recordingId}=" + recordingId);
+//		System.out.println("Stoping recording | {connectionId}=" + connectionId);
+//		
+//		try {
+//			Recording recording = this.openVidu.stopRecording(recordingId);
+//			System.out.println("stop recording - url: " + recording.getUrl());
+//
+//			String sessionId = recording.getSessionId();
+//			System.out.println("stop recording - sessionid: " + sessionId);
+//			
+//			// upzip
+//			String zipPath = File.separator + "opt" + File.separator + "openvidu" + File.separator + "recordings" + File.separator + sessionId + File.separator + sessionId + ".zip";
+//			File zipFile = new File(zipPath);
+//			// 압축 해제 위치 = 해제한 파일 위치 >> 그래야 openvidu에서 제공하는 delete 기능 사용
+//			String upzipDir = File.separator + "opt" + File.separator + "openvidu" + File.separator + "recordings" + File.separator + sessionId + File.separator;
+//			
+//			ZipInputStream zis = new ZipInputStream(new FileInputStream(zipPath));
+//			ZipEntry ze = zis.getNextEntry();
+//			
+//			while(ze!=null){
+//					String entryName = ze.getName();
+//					System.out.print("Extracting " + entryName + " -> " + upzipDir + File.separator +  entryName + "...");
+//					File f = new File(upzipDir + File.separator +  entryName);
+//					//create all folder needed to store in correct relative path.
+//					f.getParentFile().mkdirs();
+//					FileOutputStream fos = new FileOutputStream(f);
+//					int len;
+//					byte buffer[] = new byte[1024];
+//					while ((len = zis.read(buffer)) > 0) {
+//						fos.write(buffer, 0, len);
+//					}
+//					fos.close();  
+//					System.out.println("OK!");
+//					ze = zis.getNextEntry();         
+//			}
+//			zis.closeEntry();
+//			zis.close();
+//
+//			// 녹화본 정보가 담긴 json 파일 읽기
+//			Gson gson = new Gson();
+//			String jsonPath = File.separator + "opt" + File.separator + "openvidu" + File.separator + "recordings" + File.separator + sessionId + File.separator + sessionId + ".json";
+//			JsonReader recordJson = new JsonReader(new FileReader(jsonPath));
+//			JsonObject jsonObject = gson.fromJson(recordJson, JsonObject.class);
+//			System.out.println(jsonObject.get("files"));
+//			
+//			// files 읽어서 params와 같은 connectionId를 갖는 name 가져오기
+//			JsonArray recordArray = (JsonArray) jsonObject.get("files");
+//			String recordName = "";
+//			for(int i = 0; i < recordArray.size(); i++) {
+//				JsonObject recordFile = (JsonObject) recordArray.get(i);
+//				System.out.println("recordFile: " + recordFile);
+//				String curConnectionId = recordFile.get("connectionId").toString().replace("\"", "");
+//				System.out.println("curConnectionId: " + curConnectionId);
+//				System.out.println(connectionId.equals(curConnectionId));
+//				if(connectionId.equals(curConnectionId)) {
+//					recordName = (String)recordFile.get("name").toString().replace("\"", "");
+//					System.out.println(recordName);
+//					break;
+//				}
+//			}
+//			
+//			// 사용자 녹화본 url로 변환
+//			String uRecordUrl = "https:" + File.separator + File.separator + "i5a204.p.ssafy.io" + File.separator + 
+//					"openvidu" + File.separator + "recordings" + File.separator + sessionId + File.separator + recordName;
+//			System.out.println("uRecordUrl: " + uRecordUrl);
+//			
+//			RecordUrlDto urlDto = new RecordUrlDto(recording, uRecordUrl);
+//			this.sessionRecordings.remove(recording.getSessionId());
+//
+//			return new ResponseEntity<>(urlDto, HttpStatus.OK);
+//		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
+//			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//		}
+//	}
+//
+//	@RequestMapping(value = "/api/recording/delete", method = RequestMethod.DELETE)
+//	public ResponseEntity<?> deleteRecording(@RequestBody Map<String, Object> params) {
+//		String recordingId = (String) params.get("recording");
+//
+//		System.out.println("Deleting recording | {recordingId}=" + recordingId);
+//
+//		try {
+//			this.openVidu.deleteRecording(recordingId);
+//			return new ResponseEntity<>(HttpStatus.OK);
+//		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
+//			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//		}
+//	}
+//
+//	@RequestMapping(value = "/api/recording/get/{recordingId}", method = RequestMethod.GET)
+//	public ResponseEntity<?> getRecording(@PathVariable(value = "recordingId") String recordingId) {
+//
+//		System.out.println("Getting recording | {recordingId}=" + recordingId);
+//
+//		try {
+//			Recording recording = this.openVidu.getRecording(recordingId);
+//			// url 확인 출력
+//			System.out.println("get recording: " + recording.getUrl());
+//			return new ResponseEntity<>(recording, HttpStatus.OK);
+//		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
+//			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//		}
+//	}
+//
+//	@RequestMapping(value = "/api/recording/list", method = RequestMethod.GET)
+//	public ResponseEntity<?> listRecordings() {
+//
+//		System.out.println("Listing recordings");
+//
+//		try {
+//			List<Recording> recordings = this.openVidu.listRecordings();
+//
+//			return new ResponseEntity<>(recordings, HttpStatus.OK);
+//		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
+//			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//		}
+//	}
 
-		RecordingProperties properties = new RecordingProperties.Builder().outputMode(outputMode).hasAudio(hasAudio)
-				.hasVideo(hasVideo).build();
-
-		System.out.println("Starting recording for session " + sessionId + " with properties {outputMode=" + outputMode
-				+ ", hasAudio=" + hasAudio + ", hasVideo=" + hasVideo + "}");
-
-		try {
-			Recording recording = this.openVidu.startRecording(sessionId, properties);
-			// url 확인 출력
-			System.out.println("start recording: " + recording.getUrl());
-			this.sessionRecordings.put(sessionId, true);
-			return new ResponseEntity<>(recording, HttpStatus.OK);
-		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-	}
-
-	@RequestMapping(value = "/api/recording/stop", method = RequestMethod.POST)
-	public ResponseEntity<?> stopRecording(@RequestBody Map<String, Object> params) throws IOException {
-		String recordingId = (String) params.get("recording");
-		String connectionId = (String) params.get("connectionId");
-		
-		System.out.println("Stoping recording | {recordingId}=" + recordingId);
-		System.out.println("Stoping recording | {connectionId}=" + connectionId);
-		
-		try {
-			Recording recording = this.openVidu.stopRecording(recordingId);
-			System.out.println("stop recording - url: " + recording.getUrl());
-
-			String sessionId = recording.getSessionId();
-			System.out.println("stop recording - sessionid: " + sessionId);
-			
-			// upzip
-			String zipPath = File.separator + "opt" + File.separator + "openvidu" + File.separator + "recordings" + File.separator + sessionId + File.separator + sessionId + ".zip";
-			File zipFile = new File(zipPath);
-			// 압축 해제 위치 = 해제한 파일 위치 >> 그래야 openvidu에서 제공하는 delete 기능 사용
-			String upzipDir = File.separator + "opt" + File.separator + "openvidu" + File.separator + "recordings" + File.separator + sessionId + File.separator;
-			
-			ZipInputStream zis = new ZipInputStream(new FileInputStream(zipPath));
-			ZipEntry ze = zis.getNextEntry();
-			
-			while(ze!=null){
-					String entryName = ze.getName();
-					System.out.print("Extracting " + entryName + " -> " + upzipDir + File.separator +  entryName + "...");
-					File f = new File(upzipDir + File.separator +  entryName);
-					//create all folder needed to store in correct relative path.
-					f.getParentFile().mkdirs();
-					FileOutputStream fos = new FileOutputStream(f);
-					int len;
-					byte buffer[] = new byte[1024];
-					while ((len = zis.read(buffer)) > 0) {
-						fos.write(buffer, 0, len);
-					}
-					fos.close();  
-					System.out.println("OK!");
-					ze = zis.getNextEntry();         
-			}
-			zis.closeEntry();
-			zis.close();
-
-			// 녹화본 정보가 담긴 json 파일 읽기
-			Gson gson = new Gson();
-			String jsonPath = File.separator + "opt" + File.separator + "openvidu" + File.separator + "recordings" + File.separator + sessionId + File.separator + sessionId + ".json";
-			JsonReader recordJson = new JsonReader(new FileReader(jsonPath));
-			JsonObject jsonObject = gson.fromJson(recordJson, JsonObject.class);
-			System.out.println(jsonObject.get("files"));
-			
-			// files 읽어서 params와 같은 connectionId를 갖는 name 가져오기
-			JsonArray recordArray = (JsonArray) jsonObject.get("files");
-			String recordName = "";
-			for(int i = 0; i < recordArray.size(); i++) {
-				JsonObject recordFile = (JsonObject) recordArray.get(i);
-				System.out.println("recordFile: " + recordFile);
-				String curConnectionId = recordFile.get("connectionId").toString().replace("\"", "");
-				System.out.println("curConnectionId: " + curConnectionId);
-				System.out.println(connectionId.equals(curConnectionId));
-				if(connectionId.equals(curConnectionId)) {
-					recordName = (String)recordFile.get("name").toString().replace("\"", "");
-					System.out.println(recordName);
-					break;
-				}
-			}
-			
-			// 사용자 녹화본 url로 변환
-			String uRecordUrl = "https:" + File.separator + File.separator + "i5a204.p.ssafy.io" + File.separator + 
-					"openvidu" + File.separator + "recordings" + File.separator + sessionId + File.separator + recordName;
-			System.out.println("uRecordUrl: " + uRecordUrl);
-			
-			RecordUrlDto urlDto = new RecordUrlDto(recording, uRecordUrl);
-			this.sessionRecordings.remove(recording.getSessionId());
-
-			return new ResponseEntity<>(urlDto, HttpStatus.OK);
-		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-	}
-
-	@RequestMapping(value = "/api/recording/delete", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteRecording(@RequestBody Map<String, Object> params) {
-		String recordingId = (String) params.get("recording");
-
-		System.out.println("Deleting recording | {recordingId}=" + recordingId);
-
-		try {
-			this.openVidu.deleteRecording(recordingId);
-			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-	}
-
-	@RequestMapping(value = "/api/recording/get/{recordingId}", method = RequestMethod.GET)
-	public ResponseEntity<?> getRecording(@PathVariable(value = "recordingId") String recordingId) {
-
-		System.out.println("Getting recording | {recordingId}=" + recordingId);
-
-		try {
-			Recording recording = this.openVidu.getRecording(recordingId);
-			// url 확인 출력
-			System.out.println("get recording: " + recording.getUrl());
-			return new ResponseEntity<>(recording, HttpStatus.OK);
-		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-	}
-
-	@RequestMapping(value = "/api/recording/list", method = RequestMethod.GET)
-	public ResponseEntity<?> listRecordings() {
-
-		System.out.println("Listing recordings");
-
-		try {
-			List<Recording> recordings = this.openVidu.listRecordings();
-
-			return new ResponseEntity<>(recordings, HttpStatus.OK);
-		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-	}
-
+	
+	
 	private ResponseEntity<JsonObject> getErrorResponse(Exception e) {
 		JsonObject json = new JsonObject();
 		json.addProperty("cause", e.getCause().toString());

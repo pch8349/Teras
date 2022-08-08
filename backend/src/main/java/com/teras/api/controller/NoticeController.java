@@ -87,9 +87,10 @@ public class NoticeController {
 		})
 	@ApiImplicitParam(name = "noticeNo", value = "notice seq", required = true, dataType = "Long")
 	@GetMapping("/{noticeNo}")
-	public ResponseEntity getNotice(@PathVariable Long noticeNo) {
+	public ResponseEntity<? extends BaseResponseBody> getNotice(@PathVariable Long noticeNo) {
+		
 
-		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+		return ResponseEntity.status(200).body(BaseResponseBody.of(403, "권한없음"));
 	}
 
 	@ApiOperation(value = "공지사항 수정", notes = "특정 공지사항을 수정한다.")
