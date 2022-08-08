@@ -59,13 +59,14 @@ public class RoomController {
     }
 
     @PostMapping("")
-    @ApiOperation(value = "방을 만들 때 사용", notes = "<strong>방 만들기</strong>을 통해 세션과 토큰을 생성 후 토큰, 방이름, 게임종류, 닉네임 반환 => password 없을시, 빈문자열 넣기")
+    @ApiOperation(value = "방을 만들 때 사용", notes = "<strong>방 만들기</strong>을 통해 세션과 토큰을 생성 후 토큰, 방이름 => password 없을시, 빈문자열 넣기")
     @ApiResponses({
             @ApiResponse(code = 200, message = "방 만들기 성공"),
             @ApiResponse(code = 400, message = "input 오류", response = ErrorResponse.class),
             @ApiResponse(code = 401, message = "토큰 만료 or 토큰 없음 or 토큰 오류 -> 권한 인증 오류", response = ErrorResponse.class),
             @ApiResponse(code = 500, message = "서버 에러", response = ErrorResponse.class)
     })
+    
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<RoomRes> makeRoom(@RequestBody MakeRoomReq makeRoomReq) throws OpenViduJavaClientException, OpenViduHttpException {
         // 방 번호 난수 생성
@@ -81,13 +82,13 @@ public class RoomController {
     }
 
     @PostMapping("/search")
-    @ApiOperation(value = "방을 검색할 때 사용", notes = "<strong>방 검색</strong>을 통해 검색하는 방이 존재한다면 토큰, 방이름, 게임종류, 닉네임을 반환 => password 없을시, 빈문자열 넣기")
+    @ApiOperation(value = "방을 검색할 때 사용", notes = "<strong>방 검색</strong>을 통해 검색하는 방이 존재한다면 토큰, 방이름  => password 없을시, 빈문자열 넣기")
     @ApiResponses({
             @ApiResponse(code = 200, message = "방 검색 성공"),
             @ApiResponse(code = 400, message = "input 오류", response = ErrorResponse.class),
             @ApiResponse(code = 401, message = "토큰 만료 or 토큰 없음 or 토큰 오류 -> 권한 인증 오류", response = ErrorResponse.class),
             @ApiResponse(code = 404, message = "방 정보가 없습니다.", response = ErrorResponse.class),
-            @ApiResponse(code = 409, message = "방 접속 불가능 상태(GAME | FULL)", response = ErrorResponse.class),
+            @ApiResponse(code = 409, message = "방 접속 불가능 상태", response = ErrorResponse.class),
             @ApiResponse(code = 500, message = "서버 에러", response = ErrorResponse.class)
     })
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
@@ -109,11 +110,11 @@ public class RoomController {
         // 방 관리 map에 저장
         this.mapSessions.put(roomId, this.mapSessions.get(roomId) + 1);
 
-        return ResponseEntity.ok(roomService.getRoomRes(roomId, gameType));
+        return ResponseEntity.ok(roomService.getRoomRes(roomId, Roomtype));
     }
 
     @PostMapping("/quick")
-    @ApiOperation(value = "빠른 시작을 할 때 사용", notes = "<strong>빠른 시작</strong>을 통해 선택한 종목의 방이 있으면 반환하고 없다면 새로 생성 후 토큰, 방이름, 게임종류, 닉네임 반환")
+    @ApiOperation(value = "빠른 시작을 할 때 사용", notes = "<strong>빠른 시작</strong>을 통해 선택한 종목의 방이 있으면 반환하고 없다면 새로 생성 후 토큰, 방이름 반환")
     @ApiResponses({
             @ApiResponse(code = 200, message = "빠른 시작 성공"),
             @ApiResponse(code = 400, message = "input 오류", response = ErrorResponse.class),
