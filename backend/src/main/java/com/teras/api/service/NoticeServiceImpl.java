@@ -10,9 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teras.api.request.NoticeRegisterPostReq;
-import com.teras.db.Dto.NoticeDto;
+import com.teras.db.dto.NoticeDto;
 import com.teras.db.entity.ClassEntity;
 import com.teras.db.entity.Notice;
+import com.teras.db.entity.User;
 import com.teras.db.repository.AttachmentRepository;
 import com.teras.db.repository.ClassEntityRepository;
 import com.teras.db.repository.NoticeRepository;
@@ -36,10 +37,11 @@ public class NoticeServiceImpl implements NoticeService {
 	AttachmentRepository attachmentRepository;
 
 	@Override
-	public Notice createNotice(NoticeRegisterPostReq noticeRegisterInfo) {
+	public Notice createNotice(NoticeRegisterPostReq noticeRegisterInfo, String userId) {
+		User user = userRepository.findByUserId(userId).get();
+
 		Notice notice = Notice.builder().title(noticeRegisterInfo.getTitle()).content(noticeRegisterInfo.getContent())
-				.user(userRepository.findByUserId(noticeRegisterInfo.getUserId()).get())
-				.classCode(classEntityRepository.findByClassCode(noticeRegisterInfo.getClassCode()).get())
+				.user(user).classCode(user.getClassCode())
 				.attach(attachmentRepository.findByUuid(noticeRegisterInfo.getUuid()).orElse(null)).build();
 
 		return noticeRepository.save(notice);
@@ -49,15 +51,13 @@ public class NoticeServiceImpl implements NoticeService {
 	public List<NoticeDto> getNoticeList(ClassEntity classEntity) {
 		String classCode = classEntity.getClassCode();
 
-		
 		List<NoticeDto> list = new ArrayList<>();
-		
-		for(Notice notice : noticeRepository.findAllByClassCode(classEntity)) {
+
+		for (Notice notice : noticeRepository.findAllByClassCode(classEntity)) {
 			System.out.println(notice.toString());
 			list.add(new NoticeDto(notice));
 		}
-		
-		
+
 		return list;
 	}
 

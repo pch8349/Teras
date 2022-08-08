@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.teras.api.response.TimeTableGetRes;
 import com.teras.api.service.TimeTableService;
 import com.teras.common.auth.SsafyUserDetails;
-import com.teras.db.Dto.TimeTableDto;
+import com.teras.db.dto.TimeTableDto;
 
 import io.swagger.annotations.Api;
 import springfox.documentation.annotations.ApiIgnore;

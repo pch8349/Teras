@@ -20,7 +20,7 @@ import com.teras.api.service.NoticeService;
 import com.teras.api.service.UserService;
 import com.teras.common.auth.SsafyUserDetails;
 import com.teras.common.model.response.BaseResponseBody;
-import com.teras.db.Dto.NoticeDto;
+import com.teras.db.dto.NoticeDto;
 import com.teras.db.entity.ClassEntity;
 import com.teras.db.entity.Notice;
 import com.teras.db.entity.User;
@@ -54,10 +54,12 @@ public class NoticeController {
 	@ApiResponses({ @ApiResponse(code = 200, message = "작성 성공"), @ApiResponse(code = 401, message = "인증 실패"),
 			@ApiResponse(code = 500, message = "서버 오류") })
 	@PostMapping()
-	public ResponseEntity<? extends BaseResponseBody> register(
+	public ResponseEntity<? extends BaseResponseBody> register(@ApiIgnore Authentication authentication,
 			@RequestBody @ApiParam(value = "공지사항 내용", required = true) NoticeRegisterPostReq registerInfo) {
+		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+		String userId = userDetails.getUsername();
 
-		Notice notice = noticeService.createNotice(registerInfo);
+		Notice notice = noticeService.createNotice(registerInfo, userId);
 
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
 	}
@@ -80,11 +82,8 @@ public class NoticeController {
 	}
 
 	@ApiOperation(value = "특정 게시글 조회", notes = "특정 공지사항을 조회한다.")
-	@ApiResponses({
-		@ApiResponse(code = 200, message = "조회 성공"),
-		@ApiResponse(code = 404, message = "게시글 없음"),
-		@ApiResponse(code = 500, message = "서버 오류")
-		})
+	@ApiResponses({ @ApiResponse(code = 200, message = "조회 성공"), @ApiResponse(code = 404, message = "게시글 없음"),
+			@ApiResponse(code = 500, message = "서버 오류") })
 	@ApiImplicitParam(name = "noticeNo", value = "notice seq", required = true, dataType = "Long")
 	@GetMapping("/{noticeNo}")
 	public ResponseEntity<? extends BaseResponseBody> getNotice(@PathVariable Long noticeNo) {
@@ -94,13 +93,9 @@ public class NoticeController {
 	}
 
 	@ApiOperation(value = "공지사항 수정", notes = "특정 공지사항을 수정한다.")
-	@ApiResponses({
-		@ApiResponse(code = 200, message = "수정 성공"),
-		@ApiResponse(code = 401, message = "인증 실패"),
-		@ApiResponse(code = 403, message = "권한 없음"),
-		@ApiResponse(code = 404, message = "게시글 없음"),
-		@ApiResponse(code = 500, message = "서버 오류")
-	})
+	@ApiResponses({ @ApiResponse(code = 200, message = "수정 성공"), @ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 403, message = "권한 없음"), @ApiResponse(code = 404, message = "게시글 없음"),
+			@ApiResponse(code = 500, message = "서버 오류") })
 	@ApiImplicitParam(name = "noticeNo", value = "notice seq", required = true, dataType = "Long")
 	@PutMapping("/{noticeNo}")
 	public ResponseEntity editNotice(@ApiIgnore Authentication authentication,

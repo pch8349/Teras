@@ -6,7 +6,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.teras.db.EmbeddedId.TimeTableId;
+import com.teras.db.embeddedId.TimeTableId;
 
 import lombok.Getter;
 

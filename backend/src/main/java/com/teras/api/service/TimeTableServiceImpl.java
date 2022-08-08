@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.teras.db.Dto.TimeTableDto;
+import com.teras.db.dto.TimeTableDto;
 import com.teras.db.entity.TimeTable;
 import com.teras.db.entity.User;
 import com.teras.db.repository.TimeTableRepository;
