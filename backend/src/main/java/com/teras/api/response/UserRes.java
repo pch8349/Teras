@@ -1,6 +1,6 @@
 package com.teras.api.response;
 
-import com.teras.db.entity.User;
+import com.teras.db.dto.UserDto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -15,11 +15,11 @@ import lombok.Setter;
 @ApiModel("UserResponse")
 public class UserRes{
 	@ApiModelProperty(name="User ID")
-	String userId;
+	UserDto user;
 	
-	public static UserRes of(User user) {
+	public static UserRes of(UserDto user) {
 		UserRes res = new UserRes();
-		res.setUserId(user.getUserId());
+		res.setUser(user);
 		return res;
 	}
 }

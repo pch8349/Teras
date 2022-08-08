@@ -1,16 +1,78 @@
 # Teras
 
-### 07/25/kang
+## Git branch naming convention
 
-#### login/signup 
+ master<br>
+└─develop<br>
+    ├─backend<br>
+    │  ├─feature/be-login<br>
+    │  ├─feature/be-signup<br>
+    │  ├─classroom<br>
+    ├─frontend<br>
+    │  ├─feature/fe-login<br>
+    │  └─feature/fe-signup<br>
 
-사용 의존성: Spring Boot DevTools, Lombok, Spring Security, Spring Web, Spring Data JPA,
 
-MySQL Driver, Mustache 
+## Git merge request naming convention
 
-### 07/27 /KimKyeongHwan
+title : ex) [FE] merge feature/fe-login into frontend
 
-#### login/signup 
-![postman_login](/uploads/3d8968c96c03e01857e4c6cc983b8bf2/postman_login.PNG)
+* "Delete source branch when merge request is accepted" 항목 체크 시 merge시킨 원래 브런치 삭제됨
 
-![postman_signup](/uploads/2b14725a793dfe5487cc70a3a9196fc3/postman_signup.PNG)
+    더 이상 필요없는 브랜치일 경우만 체크!
+
+## Git commit naming convention
+
+[FE/BE] (구현한 기능) (동사)
+
+ex) [BE] login api add / [FE] signup page css update
+
+## AWS 진행 사항
+
+### 기본 설정
+방화벽 설정(ssh 허용, 방화성 활성화)
+* sudo ufw allow ssh
+* sudo ufw enable
+
+***
+
+### nginx
+nginx 설치
+* sudo apt-get install nginx
+
+nginx 설정
+* sudo vi /etc/nginx/sites-available/default
+```
+server_name localhost teras.site www.teras.site;
+``` 
+
+nginx 명령어
+* 재부팅    : sudo service nginx reload
+* 중지      : sudo systemctl stop nginx
+* 시작      : sudo systemctl start nginx
+* 재시작    : sudo systemctl restart nginx
+* 비활성화  : sudo systemctl disable nginx
+* 활성화    : sudo systemctl enable nginx
+
+***
+
+### https
+
+certbot 설치
+* sudo snap install --classic certbot
+
+방화벽 설정
+* sudo ufw allow 80/tcp
+
+https 인증서 발급
+* sudo certbot --nginx -d i7a706.p.ssafy.io
+
+***
+
+### mysql
+
+mysql-server 설치
+* sudo apt-get install mysql-server
+
+방화벽 설정(mysql 허용)
+* sudo ufw allow mysql
