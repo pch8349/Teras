@@ -10,44 +10,51 @@ import Schedule from "./components/Schedule/Schedule";
 import StudyRoom from "./components/StudyRoom/StudyRoom";
 import MyClass from "./components/MyClass/MyClass";
 import Profile from "./components/Profile/Profile";
+import { Route, Routes, NavLink } from "react-router-dom";
+
 
 function Home() {
-  const [selected, setSelected] = useState(0);
   const navTabs = [
     {
       name: "메인",
       component: <Main />,
-      isSelected: false,
+      path: "/main"
     },
     {
       name: "공지",
       component: <Notice />,
-      isSelected: false,
+      path: "/notice"
+
     },
     {
       name: "과제",
       component: <Assignment />,
-      isSelected: false,
+      path: "/assignment"
+
     },
     {
       name: "성적",
       component: <Grade />,
-      isSelected: false,
+      path: "/grade"
+
     },
     {
       name: "일정",
       component: <Schedule />,
-      isSelected: false,
+      path: "/schedule"
+
     },
     {
       name: "스터디룸",
       component: <StudyRoom />,
-      isSelected: false,
+      path: "/studyroom"
+
     },
     {
       name: "우리반",
       component: <MyClass />,
-      isSelected: false,
+      path: "/myclass"
+
     },
   ];
 
@@ -66,6 +73,8 @@ function Home() {
           </div>
           <div className="timeTableGridContainer">
             <div className="classRoomButtonContainer">
+              {/* Link 써서 주소로보내기 */}
+              {/*   ex.      <Link to="/signup" className="">회원가입</Link> */}
               <Button
                 sx={{
                   width: 200,
@@ -86,7 +95,32 @@ function Home() {
         </div>
         <div className="dashBoardFlexContainer">
           <div className="dashBoardContainer">
+            {/* tap 메뉴 div */}
             <div className="navTabContainer">
+              {navTabs.map((tab, index) => (
+                  <NavLink
+                    className={({isActive}) => (isActive ? "navTabButton selectedTab": "navTabButton")}
+                    key = {index}
+                    to = {tab.path}
+                    >
+                      {tab.name}
+                  </NavLink>
+                ))}
+            </div>
+            {/* routing box */}
+            <div className="componentContainer">
+              <Routes>
+                <Route path="main" element={<Main />} />
+                <Route path="notice/*" element={<Notice />} />
+                <Route path="assignment" element={<Assignment/>} />
+                <Route path="grade" element={<Grade />} />
+                <Route path="schedule" element={<Schedule />} />
+                <Route path="studyroom" element={<StudyRoom />} />
+                <Route path="myclass" element={<MyClass />} />
+              </Routes>
+            </div>
+
+            {/* <div className="navTabContainer">
               {navTabs.map((tab, index) => (
                 <button
                   className={`navTabButton ${
@@ -101,7 +135,7 @@ function Home() {
             </div>
             <div className="componentContainer">
               {navTabs[selected].component}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
