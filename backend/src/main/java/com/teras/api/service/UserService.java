@@ -9,4 +9,5 @@ import com.teras.db.entity.User;
 public interface UserService {
 	User createUser(UserRegisterPostReq userRegisterInfo);
 	User getUserByUserId(String userId);
+	int idCheck(String id);
 }
