@@ -12,9 +12,9 @@ public interface NoticeService {
 	
 	NoticeDto getNotice(long noticeNo);
 	
-	String editNotice(long noticeNo, User user, NoticeRegisterPostReq noticePostReq);
+	boolean editNotice(long noticeNo, User user, NoticeRegisterPostReq noticePostReq);
 	
-	String deleteNotice(long noticeNo, User user);
+	boolean deleteNotice(long noticeNo, User user);
 
 	List<NoticeDto> getNoticeList(String userId);
 }

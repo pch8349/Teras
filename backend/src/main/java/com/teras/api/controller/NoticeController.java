@@ -110,11 +110,11 @@ public class NoticeController {
 		String userId = userDetails.getUsername();
 		User user = userService.getUserByUserId(userId);
 		
-		String isNoticeEdited = noticeService.editNotice(noticeNo, user, noticePostReq);
-		if(isNoticeEdited == null) {
-			return ResponseEntity.status(204).body(BaseResponseBody.of(204, "NO_CONTENT"));
-		}
-		if(isNoticeEdited == "forbidden") {
+		boolean isNoticeEdited = noticeService.editNotice(noticeNo, user, noticePostReq);
+//		if(isNoticeEdited == null) {
+//			return ResponseEntity.status(204).body(BaseResponseBody.of(204, "NO_CONTENT"));
+//		}
+		if(isNoticeEdited == false) {
 			return ResponseEntity.status(403).body(BaseResponseBody.of(403, "FORBIDDEN"));
 		}
 
@@ -136,11 +136,11 @@ public class NoticeController {
 		String userId = userDetails.getUsername();
 		User user = userService.getUserByUserId(userId);
 		
-		String isNoticeDeleted = noticeService.deleteNotice(noticeNo, user);
-		if(isNoticeDeleted == null) {
-			return ResponseEntity.status(204).body(BaseResponseBody.of(204, "NO_CONTENT"));
-		}
-		if(isNoticeDeleted == "forbidden") {
+		boolean isNoticeDeleted = noticeService.deleteNotice(noticeNo, user);
+//		if(isNoticeDeleted == null) {
+//			return ResponseEntity.status(204).body(BaseResponseBody.of(204, "NO_CONTENT"));
+//		}
+		if(isNoticeDeleted == false) {
 			return ResponseEntity.status(403).body(BaseResponseBody.of(403, "FORBIDDEN"));
 		}
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));

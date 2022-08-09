@@ -66,35 +66,31 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 	
 	@Override
-	public String editNotice(long noticeNo, User user, NoticeRegisterPostReq noticePostReq) {
+	public boolean editNotice(long noticeNo, User user, NoticeRegisterPostReq noticePostReq) {
 
 		Notice notice = noticeRepository.findById(noticeNo).orElse(null);
-		if(notice == null) {
-			return null;
-		}
+
 		if(!notice.getUser().equals(user)) {
-			return "forbidden";
+			return false;
 		}
 		
 		notice.update(noticePostReq.getTitle(), noticePostReq.getContent());
 		
 		noticeRepository.save(notice);
 		
-		return "success";
+		return true;
 	}
 	
 	@Override
-	public String deleteNotice(long noticeNo, User user) {
+	public boolean deleteNotice(long noticeNo, User user) {
 		Notice notice = noticeRepository.findById(noticeNo).orElse(null);
-		if(notice == null) {
-			return null;
-		}
+
 		if(!notice.getUser().equals(user)) {
-			return "forbidden";
+			return false;
 		}
 		noticeRepository.deleteById(noticeNo);
 		
-		return "success";
+		return true;
 	}
 
 
