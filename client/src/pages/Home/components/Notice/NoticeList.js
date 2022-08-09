@@ -15,9 +15,10 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
+  text-align: center;
   font-size: 1.8rem;
-  margin-top: 3rem;
   font-weight: 600;
+  margin-bottom: 1.5rem;
 `;
 
 const StyledTable = styled.table`

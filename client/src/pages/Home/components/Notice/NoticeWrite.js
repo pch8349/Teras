@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {createRef, useCallback, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { registerNotice } from '../../../../api/notice'
 import { errorAlert, successAlert } from '../../../../modules/alert'
@@ -7,8 +7,14 @@ import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor } from "@toast-ui/react-editor";
 import Dropzone from "react-dropzone";
 import { FileIcon, defaultStyles } from "react-file-icon";
-import { uploadFile } from "../../../../api/file";
+import axios from 'axios';
 
+const Title = styled.div`
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+`;
 
 const InputContainer = styled.div`
   display: flex;
@@ -63,69 +69,70 @@ const FileContainer = styled.div`
 
 
 function NoticeWrite() {
-  const Navigate = useNavigate()
+  const editorRef = createRef();
+  const Navigate = useNavigate();
+  const [files, setFiles] = useState({
+    files: null,
+  })
   const [data, setData] = useState({
     title: "",
     content: "",
     uuid: null,
   })
-  const [files, setFiles] = useState(null)
 
   const onChange = (e) => {
-    const {name, value} = e.target
     setData({
       ...data,
-      [name]:value,
+      [e.target.name]: e.target.value,
     })
   }
 
   const onSubmit = () => {
-    if (files) {
-      uploadFile(files).then(res).catch((e) => {
-        if (e.response.status === 401) {
-          errorAlert(401);
-        } else {
-          errorAlert(e.response.status, "글 등록에 실패하였습니다.");
-        }
-      });
-      data.uuid = res.data.uuid
-      registerNotice(data).then(() => {
-        successAlert("글 등록에 성공하였습니다.");
-        Navigate("/notice");
-      })
-      .catch((e) => {
-        if (e.response.status === 401) {
-          errorAlert(401);
-        } else {
-          errorAlert(e.response.status, "글 등록에 실패하였습니다.");
-        }
-      });
-    } else {
-          // api요청에 data 실어서 보내기 (header값 필요하면 header 처리해서)
-          registerNotice(data).then(() => {
-            successAlert("글 등록에 성공하였습니다.");
-            Navigate("/notice");
-          })
-          .catch((e) => {
-            if (e.response.status === 401) {
-              errorAlert(401);
-            } else {
-              errorAlert(e.response.status, "글 등록에 실패하였습니다.");
-            }
-          });
-    };
-  }
+    data.content= editorRef.current.getInstance().getHTML();
+
+    // api요청에 data 실어서 보내기 (header값 필요하면 header 처리해서)
+    registerNotice(data).then(() => {
+      successAlert("글 등록에 성공하였습니다.");
+      Navigate("/notice");
+    })
+    .catch((e) => {
+      if (e.response.status === 401) {
+        errorAlert(401);
+      } else {
+        errorAlert(e.response.status, "글 등록에 실패하였습니다.");
+      }
+    });
+  };
+  
 
   const onCancel = () => {
       Navigate("../")
     }
 
-  const handleDrop = (acceptedFiles) => {
+
+  const handleDrop = useCallback(async (acceptedFiles) => {
+    // 사용자가 올린 정보를 확인해야 하므로 일단 서버로 전송합니다.
+    // 제목 같은 건 폼을 제출한 이후에 달아주도록 합시다.
+
+    // 폼데이터 구성
+    const formData = new FormData();
+    const config = {
+      header: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    formData.append("file", acceptedFiles[0]);
     setFiles({
       ...files,
       files: acceptedFiles.map((file) => file),
+    })
+
+    // 배포시에는 지워줘야 합니다.
+    axios.defaults.baseURL = "http://i7a706.p.ssafy.io:8080/";
+    await axios.post("/file/upload", formData, config).then((res) => {
+      data.uuid = res.data.uuid;
     });
-  };
+  }, []);
 
   const makeExtension = (fileName) => {
     let fileLength = fileName.length;
@@ -137,19 +144,24 @@ function NoticeWrite() {
 
   return (
     <div>
-      <h2>공지사항 작성하기</h2>
+      <Title>공지사항 작성하기</Title>
       {/* 제목 */}
       <InputContainer>
         <label for='title'></label>
-        <input id='title' onChange={onChange}></input>
+        <input id='title' name='title' value = {data.title} onChange={onChange}></input>
       </InputContainer>
       {/* 내용 */}
       <InputContainer>
         <label for='content'></label>
         <Editor 
-        id='content' 
-        onChange={onChange}
-        ></Editor>
+          name="content"
+          initialValue={data.content}
+          previewStyle="tab"
+          height="400px"
+          initialEditType="wysiwyg"
+          useCommandShortcut={true}
+          ref={editorRef}
+         />
       </InputContainer>
       <FileContainer>
         <Dropzone onDrop={handleDrop} className="dropzone">
@@ -160,9 +172,9 @@ function NoticeWrite() {
             </div>
           )}
         </Dropzone>
-        {files && (
+        {files.files && (
           <div className="files">
-            {files.map((file) => (
+            {files.files.map((file) => (
               <div key={file.name}>
                 <div className="file">
                   <div className="icon">

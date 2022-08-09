@@ -3,7 +3,7 @@ import { apiInstance, fileApi } from "./index";
 const api = apiInstance();
 
 export const registerNotice = async (content, success, fail) => {
-    return await api.post("/notice", content).then(success).catch(fail);
+  return await api.post("/notice", content).then(success).catch(fail);
   };
   
 export const modifyNotice = async (content, success, fail) => {

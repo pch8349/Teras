@@ -12,7 +12,7 @@ export function apiInstance() {
 };
 
 export const fileApi = axios.create({
-  baseURL: "https://i6a706.p.ssafy.io:8080/",
+  baseURL: "https://i7a706.p.ssafy.io:8080/",
   headers: {
     "Content-Type": `multipart/form-data`,
   },

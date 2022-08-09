@@ -2,7 +2,7 @@ import { apiInstance, fileApi } from "./index";
 
 const api = apiInstance();
 
-export const registerFile = async(content, success, fail) => {
+export const uploadFile = async(content, success, fail) => {
     return await fileApi.post("/file/upload", content).then(success).catch(fail);
   };
   
