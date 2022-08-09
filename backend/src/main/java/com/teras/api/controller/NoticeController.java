@@ -20,6 +20,7 @@ import com.teras.api.response.NoticeListGetRes;
 import com.teras.api.service.NoticeService;
 import com.teras.api.service.UserService;
 import com.teras.common.auth.SsafyUserDetails;
+import com.teras.common.model.column.TerasAuthority;
 import com.teras.common.model.response.BaseResponseBody;
 import com.teras.db.dto.NoticeDto;
 import com.teras.db.entity.Notice;
@@ -59,6 +60,11 @@ public class NoticeController {
 		
 		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
 		String userId = userDetails.getUsername();
+		TerasAuthority userAuthority = userDetails.getUser().getAuthority();
+
+		if(userAuthority != TerasAuthority.valueOf("TEACHER")) {
+			return ResponseEntity.status(403).body(BaseResponseBody.of(403, "FORBIDDEN"));
+		}
 		
 		Notice notice = noticeService.createNotice(registerInfo, userId);
 
