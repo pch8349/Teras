@@ -15,8 +15,6 @@ public interface NoticeService {
 	Boolean editNotice(long noticeNo, User user, NoticeRegisterPostReq noticePostReq);
 	
 	Boolean deleteNotice(long noticeNo, User user);
-
-	List<NoticeDto> getNoticeList(String userId);
 	
 	List<NoticeDto> getNoticeList(String userId, int page);
 }
