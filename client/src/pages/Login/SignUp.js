@@ -259,27 +259,22 @@ const SignUp = ({}) => {
             }}
           />
           <EmptyPart />
-          <FlexColumn>
-            <DropDown
-              arr={[
-                { id: "TEACHER", name: "교사" },
-                { id: "STUDENT", name: "학생" },
-              ]} // 배열로 선택할 값 전달
-              getDropDownValue={getDropDownValue} // 자식 컴포넌트에서 보낸 값 받기 위함
-            />
-            <DropDown
-              arr={[
-                { id: "TEACHER", name: "교사" },
-                { id: "STUDENT", name: "학생" },
-              ]} // 배열로 선택할 값 전달
-              getDropDownValue={getDropDownValue} // 자식 컴포넌트에서 보낸 값 받기 위함
-            />
-          </FlexColumn>
-
           <FlexRow>
-            <EmptyPart></EmptyPart>
+            <DropDown
+              arr={[
+                { id: "TEACHER", name: "교사" },
+                { id: "STUDENT", name: "학생" },
+              ]} // 배열로 선택할 값 전달
+              getDropDownValue={getDropDownValue} // 자식 컴포넌트에서 보낸 값 받기 위함
+            />
+            <DropDown
+              arr={[
+                { id: "TEACHER", name: "교사" },
+                { id: "STUDENT", name: "학생" },
+              ]} // 배열로 선택할 값 전달
+              getDropDownValue={getDropDownValue} // 자식 컴포넌트에서 보낸 값 받기 위함
+            />
           </FlexRow>
-
           <FlexRow>
             <EmptyPart></EmptyPart>
           </FlexRow>

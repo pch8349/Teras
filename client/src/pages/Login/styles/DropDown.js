@@ -43,7 +43,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 
 export const DropDown = ({ arr, getDropDownValue }) => {
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", width: "100%" }}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label"></InputLabel>
         <Select
