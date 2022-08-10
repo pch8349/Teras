@@ -37,6 +37,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+
 @Api(value = "openvidu처리 API", tags = {"Openvidu."})
 @RestController
 @RequestMapping("/api/openvidu")
@@ -199,4 +200,5 @@ public class OpenviduController {
 		}
 		
 	}
+
 }
