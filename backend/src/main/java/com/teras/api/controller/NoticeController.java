@@ -68,7 +68,7 @@ public class NoticeController {
 		
 		Notice notice = noticeService.createNotice(registerInfo, userId);
 
-		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+		return ResponseEntity.status(201).body(BaseResponseBody.of(201, "CREATED"));
 	}
 
 	@ApiOperation(value = "공지사항 전체 조회", notes = "모든 공지사항을 조회한다.")
@@ -95,7 +95,7 @@ public class NoticeController {
 		
 		NoticeDto notice = noticeService.getNotice(noticeNo);
 		if(notice == null) {
-			return ResponseEntity.status(204).body(BaseResponseBody.of(204, "NO_CONTENT"));
+			return ResponseEntity.status(404).body(BaseResponseBody.of(404, "NOT_FOUND"));
 		}
 		return ResponseEntity.status(200).body(NoticeGetRes.of(200, "SUCCESS", notice));
 	}
@@ -116,10 +116,10 @@ public class NoticeController {
 		String userId = userDetails.getUsername();
 		User user = userService.getUserByUserId(userId);
 		
-		boolean isNoticeEdited = noticeService.editNotice(noticeNo, user, noticePostReq);
-//		if(isNoticeEdited == null) {
-//			return ResponseEntity.status(204).body(BaseResponseBody.of(204, "NO_CONTENT"));
-//		}
+		Boolean isNoticeEdited = noticeService.editNotice(noticeNo, user, noticePostReq);
+		if(isNoticeEdited == null) {
+			return ResponseEntity.status(404).body(BaseResponseBody.of(404, "NOT_FOUND"));
+		}
 		if(isNoticeEdited == false) {
 			return ResponseEntity.status(403).body(BaseResponseBody.of(403, "FORBIDDEN"));
 		}
@@ -142,10 +142,10 @@ public class NoticeController {
 		String userId = userDetails.getUsername();
 		User user = userService.getUserByUserId(userId);
 		
-		boolean isNoticeDeleted = noticeService.deleteNotice(noticeNo, user);
-//		if(isNoticeDeleted == null) {
-//			return ResponseEntity.status(204).body(BaseResponseBody.of(204, "NO_CONTENT"));
-//		}
+		Boolean isNoticeDeleted = noticeService.deleteNotice(noticeNo, user);
+		if(isNoticeDeleted == null) {
+			return ResponseEntity.status(404).body(BaseResponseBody.of(404, "NOT_FOUND"));
+		}
 		if(isNoticeDeleted == false) {
 			return ResponseEntity.status(403).body(BaseResponseBody.of(403, "FORBIDDEN"));
 		}
