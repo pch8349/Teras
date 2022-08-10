@@ -10,4 +10,12 @@ public interface NoticeService {
 	Notice createNotice(NoticeRegisterPostReq noticeRegisterInfo, String userId);
 	
 	List<NoticeDto> getNoticeList(String userId, int page);
+
+	NoticeDto getNotice(long noticeNo);
+	
+	Boolean editNotice(long noticeNo, String userId, NoticeRegisterPostReq noticePostReq);
+	
+	Boolean deleteNotice(long noticeNo, String userId);
+	
+	int getNoticeListTotal(String userId);
 }

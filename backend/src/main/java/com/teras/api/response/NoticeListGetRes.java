@@ -16,12 +16,14 @@ import lombok.Setter;
 public class NoticeListGetRes extends BaseResponseBody {
 	@ApiModelProperty(name = "공지사항 목록", example = "list[{notice}, {notice}, ...]")
 	List<NoticeDto> list;
+	int total;
 
-	public static NoticeListGetRes of(Integer statusCode, String message, List<NoticeDto> list) {
+	public static NoticeListGetRes of(Integer statusCode, String message, List<NoticeDto> list, int total) {
 		NoticeListGetRes res = new NoticeListGetRes();
 		res.setStatusCode(statusCode);
 		res.setMessage(message);
 		res.setList(list);
+		res.setTotal(total);
 		return res;
 	}
 }

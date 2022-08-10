@@ -13,7 +13,7 @@ import com.teras.db.entity.ClassEntity;
 import com.teras.db.entity.Notice;
 
 @Repository
-public interface NoticeRepository extends JpaRepository<Notice, Integer> {
+public interface NoticeRepository extends JpaRepository<Notice, Long> {
 
 	Optional<Notice> findByNoticeNo(int noticeNo);
 
@@ -22,5 +22,6 @@ public interface NoticeRepository extends JpaRepository<Notice, Integer> {
 	@Query(value = "SELECT * FROM notice WHERE :type like '%:word%'", nativeQuery = true)
 	Optional<List<Notice>> findNoticeByType(@Param("type") String type, @Param("word") String word);
 
-	List<Notice> findAllByClassCode(ClassEntity classEntity, Pageable pageable);
+	List<Notice> findByClassCode(ClassEntity classEntity, Pageable pageable);
+	Integer countByClassCode(ClassEntity classEntity);
 }

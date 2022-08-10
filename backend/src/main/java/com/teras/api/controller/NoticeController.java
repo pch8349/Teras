@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teras.api.request.NoticeRegisterPostReq;
+import com.teras.api.response.NoticeDetailGetRes;
 import com.teras.api.response.NoticeListGetRes;
 import com.teras.api.service.NoticeService;
 import com.teras.common.auth.SsafyUserDetails;
@@ -61,14 +61,15 @@ public class NoticeController {
 
 	@GetMapping("/page/{pageNo}")
 	public ResponseEntity<? extends NoticeListGetRes> getList(@ApiIgnore Authentication authentication,
-			@PathVariable(name = "pageNumber") int page) {
+			@PathVariable(name = "pageNo") int page) {
 		System.out.println("noticeList");
 		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
 		String userId = userDetails.getUsername();
 
 		List<NoticeDto> list = noticeService.getNoticeList(userId, page);
+		int total = noticeService.getNoticeListTotal(userId);
 
-		return ResponseEntity.status(200).body(NoticeListGetRes.of(200, "SUCCESS", list));
+		return ResponseEntity.status(200).body(NoticeListGetRes.of(200, "SUCCESS", list, total));
 	}
 
 	@ApiOperation(value = "특정 게시글 조회", notes = "특정 공지사항을 조회한다.")
@@ -76,9 +77,15 @@ public class NoticeController {
 			@ApiResponse(code = 500, message = "서버 오류") })
 	@ApiImplicitParam(name = "noticeNo", value = "notice seq", required = true, dataType = "Long")
 	@GetMapping("/{noticeNo}")
-	public ResponseEntity getNotice(@PathVariable Long noticeNo) {
+	public ResponseEntity<? extends BaseResponseBody> getNotice(@PathVariable Long noticeNo) {
 
-		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+		NoticeDto notice = noticeService.getNotice(noticeNo);
+		
+		if (notice == null) {
+			return ResponseEntity.status(404).body(BaseResponseBody.of(404, "NOT_FOUND"));
+		}
+
+		return ResponseEntity.status(200).body(NoticeDetailGetRes.of(200, "SUCCESS", notice));
 	}
 
 	@ApiOperation(value = "공지사항 수정", notes = "특정 공지사항을 수정한다.")
@@ -87,9 +94,21 @@ public class NoticeController {
 			@ApiResponse(code = 500, message = "서버 오류") })
 	@ApiImplicitParam(name = "noticeNo", value = "notice seq", required = true, dataType = "Long")
 	@PutMapping("/{noticeNo}")
-	public ResponseEntity editNotice(@ApiIgnore Authentication authentication,
+	public ResponseEntity<? extends BaseResponseBody> editNotice(@ApiIgnore Authentication authentication,
 			@RequestBody @ApiParam(value = "게시글 수정", required = true) NoticeRegisterPostReq noticePostReq,
 			@PathVariable Long noticeNo) {
+
+		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+		String userId = userDetails.getUsername();
+
+		Boolean isNoticeEdited = noticeService.editNotice(noticeNo, userId, noticePostReq);
+
+		if (isNoticeEdited == null) {
+			return ResponseEntity.status(404).body(BaseResponseBody.of(404, "NOT_FOUND"));
+		}
+		if (isNoticeEdited == false) {
+			return ResponseEntity.status(403).body(BaseResponseBody.of(403, "FORBIDDEN"));
+		}
 
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
 	}
@@ -100,7 +119,20 @@ public class NoticeController {
 			@ApiResponse(code = 500, message = "서버 오류") })
 	@ApiImplicitParam(name = "noticeNo", value = "notice seq", required = true, dataType = "Long")
 	@DeleteMapping("/{noticeNo}")
-	public ResponseEntity delete(@ApiIgnore Authentication authentication, @PathVariable Long noticeNo) {
+	public ResponseEntity<? extends BaseResponseBody> delete(@ApiIgnore Authentication authentication,
+			@PathVariable Long noticeNo) {
+
+		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+		String userId = userDetails.getUsername();
+
+		Boolean isNoticeDeleted = noticeService.deleteNotice(noticeNo, userId);
+		
+		if (isNoticeDeleted == null) {
+			return ResponseEntity.status(404).body(BaseResponseBody.of(404, "NOT_FOUND"));
+		}
+		if (isNoticeDeleted == false) {
+			return ResponseEntity.status(403).body(BaseResponseBody.of(403, "FORBIDDEN"));
+		}
 
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
 	}

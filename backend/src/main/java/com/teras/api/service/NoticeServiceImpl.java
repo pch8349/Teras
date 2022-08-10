@@ -37,7 +37,7 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public Notice createNotice(NoticeRegisterPostReq noticeRegisterInfo, String userId) {
 		User user = userRepository.findByUserId(userId).get();
-		
+
 		Notice notice = Notice.builder().title(noticeRegisterInfo.getTitle()).content(noticeRegisterInfo.getContent())
 				.user(user).classCode(user.getClassCode())
 				.attach(attachmentRepository.findByUuid(noticeRegisterInfo.getUuid()).orElse(null)).build();
@@ -48,12 +48,12 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public List<NoticeDto> getNoticeList(String userId, int page) {
 		User user = userRepository.findByUserId(userId).get();
-		
+
 		Pageable pageable = PageRequest.of(page, 10, Sort.by("noticeNo").descending());
 
 		List<NoticeDto> list = new ArrayList<>();
 
-		for (Notice notice : noticeRepository.findAllByClassCode(user.getClassCode(), pageable)) {
+		for (Notice notice : noticeRepository.findByClassCode(user.getClassCode(), pageable)) {
 			System.out.println(notice.toString());
 			list.add(new NoticeDto(notice));
 		}
@@ -61,4 +61,57 @@ public class NoticeServiceImpl implements NoticeService {
 		return list;
 	}
 
+	@Override
+	public int getNoticeListTotal(String userId) {
+		User user = userRepository.findByUserId(userId).get();
+
+		int total = noticeRepository.countByClassCode(user.getClassCode());
+
+		return total / 10;
+	}
+
+	@Override
+	public NoticeDto getNotice(long noticeNo) {
+		Notice notice = noticeRepository.findById(noticeNo).orElse(null);
+		if (notice == null)
+			return null;
+
+		return new NoticeDto(notice);
+	}
+
+	@Override
+	public Boolean editNotice(long noticeNo, String userId, NoticeRegisterPostReq noticePostReq) {
+
+		Notice notice = noticeRepository.findById(noticeNo).orElse(null);
+		User user = userRepository.findByUserId(userId).get();
+		
+		if (notice == null)
+			return null;
+
+		if (!notice.getUser().equals(user)) {
+			return false;
+		}
+
+		notice.update(noticePostReq.getTitle(), noticePostReq.getContent());
+
+		noticeRepository.save(notice);
+
+		return true;
+	}
+
+	@Override
+	public Boolean deleteNotice(long noticeNo, String userId) {
+		Notice notice = noticeRepository.findById(noticeNo).orElse(null);
+		User user = userRepository.findByUserId(userId).get();
+		
+		if (notice == null)
+			return null;
+
+		if (!notice.getUser().equals(user)) {
+			return false;
+		}
+		noticeRepository.deleteById(noticeNo);
+
+		return true;
+	}
 }
