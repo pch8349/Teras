@@ -1,22 +1,19 @@
-import { apiInstance, fileApi } from "./index";
+import { apiInstance, authApiInstance, fileApi } from "./index";
 
 const api = apiInstance();
+const tokenApi = authApiInstance();
 
 export const registerNotice = async (content, success, fail) => {
-  return await api.post("/notice", content).then(success).catch(fail);
+  return await tokenApi.post("/notice", content).then(success).catch(fail);
   };
   
 export const modifyNotice = async (content, success, fail) => {
   return await fileApi.put("/notice", content).then(success).catch(fail);
 };
 
-export const getNotice = async (success, fail) => {
-  return await api.get("/notice").then(success).catch(fail);
-};
-
-export const getNoticeList = async (pageNumber, success, fail) => {
-  return await api
-    .get(`/notice/list/${pageNumber}`)
+export const getNoticeList = async (pageNo, success, fail) => {
+  return await tokenApi
+    .get(`/notice/page/${pageNo}`)
     .then(success)
     .catch(fail);
 };

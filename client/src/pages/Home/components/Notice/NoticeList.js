@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import NoticeItem from "./NoticeItem";
-import Pagination from "react-js-pagination";
-import { getNotice, getNoticeList } from '../../../../api/notice';
+import { getNoticeList } from '../../../../api/notice';
+import Button from '../../../../components/Button/Button';
+import { Pagination } from '@mui/material';
 
 
 
@@ -66,8 +67,8 @@ function NoticeList() {
 
     useEffect(() => {
         if (isTotalItemsCountLoading) {
-          getNotice().then((res) => {
-            setTotalItemsCount(res.data.length());
+          getNoticeList(page).then((res) => {
+            setTotalItemsCount(res.data.total*10 + res.data.list.length);
             setIsTotalItemsCountLoading(false);
           });
         } else {
@@ -75,15 +76,15 @@ function NoticeList() {
         }
       }, [isTotalItemsCountLoading]);
     
-      // useEffect 데이터 read
-      useEffect(() => {
-        if (isLoading) {
-          getNoticeList(page).then((res) => {
-            setData(res.data);
-            setIsLoading(false);
-          });
-        }
-      }, [isLoading]);
+    // useEffect 데이터 read
+    useEffect(() => {
+      if (isLoading) {
+        getNoticeList(page).then((res) => {
+          setData(res.data.list);
+          setIsLoading(false);
+        });
+      }
+    }, [isLoading]);
 
 
     const handlePageChange = (page) => {
@@ -91,29 +92,27 @@ function NoticeList() {
     Navigate(`?page=${page}`);
     setIsLoading(true);
     };
-    
-    
+
+
     return (
-    <div>
-        <Title>공지사항</Title>
-        <Container>
-            <ButtonContainer>
-            <button
-                name='글쓰기'
-                onClick={()=> Navigate("./write")} />
-            </ButtonContainer>
-            <StyledTable>
+    <>
+      <Title>공지사항</Title>
+      <Container>
+        <ButtonContainer>
+          <Button
+            name='글쓰기'
+            onClick={()=> Navigate("./write")} />
+        </ButtonContainer>
+        <StyledTable>
           <colgroup>
             <StyledCol width="10%"></StyledCol>
-            <StyledCol width="15%"></StyledCol>
-            <StyledCol width="45%"></StyledCol>
-            <StyledCol width="15%"></StyledCol>
-            <StyledCol width="15%"></StyledCol>
+            <StyledCol width="50%"></StyledCol>
+            <StyledCol width="20%"></StyledCol>
+            <StyledCol width="20%"></StyledCol>
           </colgroup>
           <thead>
             <tr>
               <StyledTh>글번호</StyledTh>
-              <StyledTh>구분</StyledTh>
               <StyledTh>제목</StyledTh>
               <StyledTh>작성자</StyledTh>
               <StyledTh>등록일</StyledTh>
@@ -133,17 +132,19 @@ function NoticeList() {
         </StyledTable>
         </Container>
         <PageContainer>
-        <Pagination
-          activePage={page + 1}
-          itemsCountPerPage={10}
-          totalItemsCount={totalItemsCount}
-          pageRangeDisplayed={5}
-          prevPageText={"‹"}
-          nextPageText={"›"}
-          onChange={handlePageChange}
-        />
+          <Pagination
+            count ={page + 1}
+            shape = "rounded"
+            page = {page}
+            itemsCountPerPage={10}
+            totalItemsCount={totalItemsCount}
+            pageRangeDisplayed={5}
+            prevPageText={"‹"}
+            nextPageText={"›"}
+            onChange={handlePageChange}
+          />
       </PageContainer>
-    </div>
+    </>
   )
 }
 

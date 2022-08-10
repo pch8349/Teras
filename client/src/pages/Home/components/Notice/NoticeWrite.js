@@ -1,6 +1,6 @@
 import React, {createRef, useCallback, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
-import { registerNotice } from '../../../../api/notice'
+import { registerNotice  } from '../../../../api/notice'
 import { errorAlert, successAlert } from '../../../../modules/alert'
 import styled from 'styled-components';
 import "@toast-ui/editor/dist/toastui-editor.css";
@@ -73,11 +73,12 @@ function NoticeWrite() {
   const Navigate = useNavigate();
   const [files, setFiles] = useState({
     files: null,
+    uuid: "",
   })
   const [data, setData] = useState({
     title: "",
     content: "",
-    uuid: null,
+    uuid: "",
   })
 
   const onChange = (e) => {
@@ -96,6 +97,7 @@ function NoticeWrite() {
       Navigate("/notice");
     })
     .catch((e) => {
+      console.log(e)
       if (e.response.status === 401) {
         errorAlert(401);
       } else {
@@ -130,7 +132,10 @@ function NoticeWrite() {
     // 배포시에는 지워줘야 합니다.
     axios.defaults.baseURL = "http://i7a706.p.ssafy.io:8080/";
     await axios.post("/file/upload", formData, config).then((res) => {
-      data.uuid = res.data.uuid;
+      setData({
+        ...data,
+        uuid : res.data.uuid,
+      })
     });
   }, []);
 
@@ -158,7 +163,7 @@ function NoticeWrite() {
           initialValue={data.content}
           previewStyle="tab"
           height="400px"
-          initialEditType="wysiwyg"
+          initialEditType="markdown"
           useCommandShortcut={true}
           ref={editorRef}
          />
