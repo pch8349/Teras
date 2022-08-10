@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teras.api.request.NoticeRegisterPostReq;
+import com.teras.api.response.NoticeDetailGetRes;
 import com.teras.api.response.NoticeListGetRes;
 import com.teras.api.service.NoticeService;
 import com.teras.common.auth.SsafyUserDetails;
@@ -76,14 +77,15 @@ public class NoticeController {
 			@ApiResponse(code = 500, message = "서버 오류") })
 	@ApiImplicitParam(name = "noticeNo", value = "notice seq", required = true, dataType = "Long")
 	@GetMapping("/{noticeNo}")
-	public ResponseEntity getNotice(@PathVariable Long noticeNo) {
+	public ResponseEntity<? extends BaseResponseBody> getNotice(@PathVariable Long noticeNo) {
 
 		NoticeDto notice = noticeService.getNotice(noticeNo);
+		
 		if (notice == null) {
 			return ResponseEntity.status(404).body(BaseResponseBody.of(404, "NOT_FOUND"));
 		}
 
-		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+		return ResponseEntity.status(200).body(NoticeDetailGetRes.of(200, "SUCCESS", notice));
 	}
 
 	@ApiOperation(value = "공지사항 수정", notes = "특정 공지사항을 수정한다.")
