@@ -55,17 +55,14 @@ public class Notice {
 	@JoinColumn(name = "attach", nullable = true)
 	Attachment attach;
 
+	public void update(String title, String content) {
+		this.title = title;
+		this.content = content;
+	}
+
 	@Override
 	public String toString() {
 		return "Notice [noticeNo=" + noticeNo + ", title=" + title + ", content=" + content + ", createdDate="
 				+ createdDate + ", user=" + user + ", classCode=" + classCode + ", attach=" + attach + "]";
 	}
-	
-	public void update(String title, String content) {
-		// TODO Auto-generated method stub
-		this.title = title;
-		this.content = content;
-		
-	}
-
 }

@@ -12,20 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teras.api.request.NoticeRegisterPostReq;
 import com.teras.api.response.NoticeListGetRes;
 import com.teras.api.service.NoticeService;
-import com.teras.api.service.UserService;
 import com.teras.common.auth.SsafyUserDetails;
-import com.teras.common.model.column.TerasAuthority;
 import com.teras.common.model.response.BaseResponseBody;
 import com.teras.db.dto.NoticeDto;
 import com.teras.db.entity.Notice;
-import com.teras.db.entity.User;
-import com.teras.db.repository.NoticeRepository;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -43,14 +38,8 @@ import springfox.documentation.annotations.ApiIgnore;
 public class NoticeController {
 
 	@Autowired
-	UserService userService;
-	
-	@Autowired
 	NoticeService noticeService;
 
-	@Autowired
-	NoticeRepository noticeRepository;
-	
 	@ApiOperation(value = "공지사항 작성", notes = "사용자가 공지사항을 작성한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "작성 성공"), @ApiResponse(code = 401, message = "인증 실패"),
 			@ApiResponse(code = 500, message = "서버 오류") })
@@ -61,16 +50,9 @@ public class NoticeController {
 		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
 		String userId = userDetails.getUsername();
 
-		TerasAuthority userAuthority = userDetails.getUser().getAuthority();
-
-		if(userAuthority != TerasAuthority.valueOf("TEACHER")) {
-			return ResponseEntity.status(403).body(BaseResponseBody.of(403, "FORBIDDEN"));
-		}
-
-		
 		Notice notice = noticeService.createNotice(registerInfo, userId);
 
-		return ResponseEntity.status(201).body(BaseResponseBody.of(201, "CREATED"));
+		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
 	}
 
 	@ApiOperation(value = "공지사항 전체 조회", notes = "모든 공지사항을 조회한다.")
@@ -78,14 +60,15 @@ public class NoticeController {
 
 	@GetMapping("/page/{pageNo}")
 	public ResponseEntity<? extends NoticeListGetRes> getList(@ApiIgnore Authentication authentication,
-			@PathVariable(name = "pageNumber") int page) {
+			@PathVariable(name = "pageNo") int page) {
 		System.out.println("noticeList");
 		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
 		String userId = userDetails.getUsername();
 
 		List<NoticeDto> list = noticeService.getNoticeList(userId, page);
+		int total = noticeService.getNoticeListTotal(userId);
 
-		return ResponseEntity.status(200).body(NoticeListGetRes.of(200, "SUCCESS", list));
+		return ResponseEntity.status(200).body(NoticeListGetRes.of(200, "SUCCESS", list, total));
 	}
 
 	@ApiOperation(value = "특정 게시글 조회", notes = "특정 공지사항을 조회한다.")
@@ -96,10 +79,10 @@ public class NoticeController {
 	public ResponseEntity getNotice(@PathVariable Long noticeNo) {
 
 		NoticeDto notice = noticeService.getNotice(noticeNo);
-		if(notice == null) {
+		if (notice == null) {
 			return ResponseEntity.status(404).body(BaseResponseBody.of(404, "NOT_FOUND"));
 		}
-		
+
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
 	}
 
@@ -109,22 +92,22 @@ public class NoticeController {
 			@ApiResponse(code = 500, message = "서버 오류") })
 	@ApiImplicitParam(name = "noticeNo", value = "notice seq", required = true, dataType = "Long")
 	@PutMapping("/{noticeNo}")
-	public ResponseEntity editNotice(@ApiIgnore Authentication authentication,
+	public ResponseEntity<? extends BaseResponseBody> editNotice(@ApiIgnore Authentication authentication,
 			@RequestBody @ApiParam(value = "게시글 수정", required = true) NoticeRegisterPostReq noticePostReq,
 			@PathVariable Long noticeNo) {
 
 		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
 		String userId = userDetails.getUsername();
-		User user = userService.getUserByUserId(userId);
-		
-		Boolean isNoticeEdited = noticeService.editNotice(noticeNo, user, noticePostReq);
-		if(isNoticeEdited == null) {
+
+		Boolean isNoticeEdited = noticeService.editNotice(noticeNo, userId, noticePostReq);
+
+		if (isNoticeEdited == null) {
 			return ResponseEntity.status(404).body(BaseResponseBody.of(404, "NOT_FOUND"));
 		}
-		if(isNoticeEdited == false) {
+		if (isNoticeEdited == false) {
 			return ResponseEntity.status(403).body(BaseResponseBody.of(403, "FORBIDDEN"));
 		}
-		
+
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
 	}
 
@@ -134,20 +117,21 @@ public class NoticeController {
 			@ApiResponse(code = 500, message = "서버 오류") })
 	@ApiImplicitParam(name = "noticeNo", value = "notice seq", required = true, dataType = "Long")
 	@DeleteMapping("/{noticeNo}")
-	public ResponseEntity delete(@ApiIgnore Authentication authentication, @PathVariable Long noticeNo) {
+	public ResponseEntity<? extends BaseResponseBody> delete(@ApiIgnore Authentication authentication,
+			@PathVariable Long noticeNo) {
 
 		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
 		String userId = userDetails.getUsername();
-		User user = userService.getUserByUserId(userId);
+
+		Boolean isNoticeDeleted = noticeService.deleteNotice(noticeNo, userId);
 		
-		Boolean isNoticeDeleted = noticeService.deleteNotice(noticeNo, user);
-		if(isNoticeDeleted == null) {
+		if (isNoticeDeleted == null) {
 			return ResponseEntity.status(404).body(BaseResponseBody.of(404, "NOT_FOUND"));
 		}
-		if(isNoticeDeleted == false) {
+		if (isNoticeDeleted == false) {
 			return ResponseEntity.status(403).body(BaseResponseBody.of(403, "FORBIDDEN"));
 		}
-		
+
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
 	}
 }
