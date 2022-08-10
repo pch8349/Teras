@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teras.api.request.NoticeRegisterPostReq;
@@ -46,10 +47,10 @@ public class NoticeController {
 	@PostMapping()
 	public ResponseEntity<? extends BaseResponseBody> register(@ApiIgnore Authentication authentication,
 			@RequestBody @ApiParam(value = "공지사항 내용", required = true) NoticeRegisterPostReq registerInfo) {
-		
-		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+
+		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
 		String userId = userDetails.getUsername();
-		
+
 		Notice notice = noticeService.createNotice(registerInfo, userId);
 
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
@@ -58,13 +59,14 @@ public class NoticeController {
 	@ApiOperation(value = "공지사항 전체 조회", notes = "모든 공지사항을 조회한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "조회 성공"), @ApiResponse(code = 500, message = "서버 오류") })
 
-	@GetMapping()
-	public ResponseEntity<? extends NoticeListGetRes> getList(@ApiIgnore Authentication authentication) {
+	@GetMapping("/page/{pageNo}")
+	public ResponseEntity<? extends NoticeListGetRes> getList(@ApiIgnore Authentication authentication,
+			@PathVariable(name = "pageNumber") int page) {
 		System.out.println("noticeList");
 		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
 		String userId = userDetails.getUsername();
 
-		List<NoticeDto> list = noticeService.getNoticeList(userId);
+		List<NoticeDto> list = noticeService.getNoticeList(userId, page);
 
 		return ResponseEntity.status(200).body(NoticeListGetRes.of(200, "SUCCESS", list));
 	}

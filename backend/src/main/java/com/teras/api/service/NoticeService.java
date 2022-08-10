@@ -9,5 +9,5 @@ import com.teras.db.entity.Notice;
 public interface NoticeService {
 	Notice createNotice(NoticeRegisterPostReq noticeRegisterInfo, String userId);
 	
-	List<NoticeDto> getNoticeList(String userId);
+	List<NoticeDto> getNoticeList(String userId, int page);
 }

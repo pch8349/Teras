@@ -7,6 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.teras.api.request.NoticeRegisterPostReq;
@@ -43,12 +46,14 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public List<NoticeDto> getNoticeList(String userId) {
+	public List<NoticeDto> getNoticeList(String userId, int page) {
 		User user = userRepository.findByUserId(userId).get();
+		
+		Pageable pageable = PageRequest.of(page, 10, Sort.by("noticeNo").descending());
 
 		List<NoticeDto> list = new ArrayList<>();
 
-		for (Notice notice : noticeRepository.findAllByClassCode(user.getClassCode())) {
+		for (Notice notice : noticeRepository.findAllByClassCode(user.getClassCode(), pageable)) {
 			System.out.println(notice.toString());
 			list.add(new NoticeDto(notice));
 		}
