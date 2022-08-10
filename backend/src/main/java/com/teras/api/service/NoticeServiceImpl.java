@@ -61,4 +61,48 @@ public class NoticeServiceImpl implements NoticeService {
 		return list;
 	}
 
+	@Override
+	public NoticeDto getNotice(long noticeNo) {
+		Notice notice = noticeRepository.findById(noticeNo).orElse(null);
+		if(notice == null)
+			return null;
+	
+		return new NoticeDto(notice);
+	}
+	
+	@Override
+	public Boolean editNotice(long noticeNo, User user, NoticeRegisterPostReq noticePostReq) {
+
+		Notice notice = noticeRepository.findById(noticeNo).orElse(null);
+
+		if(notice == null)
+			return null;
+		
+		if(!notice.getUser().equals(user)) {
+			return false;
+		}
+		
+		notice.update(noticePostReq.getTitle(), noticePostReq.getContent());
+		
+		noticeRepository.save(notice);
+		
+		return true;
+	}
+	
+	@Override
+	public Boolean deleteNotice(long noticeNo, User user) {
+		Notice notice = noticeRepository.findById(noticeNo).orElse(null);
+
+		if(notice == null)
+			return null;
+		
+		if(!notice.getUser().equals(user)) {
+			return false;
+		}
+		noticeRepository.deleteById(noticeNo);
+		
+		return true;
+	}
+
+	
 }

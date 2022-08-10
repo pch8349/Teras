@@ -13,9 +13,9 @@ import com.teras.db.entity.ClassEntity;
 import com.teras.db.entity.Notice;
 
 @Repository
-public interface NoticeRepository extends JpaRepository<Notice, Integer> {
+public interface NoticeRepository extends JpaRepository<Notice, Long> {
 
-	Optional<Notice> findByNoticeNo(int noticeNo);
+	Optional<Notice> findByNoticeNo(long noticeNo);
 
 	Optional<List<Notice>> findAllByOrderByNoticeNoDesc();
 
