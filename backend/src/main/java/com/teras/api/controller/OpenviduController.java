@@ -30,8 +30,6 @@ import io.openvidu.java.client.OpenVidu;
 import io.openvidu.java.client.OpenViduHttpException;
 import io.openvidu.java.client.OpenViduJavaClientException;
 import io.openvidu.java.client.OpenViduRole;
-import io.openvidu.java.client.Recording;
-import io.openvidu.java.client.RecordingProperties;
 import io.openvidu.java.client.Session;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -66,13 +64,10 @@ public class OpenviduController {
 		this.openVidu = new OpenVidu(OPENVIDU_URL, SECRET);
 	}
 
-	/*******************/
-	/*** Session API ***/
-	/*******************/
 
-	@ApiOperation(value = "session 토큰 가져오기", notes = "세션 id의 정보에 따라 토큰을 가져온다.")//body{tokenName:'aaa'}
+	@ApiOperation(value = "get session 토큰", notes = "세션 id의 정보로 토큰을 가져온다.")
 	@PostMapping("/get-token")
-	public ResponseEntity<OpenviduPostRes> getToken(@RequestBody @ApiParam(value="token가져오기", required = true) OpenviduPostReq openviduPostReq) {
+	public ResponseEntity<OpenviduPostRes> getToken(@RequestBody @ApiParam(value="getToken", required = true) OpenviduPostReq openviduPostReq) {
 
 		System.out.println("Getting sessionId and token | {sessionName}=" +openviduPostReq.getSessionName());
 		String sessionName=openviduPostReq.getSessionName();
@@ -86,6 +81,7 @@ public class OpenviduController {
 		ConnectionProperties connectionProperties = new ConnectionProperties.Builder().type(ConnectionType.WEBRTC)
 				.role(role).data("").build();
 
+		//enterRoom
 		//세션이 있으면 -> 참가자로서 입장
 		if (this.mapSessions.get(sessionName) != null) {
 			// Session already exists
@@ -115,9 +111,11 @@ public class OpenviduController {
 			}
 		}
 
-		// New session
+		
+		// New session 새로운 방 생성
 		try {
 			// Create a new OpenVidu Session
+			//System.out.println("hello");
 			Session session = this.openVidu.createSession();
 			System.out.println("New session " + sessionName);
 			// Generate a new token with the recently created connectionProperties
@@ -135,7 +133,7 @@ public class OpenviduController {
 
 		} catch (Exception e) {
 			// If error generate an error message and return it to client
-			return ResponseEntity.status(401).body(OpenviduPostRes.of(401, "Invalid", null));
+			return ResponseEntity.status(401).body(OpenviduPostRes.of(401, "Invalid1", null));
 		}
 	}
 	
