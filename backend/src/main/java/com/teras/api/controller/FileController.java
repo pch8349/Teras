@@ -32,7 +32,7 @@ public class FileController {
 
 	@PostMapping("/download")
 	public ResponseEntity<Object> postDownload(@RequestBody FileDownloadPostReq downloadInfo) {
-
+		System.out.println(downloadInfo.getUuid());
 		return fileService.downloadFile(downloadInfo.getUuid());
 	}
 	

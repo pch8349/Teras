@@ -15,6 +15,8 @@ public class UserDto {
 	String phoneNumber;
 
 	String classCode;
+	
+	String authority;
 
 	public UserDto(User user) {
 		id = user.getUserId();
@@ -22,6 +24,7 @@ public class UserDto {
 		email = user.getEmail();
 		phoneNumber = user.getPhoneNumber();
 		classCode = user.getClassCode().getClassCode();
+		authority = user.getAuthority().toString();
 	}
 	
 	

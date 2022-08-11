@@ -11,6 +11,8 @@ import com.teras.db.entity.ClassEntity;
 import com.teras.db.entity.SubjectDetail;
 
 @Repository
-public interface AssignmentRepository extends JpaRepository<Assignment, Long>{
+public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
 	Optional<List<Assignment>> findByClassCodeAndSubjectCode(ClassEntity classCode, SubjectDetail subjectCode);
+
+	Optional<Assignment> findByAssignNo(long assignNo);
 }

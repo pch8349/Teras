@@ -14,7 +14,7 @@ public class AssignmentDto {
 	private String createdDate;
 	private String deadLine;
 	private String uuid;
-	
+
 	public AssignmentDto(Assignment assign) {
 		assignNo = assign.getAssignNo();
 		title = assign.getTitle();
@@ -23,6 +23,7 @@ public class AssignmentDto {
 		subjectCode = assign.getSubjectCode().getSubjectCode();
 		createdDate = assign.getCreatedDate().toString();
 		deadLine = assign.getDeadline().toString();
-		uuid = assign.getUuid().getUuid();
+		if (assign.getUuid() != null)
+			uuid = assign.getUuid().getUuid();
 	}
 }
