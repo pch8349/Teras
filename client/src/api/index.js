@@ -26,7 +26,7 @@ export function authApiInstance() {
 
 
 export const fileApi = axios.create({
-  baseURL: "https://i7a706.p.ssafy.io:8080/",
+  baseURL: "http://i7a706.p.ssafy.io:8080/",
   headers: {
     "Content-Type": `multipart/form-data`,
   },
