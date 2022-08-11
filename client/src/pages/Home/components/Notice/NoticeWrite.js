@@ -94,7 +94,7 @@ function NoticeWrite() {
     // api요청에 data 실어서 보내기 (header값 필요하면 header 처리해서)
     registerNotice(data).then(() => {
       successAlert("글 등록에 성공하였습니다.");
-      Navigate("/notice");
+      Navigate("/");
     })
     .catch((e) => {
       console.log(e)

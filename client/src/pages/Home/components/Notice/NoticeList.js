@@ -134,8 +134,7 @@ function NoticeList() {
         </Container>
         <PageContainer>
           <Pagination
-            count ={page + 1}
-            shape = "rounded"
+            activePage={page + 1}
             itemsCountPerPage={10}
             totalItemsCount={totalItemsCount}
             pageRangeDisplayed={5}
