@@ -4,7 +4,8 @@ import styled from "styled-components";
 import NoticeItem from "./NoticeItem";
 import { getNoticeList } from '../../../../api/notice';
 import Button from '../../../../components/Button/Button';
-import { Pagination } from '@mui/material';
+import Pagination from 'react-js-pagination';
+
 
 
 
@@ -133,9 +134,7 @@ function NoticeList() {
         </Container>
         <PageContainer>
           <Pagination
-            count ={page + 1}
-            shape = "rounded"
-            page = {page}
+            activePage={page + 1}
             itemsCountPerPage={10}
             totalItemsCount={totalItemsCount}
             pageRangeDisplayed={5}

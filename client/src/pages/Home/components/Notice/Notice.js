@@ -10,7 +10,7 @@ function main() {
     <Routes>
       <Route path="" element={<NoticeList />} />
       <Route path="write" element={<NoticeWrite />} />
-      <Route path="detail/:noticeNo" element={<NoticeDetail />} />
+      <Route path="/:noticeNo" element={<NoticeDetail />} />
     </Routes>
   </div>);
 }
