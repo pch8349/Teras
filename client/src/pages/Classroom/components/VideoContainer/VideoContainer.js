@@ -10,7 +10,7 @@ import VideocamIcon from "@mui/icons-material/Videocam";
 import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import ScreenShareIcon from "@mui/icons-material/ScreenShare";
 
-const OPENVIDU_SERVER_URL = "https://" + window.location.hostname + ":4443";
+const OPENVIDU_SERVER_URL = "https://i7a706.p.ssafy.io:4443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 function VideoContainer() {
@@ -202,6 +202,8 @@ function VideoContainer() {
     );
   };
 
+  // OPENVIDU_SERVER_URL + "/openvidu/api/sessions"
+
   const createSession = (sessionId) => {
     return new Promise((resolve, reject) => {
       var data = JSON.stringify({ customSessionId: sessionId });
@@ -211,6 +213,8 @@ function VideoContainer() {
             Authorization:
               "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,POST",
           },
         })
         .then((response) => {
@@ -261,6 +265,8 @@ function VideoContainer() {
               Authorization:
                 "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
               "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "GET,POST",
             },
           }
         )
