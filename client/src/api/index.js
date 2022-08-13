@@ -13,17 +13,17 @@ export function apiInstance() {
 }
 
 // axios 객체 생성
-export function authApiInstance() {
-  const instance = axios.create({
-    baseURL: "http://i7a706.p.ssafy.io:8080/",
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-    },
-  });
+// export function authApiInstance() {
+//   const instance = axios.create({
+//     baseURL: "http://i7a706.p.ssafy.io:8080/",
+//     headers: {
+//       "Content-type": "application/json",
+//       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+//     },
+//   });
 
-  return instance;
-}
+//   return instance;
+// }
 
 // axios 헤더 포함
 export function authApiInstance() {
@@ -37,7 +37,6 @@ export function authApiInstance() {
 
   return instance;
 }
-
 
 export const fileApi = axios.create({
   baseURL: "http://i7a706.p.ssafy.io:8080/",
