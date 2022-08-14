@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./style.css";
-import { Provider, useSelector, useDispatch, connect } from "react-redux";
+import { Provider, useSelector, useDispatch } from "react-redux";
 import store from "./Store";
 
 function test() {
@@ -36,9 +36,11 @@ function Left2(props) {
 }
 function Left3(props) {
   const number = useSelector((state) => state.number);
+  const content = useSelector((state) => state.content);
   return (
     <div>
       <h1>Left3 : {number}</h1>
+      <h1>content : {content}</h1>
     </div>
   );
 }
@@ -61,17 +63,23 @@ function Right2(props) {
 }
 function Right3(props) {
   const dispatch = useDispatch();
-  const data = "하이";
+
+  const onSubmit = () => {
+    dispatch({
+      type: "PLUS",
+      content: content,
+    });
+  };
+  const [content, setContent] = useState("");
   return (
     <div>
       <h1>Right3</h1>
       <input
-        type="button"
-        value="+"
-        onClick={() => {
-          dispatch({ type: "PLUS" });
-        }}
+        type="text"
+        value={content}
+        onChange={({ target: { value } }) => setContent(value)}
       />
+      <button onClick={onSubmit}></button>
     </div>
   );
 }

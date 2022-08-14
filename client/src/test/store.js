@@ -12,14 +12,18 @@ import { legacy_createStore as createStore } from "redux";
 const store = createStore((currentState, action) => {
 >>>>>>> ab2d848 (test)
   if (currentState === undefined) {
+    console.log("여기");
     return {
       number: 1,
+      content: "a",
     };
   }
   const newState = { ...currentState };
   if (action.type === "PLUS") {
     newState.number++;
+    console.log("newstate", newState.content);
   }
+  newState.content = action.content;
   return newState;
 <<<<<<< HEAD
 };
@@ -37,6 +41,7 @@ export default store;
 =======
 });
 
+<<<<<<< HEAD
 const s = createStore((currentState, action) => {
     const newState = { ...currentState };
     
@@ -44,3 +49,6 @@ const s = createStore((currentState, action) => {
 
 export default { store, s };
 >>>>>>> ab2d848 (test)
+=======
+export default store;
+>>>>>>> 25f08f2 ([FE] persist error)

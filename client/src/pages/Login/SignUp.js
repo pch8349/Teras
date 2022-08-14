@@ -30,6 +30,7 @@ const USER_REGEX = /^[a-zA-Z][a-zA-z0-9-_]{3,23}$/;
 //영 대/소문자, 0~9, 특수문자, 8~24자 제한
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const NUM_REGEX = /^(?=.*[0-9]).{11}$/;
+const TEXT_REGEX = /^.{0, 24}$/;
 
 const SignUp = ({}) => {
   const Navigate = useNavigate();
@@ -43,7 +44,8 @@ const SignUp = ({}) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [flag, setFlag] = useState("0");
+  const [flag, setFlag] = useState(1);
+  const [trigger, setTrigger] = useState("");
 
   const [validId, setValidId] = useState(false);
   const [validPw, setValidPw] = useState(false);
@@ -59,10 +61,11 @@ const SignUp = ({}) => {
     email: email,
     phoneNumber: phone,
     authority: role,
-    classCode: "S0000035400103",
+    classCode: "S0000035400101",
   };
 
   const NewUser = async (e) => {
+    console.log("login flag", flag);
     console.log(body);
     e.preventDefault();
     if (
@@ -92,43 +95,75 @@ const SignUp = ({}) => {
       }
     } else {
       warnAlert("빈 입력사항을 확인해주세요.");
+      console.log(
+        role,
+        flag,
+        validId,
+        validPw,
+        validMatch,
+        validName,
+        validEmail,
+        validPhone
+      );
     }
   };
   const getDropDownValue = (role) => {
     setRole(role);
     console.log(role);
   };
+
   //아이디 중복 검사
   const IdCheck = async (e) => {
     e.preventDefault();
-    try {
-      await userCheck(id, (response) => {
-        setFlag(response.data.flag);
-      });
-    } catch (error) {
-      console.log("error");
+    setTrigger((n) => n + 1);
+    console.log("이번");
+    if (flag === 0 && validId) {
+      successAlert("사용 가능한 아이디입니다");
+    } else if (flag === 1 && validId) {
+      warnAlert("이미 사용중인 아이디입니다");
     }
   };
-
+  useEffect(() => {
+    console.log("일번");
+    async function get() {
+      try {
+        await userCheck(id, (response) => {
+          setFlag(() => {
+            return response.data.flag;
+          });
+          console.log("IdCheck", flag);
+        });
+      } catch (error) {
+        console.log("error");
+      }
+    }
+    get();
+  }, [flag]);
   // 유효성 체크. useCallBack은 함수의 재사용을 위함
   const onValidCheck = useCallback((e) => {
     if (e[0].id === "id") {
       const result = USER_REGEX.test(e[0].value);
+      console.log("id", result);
       setValidId(result);
     } else if (e[0].id === "pw") {
       const result = PWD_REGEX.test(e[0].value);
+      console.log("pw", result);
       setValidPw(result);
     } else if (e[0].id === "matchpw") {
       const result = pw === matchpw;
+      console.log("pwd", result);
       setValidMatch(result);
     } else if (e[0].id === "name") {
-      const result = name !== "";
+      const result = name.length > 0;
+      console.log("name", result);
       setValidName(result);
     } else if (e[0].id === "email") {
-      const result = email !== "";
+      const result = email.length < 0;
+      console.log("asdfasdf", email);
       setValidEmail(result);
     } else if (e[0].id === "phone") {
       const result = NUM_REGEX.test(e[0].value);
+      console.log("phone", result);
       setValidPhone(result);
     }
   }, []);
@@ -142,15 +177,6 @@ const SignUp = ({}) => {
       );
     }
   };
-
-  useEffect(() => {
-    console.log("effect flag", flag);
-    if (flag === 0 && validId) {
-      successAlert("사용 가능한 아이디입니다");
-    } else if (flag === 1 && validId) {
-      warnAlert("이미 사용중인 아이디입니다");
-    }
-  }, [flag]);
 
   useEffect(() => {
     // 함수형의 동기를 맞추기 위해 useEffect를 한번 더 사용
@@ -169,6 +195,20 @@ const SignUp = ({}) => {
     console.log(pw, matchpw);
     setValidMatch(pw === matchpw);
   }, [pw, matchpw]);
+
+  useEffect(() => {
+    console.log(validName);
+    setValidName(name !== "");
+  }, [name, validName]);
+
+  useEffect(() => {
+    console.log(validEmail);
+    setValidEmail(email !== "");
+  }, [email, validEmail]);
+
+  useEffect(() => {
+    console.log(validPhone);
+  }, [validPhone]);
 
   return (
     <NewRoot>
@@ -199,6 +239,9 @@ const SignUp = ({}) => {
               value={id}
               onChange={({ target: { value } }) => {
                 setId(value);
+                setFlag((n) => {
+                  return n + 1;
+                });
                 onValidCheck([{ id: "id", value: value }]);
               }}
             />
@@ -259,7 +302,7 @@ const SignUp = ({}) => {
             }}
           />
           <EmptyPart />
-          <FlexRow>
+          {/* <FlexRow>
             <DropDown
               arr={[
                 { id: "TEACHER", name: "교사" },
@@ -277,7 +320,7 @@ const SignUp = ({}) => {
           </FlexRow>
           <FlexRow>
             <EmptyPart></EmptyPart>
-          </FlexRow>
+          </FlexRow> */}
           <FlexRow>
             <TextBigInter>이메일</TextBigInter>
             <FlexColumn>

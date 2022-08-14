@@ -8,25 +8,29 @@ import SignUpFin from "./pages/Login/SignUpFin";
 import Classroom from "./pages/Classroom/index";
 import ClassMake from "./pages/Login/ClassMake";
 import Test from "./test/Test";
-import { getUser } from "./api/users";
 
-function App() {
-  const [user, setUser] = useState();
+const App = () => {
   const [token, setToken] = useState();
   useEffect(() => {
-    setToken(
-      localStorage.getItem("accessToken") === null
-        ? sessionStorage.getItem("accessToken")
-        : localStorage.getItem("accessToken")
-    );
+    const load = () => {
+      setToken(() =>
+        localStorage.getItem("accessToken") === null
+          ? sessionStorage.getItem("accessToken")
+          : localStorage.getItem("accessToken")
+      );
+    };
+    console.log("토큰", token);
+    load();
+  }, [token]);
+  useEffect(() => {
     console.log(token);
-  }, []);
+  }, [token]);
 
   return (
     <Router>
       <Routes>
         <Route path="/test" element={<Test />} />
-        <Route path="/main" element={token ? <Home /> : <UserLogin />} />
+        <Route path="/*" element={token ? <Home /> : <UserLogin />} />
         <Route path="/login" element={<UserLogin />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signupfin" element={<SignUpFin />} />
@@ -35,6 +39,6 @@ function App() {
       </Routes>
     </Router>
   );
-}
+};
 
 export default App;

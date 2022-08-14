@@ -31,7 +31,7 @@ export function authApiInstance() {
     baseURL: "http://i7a706.p.ssafy.io:8080/",
     headers: {
       "Content-type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
     },
   });
 

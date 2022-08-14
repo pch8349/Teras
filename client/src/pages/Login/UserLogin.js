@@ -18,7 +18,8 @@ import {
 import { TextBigInter, TextSmallInter, TextBtnInter } from "./styles/LoginText";
 import { GreenBtn } from "./styles/LoginBtn";
 import { doLogin, getUser } from "../../api/users";
-import { Cookies } from "react-cookie";
+import { login } from "storage/UserSlice";
+import { useDispatch } from "react-redux";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -30,7 +31,8 @@ const UserLogin = ({}) => {
   const [success, setSuccess] = useState(true);
   const [ischecked, setIsChecked] = useState(false);
 
-  const onSubmit = async (e) => {
+  const dispatch = useDispatch();
+  const OnSubmit = async (e) => {
     e.preventDefault();
     try {
       await doLogin(
@@ -39,11 +41,12 @@ const UserLogin = ({}) => {
           const accessToken = response.data.accessToken;
           if (ischecked) {
             localStorage.setItem("accessToken", accessToken);
+            sessionStorage.setItem("accessToken", accessToken);
           } else {
             sessionStorage.setItem("accessToken", accessToken);
           }
           setSuccess(true);
-          Navigate("/main");
+          console.log("로그인 성공", accessToken);
         },
         () => {
           console.log("로그인 실패");
@@ -53,6 +56,33 @@ const UserLogin = ({}) => {
     } catch (error) {
       console.log(error);
     }
+
+    const getJWTData = async () => {
+      sessionStorage.getItem("accessToken");
+      try {
+        await getUser(
+          async (response) => {
+            const res = response.data.user;
+            dispatch(
+              login({
+                id: res.id,
+                name: res.name,
+                email: res.email,
+                phoneNumber: res.phoneNumber,
+                classCode: res.classCode,
+                authority: res.authority,
+              })
+            );
+            console.log("redux 성공");
+            Navigate("/");
+          },
+          (error) => {
+            console.log("에러입니다", error);
+          }
+        );
+      } catch {}
+    };
+    getJWTData();
   };
 
   useEffect(() => {
@@ -64,7 +94,7 @@ const UserLogin = ({}) => {
       <BackForm>
         <LoginContent>
           <LogoForm src={`https://file.rendit.io/n/hqghxg3SfioHvsa6lVy3.png`} />
-          <form onSubmit={onSubmit}>
+          <form onSubmit={OnSubmit}>
             <TextBigInter>아이디</TextBigInter>
             <IdForm
               value={id}
