@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./home.css";
 import TimeTable from "./components/Timetable/timetable";
 import { Button } from "@mui/material";
@@ -13,7 +13,12 @@ import Profile from "./components/Profile/Profile";
 import { Route, Routes, NavLink, Link } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 
-function Home() {
+import { useDispatch } from "react-redux";
+import { logout, login, reset } from "storage/UserSlice";
+
+const Home = (tmp) => {
+  const dispatch = useDispatch();
+
   const navTabs = [
     {
       name: "메인",
@@ -54,6 +59,9 @@ function Home() {
 
   const handleLogOut = () => {
     localStorage.clear();
+    sessionStorage.clear();
+    dispatch(reset());
+    dispatch(logout());
   };
 
   return (
@@ -64,7 +72,7 @@ function Home() {
             <img src={"/Teras_logo_home.png"} alt="terasLogo" height="100" />
           </div>
           <div className="navBar">
-            <Link to="/login">
+            <Link to="/">
               <button onClick={handleLogOut}>
                 로그아웃
                 <LogoutIcon />
@@ -149,6 +157,6 @@ function Home() {
       </div>
     </div>
   );
-}
+};
 
 export default Home;

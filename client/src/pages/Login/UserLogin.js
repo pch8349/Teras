@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import {
   NewRoot,
@@ -17,43 +17,82 @@ import {
 } from "./styles/LoginStyle";
 import { TextBigInter, TextSmallInter, TextBtnInter } from "./styles/LoginText";
 import { GreenBtn } from "./styles/LoginBtn";
-import { doLogin, getUser } from "../../api/users";
+import { useDispatch } from "react-redux";
+import { doLogin, getUser } from "api/users";
+import { login, isLogined } from "storage/UserSlice";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-const UserLogin = ({}) => {
+const UserLogin = () => {
+  const Navigate = useNavigate();
+
   const [id, setId] = useState("");
   const [password, setPw] = useState("");
   const [success, setSuccess] = useState(true);
   const [ischecked, setIsChecked] = useState(false);
 
-  const onSubmit = async (e) => {
+  const dispatch = useDispatch();
+
+  const OnChange = (e) => {
+    const {
+      target: { name, value },
+    } = e;
+    if (name === "id") setId(value);
+    else if (name === "pw") setPw(value);
+  };
+
+  const getJWTData = async () => {
+    console.log("이번");
+    try {
+      console.log("세션 세부", sessionStorage.getItem("accessToken"));
+      await getUser(
+        async (response) => {
+          console.log("리스폰스", response);
+          const res = response.data.user;
+          dispatch(
+            login({
+              // type: "login",
+              // payload: {
+              id: res.id,
+              name: res.name,
+              email: res.email,
+              phoneNumber: res.phoneNumber,
+              classCode: res.classCode,
+              authority: res.authority,
+              isLogin: true,
+              // },
+            })
+            // isLogined(true)
+          );
+
+          Navigate("/");
+        },
+        (error) => {
+          console.log("getUser 에러입니다", error);
+        }
+      );
+    } catch (e) {
+      console.log("걍 에러");
+    }
+  };
+
+  const OnSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log("일번");
       await doLogin(
         { id, password },
-        async (response) => {
+        (response) => {
           const accessToken = response.data.accessToken;
+          sessionStorage.setItem("accessToken", accessToken);
           if (ischecked) {
             localStorage.setItem("accessToken", accessToken);
-          } else {
-            sessionStorage.setItem("accessToken", accessToken);
           }
+
           setSuccess(true);
-
-          try {
-            await getUser(
-              async (response) => {
-                localStorage.setItem("userId", response.data.user.id);
-                localStorage.setItem("userName", response.data.user.name);
-              },
-              (error) => {
-                console.log(error);
-              }
-            );
-          } catch {}
-
-          window.location.href = "/";
+          console.log("로그인 성공");
+          // setAuthApiHeaders();
+          // Navigate("/");
         },
         () => {
           console.log("로그인 실패");
@@ -61,8 +100,10 @@ const UserLogin = ({}) => {
         }
       );
     } catch (error) {
-      console.log(error);
+      console.log("3333", error);
     }
+    console.log("4444");
+    getJWTData();
   };
 
   useEffect(() => {
@@ -74,11 +115,12 @@ const UserLogin = ({}) => {
       <BackForm>
         <LoginContent>
           <LogoForm src={`https://file.rendit.io/n/hqghxg3SfioHvsa6lVy3.png`} />
-          <form onSubmit={onSubmit}>
+          <form onSubmit={OnSubmit}>
             <TextBigInter>아이디</TextBigInter>
             <IdForm
+              name="id"
               value={id}
-              onChange={({ target: { value } }) => setId(value)}
+              onChange={OnChange}
               placeholder="아이디를 입력하세요"
             />
             <FlexRow>
@@ -86,8 +128,9 @@ const UserLogin = ({}) => {
             </FlexRow>
             <TextBigInter>비밀번호</TextBigInter>
             <PwForm
+              name="pw"
               value={password}
-              onChange={({ target: { value } }) => setPw(value)}
+              onChange={OnChange}
               placeholder="비밀번호를 입력하세요"
             />
             <FlexRow1>

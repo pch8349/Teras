@@ -2,16 +2,22 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import { createStore, applyMiddleware } from "redux";
+import { ToastContainer } from "react-toastify";
 import { Provider } from "react-redux";
-import rootReducer from "./reducers/index";
-import logger from "redux-logger";
+import Store from "storage/Store";
+import persistStore from "redux-persist/es/persistStore";
+import { PersistGate } from "redux-persist/integration/react";
 
-const store = createStore(rootReducer, applyMiddleware(logger));
+let persistor = persistStore(Store);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>
+  <>
+    <Provider store={Store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+        <ToastContainer />
+      </PersistGate>
+    </Provider>
+  </>
 );

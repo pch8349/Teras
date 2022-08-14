@@ -23,6 +23,7 @@ const NewRoot = styled.div`
 `;
 const BackForm = styled.div`
   width: 1440px;
+  height: 100%;
   background-color: #f4f4f4;
   display: flex;
   overflow: hidden;
