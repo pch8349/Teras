@@ -14,9 +14,11 @@ import { Route, Routes, NavLink, Link } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 import { useDispatch } from "react-redux";
-import { logout } from "storage/UserSlice";
+import { logout, login, reset } from "storage/UserSlice";
 
-function Home() {
+const Home = (tmp) => {
+  const dispatch = useDispatch();
+
   const navTabs = [
     {
       name: "메인",
@@ -55,10 +57,10 @@ function Home() {
     },
   ];
 
-  const dispatch = useDispatch();
   const handleLogOut = () => {
     localStorage.clear();
     sessionStorage.clear();
+    dispatch(reset());
     dispatch(logout());
   };
 
@@ -70,7 +72,7 @@ function Home() {
             <img src={"/Teras_logo_home.png"} alt="terasLogo" height="100" />
           </div>
           <div className="navBar">
-            <Link to="/login">
+            <Link to="/">
               <button onClick={handleLogOut}>
                 로그아웃
                 <LogoutIcon />
@@ -155,6 +157,6 @@ function Home() {
       </div>
     </div>
   );
-}
+};
 
 export default Home;

@@ -13,7 +13,7 @@ export const tokenSlice = createSlice({
     // access token 정보 저장
     SET_TOKEN: (state, action) => {
       state.authenticated = true;
-      state.accessToken = action.payload;
+      state.accessToken = action.payload; //action.payload
       state.expireTime = new Date().getTime() + TOKEN_TIME_OUT;
     },
     // 초기화

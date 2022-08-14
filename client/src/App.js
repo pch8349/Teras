@@ -8,35 +8,38 @@ import SignUpFin from "./pages/Login/SignUpFin";
 import Classroom from "./pages/Classroom/index";
 import ClassMake from "./pages/Login/ClassMake";
 import Test from "./test/Test";
+import { useDispatch, useSelector } from "react-redux";
+import { login, selectLogined, selectUser } from "storage/UserSlice";
 
 const App = () => {
-  const [token, setToken] = useState();
-  useEffect(() => {
-    const load = () => {
-      setToken(() =>
-        localStorage.getItem("accessToken") === null
-          ? sessionStorage.getItem("accessToken")
-          : localStorage.getItem("accessToken")
-      );
-    };
-    console.log("토큰", token);
-    load();
-  }, [token]);
-  useEffect(() => {
-    console.log(token);
-  }, [token]);
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const data = {};
+  // const isLogin = useSelector(selectLogined);
+  // console.log("유저데이터", isLogin);
+  console.log("유저데이터", user);
+  if (user === null) dispatch(login({ isLogin: false }));
 
   return (
     <Router>
-      <Routes>
-        <Route path="/test" element={<Test />} />
-        <Route path="/*" element={token ? <Home /> : <UserLogin />} />
-        <Route path="/login" element={<UserLogin />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/signupfin" element={<SignUpFin />} />
-        <Route path="/classroom" element={<Classroom />} />
-        <Route path="/classmake" element={<ClassMake />} />
-      </Routes>
+      {user.isLogin ? (
+        <>
+          <Routes>
+            <Route path="/test" element={<Test />} />
+            <Route path="/*" element={<Home />} />
+            <Route path="/classroom" element={<Classroom />} />
+            <Route path="/classmake" element={<ClassMake />} />
+          </Routes>
+        </>
+      ) : (
+        <>
+          <Routes>
+            <Route path="/" element={<UserLogin />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/signupfin" element={<SignUpFin />} />
+          </Routes>
+        </>
+      )}
     </Router>
   );
 };

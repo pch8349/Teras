@@ -10,10 +10,14 @@ const reducers = combineReducers({
   user: userReducer,
 });
 
+// 
 const rootReducer = (state, action) => {
   if (action.type === "logout") {
-    storage.removeItem("persist:root");
+    localStorage.removeItem("persist:root");
     return reducers(undefined, action);
+  }
+  if (action.type === "login") {
+    console.log("로그인");
   }
   return reducers(state, action);
 };
@@ -21,7 +25,7 @@ const rootReducer = (state, action) => {
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["user"],
+  whitelist: ["user"], // 포함해야 될 목록. name인지 initalState 값인지 모르겠음
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
