@@ -57,7 +57,8 @@ public class UserServiceImpl implements UserService {
 		List<UserDto> list = new ArrayList<>();
 		
 		for (User student : userRepository.findByClassCode(classCode)) {
-			list.add(new UserDto(student));
+			if(student.getAuthority() == TerasAuthority.valueOf("STUDENT"))
+				list.add(new UserDto(student));
 		}
 		
 		return list;
@@ -66,8 +67,17 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int getClassmatesTotal(ClassEntity classCode) {
 		
-		int total = userRepository.countByClassCode(classCode);
+//		int total = userRepository.countByClassCode(classCode);
+//		
+//		return total;
 		
-		return total;
+		List<UserDto> list = new ArrayList<>();
+		
+		for (User student : userRepository.findByClassCode(classCode)) {
+			if(student.getAuthority() == TerasAuthority.valueOf("STUDENT"))
+				list.add(new UserDto(student));
+		}
+		
+		return list.size();
 	}
 }
