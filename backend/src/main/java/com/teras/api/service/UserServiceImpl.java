@@ -1,11 +1,16 @@
 package com.teras.api.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.teras.api.request.UserRegisterPostReq;
 import com.teras.common.model.column.TerasAuthority;
+import com.teras.db.dto.UserDto;
+import com.teras.db.entity.ClassEntity;
 import com.teras.db.entity.User;
 import com.teras.db.repository.ClassEntityRepository;
 import com.teras.db.repository.UserRepository;
@@ -44,5 +49,35 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int idCheck(String id) {
 		return userRepository.countByUserId(id);
+	}
+	
+	@Override
+	public List<UserDto> getClassmates(ClassEntity classCode){
+		
+		List<UserDto> list = new ArrayList<>();
+		
+		for (User student : userRepository.findByClassCode(classCode)) {
+			if(student.getAuthority() == TerasAuthority.valueOf("STUDENT"))
+				list.add(new UserDto(student));
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public int getClassmatesTotal(ClassEntity classCode) {
+		
+//		int total = userRepository.countByClassCode(classCode);
+//		
+//		return total;
+		
+		List<UserDto> list = new ArrayList<>();
+		
+		for (User student : userRepository.findByClassCode(classCode)) {
+			if(student.getAuthority() == TerasAuthority.valueOf("STUDENT"))
+				list.add(new UserDto(student));
+		}
+		
+		return list.size();
 	}
 }

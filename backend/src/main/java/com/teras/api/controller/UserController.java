@@ -1,9 +1,12 @@
 package com.teras.api.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teras.api.request.UserRegisterPostReq;
+import com.teras.api.response.ClassmatesGetRes;
 import com.teras.api.response.UserIdCheckGetRes;
 import com.teras.api.response.UserRes;
 import com.teras.api.service.UserService;
 import com.teras.common.auth.SsafyUserDetails;
 import com.teras.common.model.response.BaseResponseBody;
 import com.teras.db.dto.UserDto;
+import com.teras.db.entity.ClassEntity;
 import com.teras.db.entity.User;
 
 import io.swagger.annotations.Api;
@@ -81,5 +86,24 @@ public class UserController {
 		User user = userService.getUserByUserId(userId);
 		
 		return ResponseEntity.status(200).body(UserRes.of(new UserDto(user)));
+	}
+	
+	@GetMapping("/classMates")
+	@ApiOperation(value = "우리반 보기", notes = "나와 같은반인 학생의 목록을 조회한다.")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "성공"),
+		@ApiResponse(code = 401, message = "인증 실패"),
+		@ApiResponse(code = 404, message = "사용자 없음"),
+		@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<? extends ClassmatesGetRes> getClassmates(@ApiIgnore Authentication authentication){
+		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+		String userId = userDetails.getUsername();
+		User user = userService.getUserByUserId(userId);
+		ClassEntity userClass = user.getClassCode();
+		List<UserDto> list = userService.getClassmates(userClass);
+		int total = userService.getClassmatesTotal(userClass);
+		
+		return ResponseEntity.status(200).body(ClassmatesGetRes.of(200, "SUCCESS", list, total));
 	}
 }
