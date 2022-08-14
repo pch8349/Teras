@@ -8,6 +8,7 @@ import SignUpFin from "./pages/Login/SignUpFin";
 import Classroom from "./pages/Classroom/index";
 import ClassMake from "./pages/Login/ClassMake";
 import Test from "./test/Test";
+import { getUser } from "./api/users";
 
 function App() {
   const [user, setUser] = useState();
@@ -25,7 +26,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/test" element={<Test />} />
-        <Route path="/*" element={token ? <Home /> : <UserLogin />} />
+        <Route path="/main" element={token ? <Home /> : <UserLogin />} />
         <Route path="/login" element={<UserLogin />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signupfin" element={<SignUpFin />} />

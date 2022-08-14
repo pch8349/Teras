@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 import { legacy_createStore as createStore } from "redux";
 import { Provider, useSelector, useDispatch, connect } from "react-redux";
@@ -19,4 +20,9 @@ const store = createStore((currentState,) => {
 
 }));
 
+=======
+import { createStore } from "redux";
+import rootReducer from "../reducers/index";
+const store = createStore(rootReducer);
+>>>>>>> baffca6 ([FE] getUser error solve)
 export default store;

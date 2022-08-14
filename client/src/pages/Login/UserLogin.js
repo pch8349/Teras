@@ -43,20 +43,7 @@ const UserLogin = ({}) => {
             sessionStorage.setItem("accessToken", accessToken);
           }
           setSuccess(true);
-
-          try {
-            await getUser(
-              async (response) => {
-                localStorage.setItem("userId", response.data.user.id);
-                localStorage.setItem("userName", response.data.user.name);
-                console.log(response.data.user.id, response.data.user.name);
-                Navigate("/");
-              },
-              (error) => {
-                console.log(error);
-              }
-            );
-          } catch {}
+          Navigate("/main");
         },
         () => {
           console.log("로그인 실패");

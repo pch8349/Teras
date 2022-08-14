@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./home.css";
 import TimeTable from "./components/Timetable/timetable";
 import { Button } from "@mui/material";
@@ -12,6 +12,7 @@ import MyClass from "./components/MyClass/MyClass";
 import Profile from "./components/Profile/Profile";
 import { Route, Routes, NavLink, Link } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { getUser } from "../../api/users";
 
 function Home() {
   const navTabs = [
@@ -54,7 +55,27 @@ function Home() {
 
   const handleLogOut = () => {
     localStorage.clear();
+    sessionStorage.clear();
   };
+
+  useEffect(() => {
+    const getJWTData = async () => {
+      console.log("여기까진 가능");
+      try {
+        await getUser(
+          async (response) => {
+            localStorage.setItem("userId", response.data.user.id);
+            localStorage.setItem("userName", response.data.user.name);
+            console.log("getJWT", response);
+          },
+          (error) => {
+            console.log("에러입니다", error);
+          }
+        );
+      } catch {}
+    };
+    getJWTData();
+  }, []);
 
   return (
     <div className="mainFlexContainer">
