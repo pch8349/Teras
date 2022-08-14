@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
-import { Link, matchPath } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 import {
   NewRoot,
   BackForm,
@@ -22,6 +23,7 @@ import { DropDown } from "./styles/DropDown";
 import { GreenBtn, YellowBtn } from "./styles/LoginBtn";
 import { signUp, userCheck } from "../../api/users";
 import { ClassNames } from "@emotion/react";
+import { errorAlert, successAlert, warnAlert } from "./styles/alert";
 
 //영어 대,소문자, 0~9, -_ 이렇게 가능함을 나타냄. 3~23자 제한
 const USER_REGEX = /^[a-zA-Z][a-zA-z0-9-_]{3,23}$/;
@@ -30,6 +32,8 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const NUM_REGEX = /^(?=.*[0-9]).{11}$/;
 
 const SignUp = ({}) => {
+  const Navigate = useNavigate();
+
   const [role, setRole] = useState("");
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
@@ -44,6 +48,9 @@ const SignUp = ({}) => {
   const [validId, setValidId] = useState(false);
   const [validPw, setValidPw] = useState(false);
   const [validMatch, setValidMatch] = useState(false);
+  const [validName, setValidName] = useState(false);
+  const [validEmail, setValidEmail] = useState(false);
+  const [validPhone, setValidPhone] = useState(false);
 
   const body = {
     id: id,
@@ -57,24 +64,34 @@ const SignUp = ({}) => {
 
   const NewUser = async (e) => {
     console.log(body);
-    console.log(validId);
     e.preventDefault();
-    try {
-      console.log("입력버튼");
-      if (validId && validPw && validMatch) {
+    if (
+      role !== "" &&
+      flag === 0 &&
+      validId &&
+      validPw &&
+      validMatch &&
+      validName &&
+      validEmail &&
+      validPhone
+    ) {
+      try {
+        console.log("입력버튼");
         await signUp(
           body,
           () => {
-            console.log("성공");
-            window.location.href = "/signupfin";
+            successAlert("회원가입에 성공했습니다.");
+            Navigate("/signupfin");
           },
           () => {
-            console.log("실패");
+            errorAlert(null, "회원가입에 실패했습니다.");
           }
         );
-      } else console.log("유효성 테스트 실패");
-    } catch (error) {
-      console.log("실패");
+      } catch (error) {
+        errorAlert("회원가입에 실패했습니다.");
+      }
+    } else {
+      warnAlert("빈 입력사항을 확인해주세요.");
     }
   };
   const getDropDownValue = (role) => {
@@ -85,18 +102,11 @@ const SignUp = ({}) => {
   const IdCheck = async (e) => {
     e.preventDefault();
     try {
-      await userCheck(
-        id,
-        (response) => {
-          setFlag(response.data.flag);
-          console.log("response", flag);
-        },
-        () => {
-          console.log("실패");
-        }
-      );
+      await userCheck(id, (response) => {
+        setFlag(response.data.flag);
+      });
     } catch (error) {
-      console.log("실패");
+      console.log("error");
     }
   };
 
@@ -111,27 +121,35 @@ const SignUp = ({}) => {
     } else if (e[0].id === "matchpw") {
       const result = pw === matchpw;
       setValidMatch(result);
+    } else if (e[0].id === "name") {
+      const result = name !== "";
+      setValidName(result);
+    } else if (e[0].id === "email") {
+      const result = email !== "";
+      setValidEmail(result);
+    } else if (e[0].id === "phone") {
+      const result = NUM_REGEX.test(e[0].value);
+      setValidPhone(result);
     }
   }, []);
 
   const idUnderLine = () => {
-    console.log("i'm here");
-    if(flag==="1"){
-      console.log("아닛!");
-      return <TextColorArt color={`#ea5757`}>
-      *이미 사용중인 아이디입니다.
-    </TextColorArt>
-    } else if(validId) {
-      return <TextColorArt color={`#ea5757`}>
-                *아이디 길이는 4~22자 내로 가능합니다
-              </TextColorArt>
-    } else{
-      return <TextColorArt color={`#0087FF`}>*사용 가능한 아이디입니다</TextColorArt>
+    if (!validId) {
+      return (
+        <TextColorArt color={`#ea5757`}>
+          *아이디 길이는 4~22자 내 영문/숫자로만 가능합니다
+        </TextColorArt>
+      );
     }
   };
 
   useEffect(() => {
-    console.log(flag);
+    console.log("effect flag", flag);
+    if (flag === 0 && validId) {
+      successAlert("사용 가능한 아이디입니다");
+    } else if (flag === 1 && validId) {
+      warnAlert("이미 사용중인 아이디입니다");
+    }
   }, [flag]);
 
   useEffect(() => {
@@ -159,6 +177,9 @@ const SignUp = ({}) => {
           <Logofixed
             src={`https://file.rendit.io/n/GuXE32OOzWWWXqrS8jTY.png`}
           />
+          <FlexRow>
+            <TextBigInter>역할 입력</TextBigInter>
+          </FlexRow>
           <DropDown
             arr={[
               { id: "TEACHER", name: "교사" },
@@ -171,16 +192,7 @@ const SignUp = ({}) => {
           </FlexRow>
           <FlexRow>
             <TextBigInter>아이디 입력</TextBigInter>
-            <FlexColumn>
-              {/* {if(validId){
-                (<TextColorArt color={`#ea5757`}>
-                *아이디 길이는 4~22자 내로 가능합니다
-              </TextColorArt>
-              )} else{
-                (<TextColorArt color={`#0087FF`}>*사용 가능한 아이디입니다</TextColorArt>)
-              } */}
-              {idUnderLine()}
-            </FlexColumn>
+            <FlexColumn>{idUnderLine()}</FlexColumn>
           </FlexRow>
           <FlexRow>
             <IdForm
@@ -192,7 +204,6 @@ const SignUp = ({}) => {
             />
             <YellowBtn onClick={IdCheck}>아이디 검사</YellowBtn>
           </FlexRow>
-
           <EmptyPart />
           <FlexRow>
             <TextBigInter>비밀번호 입력</TextBigInter>
@@ -230,33 +241,82 @@ const SignUp = ({}) => {
             }}
           />
           <EmptyPart />
-          <TextBigInter>이름</TextBigInter>
+          <FlexRow>
+            <TextBigInter>이름</TextBigInter>
+            <FlexColumn>
+              {!validName && (
+                <TextColorArt color={`#ea5757`}>
+                  *값을 입력해 주세요
+                </TextColorArt>
+              )}
+            </FlexColumn>
+          </FlexRow>
           <IdForm
             value={name}
             onChange={({ target: { value } }) => {
               setName(value);
+              onValidCheck([{ id: "name", value: value }]);
             }}
           />
           <EmptyPart />
+          <FlexColumn>
+            <DropDown
+              arr={[
+                { id: "TEACHER", name: "교사" },
+                { id: "STUDENT", name: "학생" },
+              ]} // 배열로 선택할 값 전달
+              getDropDownValue={getDropDownValue} // 자식 컴포넌트에서 보낸 값 받기 위함
+            />
+            <DropDown
+              arr={[
+                { id: "TEACHER", name: "교사" },
+                { id: "STUDENT", name: "학생" },
+              ]} // 배열로 선택할 값 전달
+              getDropDownValue={getDropDownValue} // 자식 컴포넌트에서 보낸 값 받기 위함
+            />
+          </FlexColumn>
+
+          <FlexRow>
+            <EmptyPart></EmptyPart>
+          </FlexRow>
+
+          <FlexRow>
+            <EmptyPart></EmptyPart>
+          </FlexRow>
           <FlexRow>
             <TextBigInter>이메일</TextBigInter>
+            <FlexColumn>
+              {!validEmail && (
+                <TextColorArt color={`#ea5757`}>
+                  *값을 입력해 주세요
+                </TextColorArt>
+              )}
+            </FlexColumn>
           </FlexRow>
           <IdForm
             value={email}
-            onChange={({ target: { value } }) => setEmail(value)}
+            onChange={({ target: { value } }) => {
+              setEmail(value);
+              onValidCheck([{ id: "email", value: value }]);
+            }}
           />
           <EmptyPart />
           <FlexRow>
             <TextBigInter>핸드폰 번호</TextBigInter>
             <FlexColumn>
-              <TextColorArt color={`#0087FF`}>
-                *숫자만 입력해 주세요
-              </TextColorArt>
+              {!validPhone && (
+                <TextColorArt color={`#0087FF`}>
+                  *숫자만 입력해 주세요
+                </TextColorArt>
+              )}
             </FlexColumn>
           </FlexRow>
           <IdForm
             value={phone}
-            onChange={({ target: { value } }) => setPhone(value)}
+            onChange={({ target: { value } }) => {
+              setPhone(value);
+              onValidCheck([{ id: "phone", value: value }]);
+            }}
           />
           <EmptyPart />
           <FlexRow1>

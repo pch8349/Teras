@@ -12,7 +12,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     marginTop: theme.spacing(0.8),
   },
   "& .MuiInputBase-input": {
-    maxheight: 30,
+    maxheight: 27,
     borderRadius: 4,
     position: "relative",
     backgroundColor: "#ffffff",
@@ -43,9 +43,9 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 
 export const DropDown = ({ arr, getDropDownValue }) => {
   return (
-    <Box sx={{ minWidth: 450 }}>
+    <Box sx={{ display: "flex" }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">선택하세요</InputLabel>
+        <InputLabel id="demo-simple-select-label"></InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"

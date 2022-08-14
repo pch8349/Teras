@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import styled from "styled-components";
 import {
   NewRoot,
@@ -18,6 +18,7 @@ import {
 import { TextBigInter, TextSmallInter, TextBtnInter } from "./styles/LoginText";
 import { GreenBtn } from "./styles/LoginBtn";
 import { doLogin, getUser } from "../../api/users";
+import { Cookies } from "react-cookie";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -46,6 +47,7 @@ const UserLogin = ({}) => {
               async (response) => {
                 localStorage.setItem("userId", response.data.user.id);
                 localStorage.setItem("userName", response.data.user.name);
+                Cookies.setItem("userId", response.data.user.id);
               },
               (error) => {
                 console.log(error);
@@ -53,7 +55,7 @@ const UserLogin = ({}) => {
             );
           } catch {}
 
-          window.location.href = "/";
+          Navigate("/");
         },
         () => {
           console.log("로그인 실패");

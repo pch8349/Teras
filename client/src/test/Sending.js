@@ -1,27 +1,11 @@
 import userEvent from "@testing-library/user-event";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const Info = ({ info }) => {
-  return (
-    <>
-      <b>{info.id}</b> : <span>({info.name})</span>
-    </>
-  );
+export const Info = (msg) => {
+  toast.warn(msg, {
+    position: toast.POSITION.TOP_CENTER,
+    autoClose: 1000,
+  });
 };
-
-const Sending = ({ da }) => {
-  const [text, setText] = useState("");
-
-  const submitText = () => {
-    console.log();
-  };
-  return (
-    <div>
-      {da.map((info) => (
-        <Info info={info} />
-      ))}
-    </div>
-  );
-};
-
-export default Sending;
