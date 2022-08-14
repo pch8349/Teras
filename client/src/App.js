@@ -7,7 +7,6 @@ import SignUp from "./pages/Login/SignUp";
 import SignUpFin from "./pages/Login/SignUpFin";
 import Classroom from "./pages/Classroom/index";
 import ClassMake from "./pages/Login/ClassMake";
-import Test from "./test/Test";
 import { useDispatch, useSelector } from "react-redux";
 import { login, selectLogined, selectUser } from "storage/UserSlice";
 
@@ -25,7 +24,6 @@ const App = () => {
       {user.isLogin ? (
         <>
           <Routes>
-            <Route path="/test" element={<Test />} />
             <Route path="/*" element={<Home />} />
             <Route path="/classroom" element={<Classroom />} />
             <Route path="/classmake" element={<ClassMake />} />

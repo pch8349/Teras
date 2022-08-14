@@ -359,10 +359,7 @@ const SignUp = ({}) => {
           <EmptyPart />
           <FlexRow1>
             <LinkContainer>
-              <Link
-                to={"/login"}
-                style={{ textDecoration: "none", color: "black" }}
-              >
+              <Link to={"/"} style={{ textDecoration: "none", color: "black" }}>
                 <TextSmallInter>뒤로가기</TextSmallInter>
               </Link>
             </LinkContainer>
