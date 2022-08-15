@@ -29,6 +29,7 @@ export async function getUser(success, fail) {
 }
 
 export async function getTimetable(success, fail) {
+<<<<<<< HEAD
   console.log("겟유저 내부", sessionStorage.getItem("accessToken"));
   await authApi
     .get("/timetable", {
@@ -38,6 +39,13 @@ export async function getTimetable(success, fail) {
     })
     .then(success)
     .catch(fail);
+=======
+  await authApi.get("/timetable",{
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+    },
+  }).then(success).catch(fail);
+>>>>>>> feature/fe-assign
 }
 
 export const getSchool = async (params, success, fail) => {

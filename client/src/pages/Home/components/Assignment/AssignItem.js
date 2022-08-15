@@ -16,20 +16,20 @@ const StyledTd = styled.td`
   height: 3rem;
   vertical-align: middle;
   text-align: ${(props) => props.ta || "center"};
-  padding: 0 1.5rem;
 `;
 
-function NoticeItem({data, index}) {
+function AssignItem({data, index}) {
   const Navigate = useNavigate();
 
   return (
-    <StyledTr onClick={() => Navigate(`./${data.noticeNo}`)}>
-        <StyledTd>{index + 1}</StyledTd>
+    <StyledTr onClick={() => Navigate(`./${data.assignNo}`)}>
+        <StyledTd>{data.subjectName}</StyledTd>
         <StyledTd>{data.title}</StyledTd>
         <StyledTd>{data.name}</StyledTd>
         <StyledTd>{data.createdDate}</StyledTd>
+        <StyledTd>{data.deadLine}</StyledTd>
     </StyledTr>
   );
-};
+}
 
-export default NoticeItem
+export default AssignItem

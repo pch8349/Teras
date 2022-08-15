@@ -3,7 +3,7 @@ import "./home.css";
 import TimeTable from "./components/Timetable/Timetable";
 import Main from "./components/Main/Main";
 import Notice from "./components/Notice/Notice";
-import Assignment from "./components/Assignment/Assignment";
+import Assign from "./components/Assignment/Assign";
 import Grade from "./components/Grade/Grade";
 import Schedule from "./components/Schedule/Schedule";
 import StudyRoom from "./components/StudyRoom/StudyRoom";
@@ -31,8 +31,8 @@ const Home = (tmp) => {
     },
     {
       name: "과제",
-      component: <Assignment />,
-      path: "/assignment",
+      component: <Assign />,
+      path: "/assign",
     },
     {
       name: "성적",
@@ -111,7 +111,7 @@ const Home = (tmp) => {
               <Routes>
                 <Route path="main" element={<Main />} />
                 <Route path="notice/*" element={<Notice />} />
-                <Route path="assignment" element={<Assignment />} />
+                <Route path="assign/*" element={<Assign />} />
                 <Route path="grade" element={<Grade />} />
                 <Route path="schedule" element={<Schedule />} />
                 <Route path="studyroom" element={<StudyRoom />} />
