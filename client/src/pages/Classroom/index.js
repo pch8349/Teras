@@ -18,7 +18,7 @@ function Classroom() {
         <div className="headerContainer">
           <div className="subjectBoxContainer">
             <Box sx={{}}>
-              {period} - {classCode}
+              {period} - {classCode} - {sessionId}
             </Box>
           </div>
           <div className="goalBoxContainer">
@@ -55,7 +55,12 @@ function Classroom() {
             </Box>
           </div>
         </div>
-        <VideoContainer sessionId={sessionId} />
+        <VideoContainer
+          sessionId={sessionId}
+          classCode={classCode}
+          goal={goal}
+          preiod={period}
+        />
       </div>
     </div>
   );

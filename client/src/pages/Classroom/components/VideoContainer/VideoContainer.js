@@ -14,7 +14,7 @@ import { openSession } from "../../../../api/classroom";
 const OPENVIDU_SERVER_URL = "https://i7a706.p.ssafy.io:7060";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
-function VideoContainer({ sessionId }) {
+function VideoContainer({ sessionId, goal, period, classCode }) {
   const mySessionId = sessionId;
   const myUserName = "OpenVidu_User";
 
@@ -26,6 +26,8 @@ function VideoContainer({ sessionId }) {
   const [subscribers, setSubscribers] = useState([]);
   const [currentVideoDevice, setCurrentVideoDevice] = useState();
   const [OV, setOV] = useState(null);
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     // mount시 세션 초기화
@@ -97,10 +99,23 @@ function VideoContainer({ sessionId }) {
             insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
             mirror: false, // Whether to mirror your local video or not
           });
-          // await openSession({
-          //   sessionId: sessionId,
-          //   hostId: publisher.stream,
-          // })
+          console.log("here");
+          console.log(publisher);
+          // await openSession(
+          //   {
+          //     sessionId: mySessionId,
+          //     hostId: publisher.stream.connection.connectionId,
+          //     goal: goal,
+          //     classCode: classCode,
+          //     period: period,
+          //   },
+          //   (response) => {
+          //     console.log(response);
+          //   },
+          //   (error) => {
+          //     console.log(error);
+          //   },
+          // );
 
           // --- 6) Publish your stream ---
 
@@ -211,8 +226,6 @@ function VideoContainer({ sessionId }) {
       createToken(sessionId),
     );
   };
-
-  // OPENVIDU_SERVER_URL + "/openvidu/api/sessions"
 
   const createSession = (sessionId) => {
     return new Promise((resolve, reject) => {

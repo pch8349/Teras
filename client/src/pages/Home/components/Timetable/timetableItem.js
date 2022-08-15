@@ -20,7 +20,7 @@ function TimetableItem({ period, item, active }) {
         goal: goal,
         classCode: item,
         period: period,
-        sessionId: `${item}_미술`,
+        sessionId: `${item}_ENGLISH`,
       },
     });
   };
