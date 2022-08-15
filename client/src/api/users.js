@@ -29,7 +29,14 @@ export async function getUser(success, fail) {
 }
 
 export async function getTimetable(success, fail) {
-  await authApi.get("/timetable").then(success).catch(fail);
+  await authApi
+    .get("/timetable", {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    })
+    .then(success)
+    .catch(fail);
 }
 
 export const getSchool = async (params, success, fail) => {

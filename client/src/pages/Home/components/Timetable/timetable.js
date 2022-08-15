@@ -10,7 +10,7 @@ function TimeTable() {
   const authority = user.authority;
 
   const [totalTimetable, setTotalTimetable] = useState(
-    Array.from(Array(5), () => Array(7).fill("")),
+    Array.from(Array(5), () => Array(7).fill(""))
   );
   const [todayTimetable, setTodayTimetable] = useState(Array(7).fill("-"));
 
@@ -18,7 +18,7 @@ function TimeTable() {
     await getTimetable(
       (response) => {
         const timetableDto = response.data.list;
-
+        console.log("타임테이블", response);
         if (authority === "TEACHER") {
           const newTimetable = totalTimetable.slice();
           timetableDto.forEach((item) => {
@@ -33,7 +33,7 @@ function TimeTable() {
           setTotalTimetable(newTimetable);
         }
       },
-      () => {},
+      () => {}
     );
   };
 
