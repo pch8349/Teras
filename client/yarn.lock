@@ -6429,11 +6429,7 @@
   "resolved" "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   "version" "4.17.21"
 
-<<<<<<< HEAD
-"loose-envify@^1.1.0", "loose-envify@^1.4.0":
-=======
 "loose-envify@^1.0.0", "loose-envify@^1.1.0", "loose-envify@^1.4.0":
->>>>>>> feature/fe-assign
   "integrity" "sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q=="
   "resolved" "https://registry.npmjs.org/loose-envify/-/loose-envify-1.4.0.tgz"
   "version" "1.4.0"
@@ -7976,8 +7972,6 @@
     "react" "15.x.x - 16.x.x"
     "tar" "2.2.2"
 
-<<<<<<< HEAD
-=======
 "react-locale-language@^1.0.8":
   "integrity" "sha512-EgneQvx71hqj4Rh71KDffBG5fiMvq+uf6GA33BtPK801eO7mmt5P2c+emsVm3e4hez6AFfLz9mz9+4lvijC/NA=="
   "resolved" "https://registry.npmjs.org/react-locale-language/-/react-locale-language-1.0.8.tgz"
@@ -8005,7 +7999,6 @@
     "react-fast-compare" "^3.0.1"
     "warning" "^4.0.2"
 
->>>>>>> feature/fe-assign
 "react-redux@^8.0.2":
   "integrity" "sha512-nBwiscMw3NoP59NFCXFf02f8xdo+vSHT/uZ1ldDwF7XaTpzm+Phk97VT4urYBl5TYAPNVaFm12UHAEyzkpNzRA=="
   "resolved" "https://registry.npmjs.org/react-redux/-/react-redux-8.0.2.tgz"
