@@ -2,7 +2,7 @@ import { apiInstance, authApiInstance } from "./index";
 import axios from "axios";
 
 const api = apiInstance();
-const autApi = authApiInstance();
+const authApi = authApiInstance();
 
 export const doLogin = async (user, success, fail) => {
   await api.post(`/auth/login`, user).then(success).catch(fail);
@@ -18,7 +18,7 @@ export async function userCheck(userId, success, fail) {
 
 export async function getUser(success, fail) {
   console.log("겟유저 내부", sessionStorage.getItem("accessToken"));
-  await autApi
+  await authApi
     .get("/users", {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
@@ -26,6 +26,10 @@ export async function getUser(success, fail) {
     })
     .then(success)
     .catch(fail);
+}
+
+export async function getTimetable(success, fail) {
+  await authApi.get("/timetable").then(success).catch(fail);
 }
 
 export const getSchool = async (params, success, fail) => {

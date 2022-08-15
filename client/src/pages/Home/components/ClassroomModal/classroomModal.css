@@ -1,0 +1,22 @@
+.modalContainer {
+  display: grid;
+  grid-template-rows: 60px 150px 110px;
+}
+
+.classroomTitle {
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.classroomGoalInput {
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.modalButtonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  grid-row-start: 3;
+  grid-row-end: 4;
+}

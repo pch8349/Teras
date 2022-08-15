@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import "./home.css";
-import TimeTable from "./components/Timetable/timetable";
-import { Button } from "@mui/material";
+import TimeTable from "./components/Timetable/Timetable";
 import Main from "./components/Main/Main";
 import Notice from "./components/Notice/Notice";
 import Assignment from "./components/Assignment/Assignment";
@@ -10,7 +9,7 @@ import Schedule from "./components/Schedule/Schedule";
 import StudyRoom from "./components/StudyRoom/StudyRoom";
 import MyClass from "./components/MyClass/MyClass";
 import Profile from "./components/Profile/Profile";
-import { Route, Routes, NavLink, Link } from "react-router-dom";
+import { Route, Routes, NavLink, useNavigate, Link } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 import { useDispatch } from "react-redux";
@@ -60,6 +59,7 @@ const Home = (tmp) => {
   const handleLogOut = () => {
     localStorage.clear();
     sessionStorage.clear();
+
     dispatch(reset());
     dispatch(logout());
   };
@@ -84,26 +84,9 @@ const Home = (tmp) => {
           <div className="profileContainer">
             <Profile />
           </div>
-          <div className="timeTableGridContainer">
-            <div className="classRoomButtonContainer">
-              {/* Link 써서 주소로보내기 */}
-              {/*   ex.      <Link to="/signup" className="">회원가입</Link> */}
-              <Link to="/classroom">
-                <Button
-                  sx={{
-                    width: 200,
-                    height: 50,
-                  }}
-                  variant="contained"
-                >
-                  강의실 입장
-                </Button>
-              </Link>
-            </div>
+          <div className="timeTableFlexContainer">
             <div className="timeTableContainer">
-              <TimeTable
-                rows={["수학", "영어", "국어", "진로", "화학I", "체육", "도덕"]}
-              />
+              <TimeTable />
             </div>
           </div>
         </div>
