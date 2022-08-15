@@ -2,11 +2,14 @@ import { Modal, Box, Button, Typography, TextField } from "@mui/material";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectUser } from "storage/UserSlice";
 import "./timetableItem.css";
 import { createSession, getSession } from "../../../../api/classroom";
 
 function TimetableItem({ period, item, active }) {
-  const authority = localStorage.getItem("authority");
+  const user = useSelector(selectUser);
+  const authority = user.authority;
   const [openModal, setOpenModal] = useState(false);
   const [goal, setGoal] = useState("");
   const handleOpenModal = () => setOpenModal(true);

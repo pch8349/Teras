@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { selectUser } from "storage/UserSlice";
 import TimetableItem from "./TimetableItem";
 import "./timeTable.css";
 import { getTimetable } from "../../../../api/users";
 
 function TimeTable() {
-  const authority = localStorage.getItem("authority");
+  const user = useSelector(selectUser);
+  const authority = user.authority;
+
   const [totalTimetable, setTotalTimetable] = useState(
-    Array.from(Array(5), () => Array(7).fill(""))
+    Array.from(Array(5), () => Array(7).fill("")),
   );
   const [todayTimetable, setTodayTimetable] = useState(Array(7).fill("-"));
 
@@ -29,7 +33,7 @@ function TimeTable() {
           setTotalTimetable(newTimetable);
         }
       },
-      () => {}
+      () => {},
     );
   };
 
