@@ -25,13 +25,12 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const UserLogin = () => {
   const Navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [id, setId] = useState("");
   const [password, setPw] = useState("");
   const [success, setSuccess] = useState(true);
   const [ischecked, setIsChecked] = useState(false);
-
-  const dispatch = useDispatch();
 
   const OnChange = (e) => {
     const {
@@ -90,8 +89,6 @@ const UserLogin = () => {
           }
 
           setSuccess(true);
-
-          console.log("로그인 성공");
         },
         () => {
           console.log("로그인 실패");

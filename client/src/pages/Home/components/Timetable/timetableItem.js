@@ -20,18 +20,26 @@ function TimetableItem({ period, item, active }) {
         goal: goal,
         classCode: item,
         period: period,
-        sessionId: `${item}_ENGLISH`,
+        sessionId: `${item}_미술`,
       },
     });
   };
 
   const joinClass = async () => {
-    await getSession();
-    navigate("/classroom", {
-      state: {
-        goal: "열공",
+    await getSession(
+      `${localStorage.getItem("classCode")}_${item}`,
+      (response) => {
+        console.log(response.data);
+        // navigate("/classroom", {
+        //   state: {
+        //     goal: goal,
+        //   },
+        // });
       },
-    });
+      (error) => {
+        console.log(error);
+      },
+    );
   };
 
   return (

@@ -9,13 +9,14 @@ import MicOffIcon from "@mui/icons-material/MicOff";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import ScreenShareIcon from "@mui/icons-material/ScreenShare";
+import { openSession } from "../../../../api/classroom";
 
 const OPENVIDU_SERVER_URL = "https://i7a706.p.ssafy.io:7060";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
-function VideoContainer() {
-  const mySessionId = "SessionA";
-  const myUserName = "OpenVidu_User_";
+function VideoContainer({ sessionId }) {
+  const mySessionId = sessionId;
+  const myUserName = "OpenVidu_User";
 
   const [micOn, setMicOn] = useState(false);
   const [videoOn, setVideoOn] = useState(false);
@@ -57,7 +58,7 @@ function VideoContainer() {
       setSubscribers(
         subscribers.filter((subscriber) => {
           return subscriber !== event.stream.streamManager;
-        })
+        }),
       );
     });
 
@@ -79,7 +80,7 @@ function VideoContainer() {
         .then(async () => {
           var devices = await OV.getDevices();
           var videoDevices = devices.filter(
-            (device) => device.kind === "videoinput"
+            (device) => device.kind === "videoinput",
           );
 
           // --- 5) Get your own camera stream ---
@@ -96,6 +97,10 @@ function VideoContainer() {
             insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
             mirror: false, // Whether to mirror your local video or not
           });
+          // await openSession({
+          //   sessionId: sessionId,
+          //   hostId: publisher.stream,
+          // })
 
           // --- 6) Publish your stream ---
 
@@ -111,7 +116,7 @@ function VideoContainer() {
           console.log(
             "There was an error connecting to the session:",
             error.code,
-            error.message
+            error.message,
           );
         });
     });
@@ -157,12 +162,12 @@ function VideoContainer() {
     try {
       const devices = await OV.getDevices();
       var videoDevices = devices.filter(
-        (device) => device.kind === "videoinput"
+        (device) => device.kind === "videoinput",
       );
 
       if (videoDevices && videoDevices.length > 1) {
         var newVideoDevice = videoDevices.filter(
-          (device) => device.deviceId !== currentVideoDevice.deviceId
+          (device) => device.deviceId !== currentVideoDevice.deviceId,
         );
 
         if (newVideoDevice.length > 0) {
@@ -203,7 +208,7 @@ function VideoContainer() {
 
   const getToken = () => {
     return createSession(mySessionId).then((sessionId) =>
-      createToken(sessionId)
+      createToken(sessionId),
     );
   };
 
@@ -223,7 +228,7 @@ function VideoContainer() {
           },
         })
         .then((response) => {
-          console.log("CREATE SESION", response);
+          console.log("CREATE SESSION", response);
           resolve(response.data.id);
         })
         .catch((response) => {
@@ -234,7 +239,7 @@ function VideoContainer() {
             console.log(error);
             console.warn(
               "No connection to OpenVidu Server. This may be a certificate error at " +
-                OPENVIDU_SERVER_URL
+                OPENVIDU_SERVER_URL,
             );
             if (
               window.confirm(
@@ -243,11 +248,11 @@ function VideoContainer() {
                   '"\n\nClick OK to navigate and accept it. ' +
                   'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
                   OPENVIDU_SERVER_URL +
-                  '"'
+                  '"',
               )
             ) {
               window.location.assign(
-                OPENVIDU_SERVER_URL + "/accept-certificate"
+                OPENVIDU_SERVER_URL + "/accept-certificate",
               );
             }
           }
@@ -273,7 +278,7 @@ function VideoContainer() {
               "Access-Control-Allow-Origin": "*",
               "Access-Control-Allow-Methods": "GET,POST",
             },
-          }
+          },
         )
         .then((response) => {
           console.log("TOKEN", response);

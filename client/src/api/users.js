@@ -17,9 +17,8 @@ export async function userCheck(userId, success, fail) {
 }
 
 export async function getUser(success, fail) {
-<<<<<<< HEAD
   console.log("겟유저 내부", sessionStorage.getItem("accessToken"));
-  await autApi
+  await authApi
     .get("/users", {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
@@ -27,13 +26,10 @@ export async function getUser(success, fail) {
     })
     .then(success)
     .catch(fail);
-=======
-  await authApi.get("/users").then(success).catch(fail);
 }
 
 export async function getTimetable(success, fail) {
   await authApi.get("/timetable").then(success).catch(fail);
->>>>>>> 3777c5c ([FE] openvidu host update)
 }
 
 export const getSchool = async (params, success, fail) => {

@@ -9,7 +9,7 @@ import Schedule from "./components/Schedule/Schedule";
 import StudyRoom from "./components/StudyRoom/StudyRoom";
 import MyClass from "./components/MyClass/MyClass";
 import Profile from "./components/Profile/Profile";
-import { Route, Routes, NavLink, Link } from "react-router-dom";
+import { Route, Routes, NavLink, useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 import { useDispatch } from "react-redux";
@@ -59,6 +59,7 @@ const Home = (tmp) => {
   const handleLogOut = () => {
     localStorage.clear();
     sessionStorage.clear();
+
     dispatch(reset());
     dispatch(logout());
   };

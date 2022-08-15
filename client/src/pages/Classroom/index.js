@@ -8,13 +8,18 @@ function Classroom() {
   const location = useLocation();
   const subject = "3교시 - 영어";
   const goal = location.state.goal;
+  const sessionId = location.state.sessionId;
+  const classCode = location.state.classCode;
+  const period = location.state.period;
 
   return (
     <div className="classroomFelxContainer">
       <div className="classroomGridContainer">
         <div className="headerContainer">
           <div className="subjectBoxContainer">
-            <Box sx={{}}>{subject}</Box>
+            <Box sx={{}}>
+              {period} - {classCode}
+            </Box>
           </div>
           <div className="goalBoxContainer">
             <Box
@@ -50,7 +55,7 @@ function Classroom() {
             </Box>
           </div>
         </div>
-        <VideoContainer />
+        <VideoContainer sessionId={sessionId} />
       </div>
     </div>
   );

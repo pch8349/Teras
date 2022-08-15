@@ -3,7 +3,7 @@ import { apiInstance, authApiInstance } from "./index";
 const api = apiInstance();
 const authApi = authApiInstance();
 
-export async function createSession(session, success, fail) {
+export async function openSession(session, success, fail) {
   await api
     .post(`/api/openvidu`, JSON.stringify(session))
     .then(success)
