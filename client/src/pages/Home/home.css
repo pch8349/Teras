@@ -40,38 +40,45 @@
   grid-column-end: 2;
   grid-row-start: 2;
   grid-row-end: 3;
-  grid-template-rows: 250px 550px;
+  grid-template-rows: 300px 500px;
 }
 
 .profileContainer {
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  grid-row-start: 1;
-  grid-row-end: 2;
-}
-
-.timeTableGridContainer {
-  display: grid;
-  grid-row-start: 2;
-  grid-row-end: 3;
-  grid-template-rows: 80px 450px;
-}
-
-.classRoomButtonContainer {
-  display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-end;
   align-items: center;
   grid-row-start: 1;
   grid-row-end: 2;
+  transition: transform 0.2s;
+}
+
+.profileContainer:hover {
+  transform: scale(1.03);
+}
+
+.timeTableFlexContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-row-start: 2;
+  grid-row-end: 3;
 }
 
 .timeTableContainer {
+  transition: transform 0.2s;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  width: 290px;
+  height: 450px;
+  border-radius: 15px;
+  background-color: #66c560;
+}
+
+.timeTableContainer:hover {
+  transform: scale(1.03);
 }
 
 .dashBoardFlexContainer {
@@ -85,10 +92,15 @@
 }
 
 .dashBoardContainer {
+  transition: transform 0.2s;
   display: grid;
   grid-template-rows: 50px 700px;
   width: 980px;
   height: 750px;
+}
+
+.dashBoardContainer:hover {
+  transform: scale(1.01);
 }
 
 .navTabContainer {

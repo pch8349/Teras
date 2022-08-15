@@ -1,24 +1,23 @@
 import { Modal, Box, Button, Typography, TextField } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./classroomModal.css";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 600,
-  bgcolor: "background.paper",
-  borderRadius: 2,
-  boxShadow: 24,
-  p: 4,
-};
 
 function ClassroomModal() {
   const [openModal, setOpenModal] = useState(false);
+  const [goal, setGoal] = useState("");
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
+
+  const navigate = useNavigate();
+
+  const openClass = () => {
+    navigate("/classroom", {
+      state: {
+        goal: goal,
+      },
+    });
+  };
 
   return (
     <>
@@ -42,7 +41,20 @@ function ClassroomModal() {
         aria-labelledby="keep-mounted-modal-title"
         aria-describedby="keep-mounted-modal-description"
       >
-        <Box className="modalContainer" sx={style}>
+        <Box
+          className="modalContainer"
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 600,
+            bgcolor: "background.paper",
+            borderRadius: 2,
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
           <div className="classroomTitle">
             <Box
               sx={{
@@ -88,24 +100,24 @@ function ClassroomModal() {
               rows={4}
               margin="normal"
               color="success"
+              onChange={({ target: { value } }) => setGoal(value)}
             />
           </div>
           <div className="modalButtonContainer">
-            <Link to="/classroom">
-              <Button
-                sx={{
-                  width: 200,
-                  height: 50,
-                  border: 1.2,
-                  fontWeight: "bold",
-                  fontSize: 16,
-                }}
-                variant="outlined"
-                color="success"
-              >
-                강의실 열기
-              </Button>
-            </Link>
+            <Button
+              sx={{
+                width: 200,
+                height: 50,
+                border: 1.2,
+                fontWeight: "bold",
+                fontSize: 16,
+              }}
+              variant="outlined"
+              color="success"
+              onClick={openClass}
+            >
+              강의실 열기
+            </Button>
           </div>
         </Box>
       </Modal>

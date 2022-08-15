@@ -61,15 +61,15 @@ const UserLogin = () => {
               authority: res.authority,
               isLogin: true,
               // },
-            })
+            }),
             // isLogined(true)
           );
 
-          Navigate("/");
+          Navigate("/main");
         },
         (error) => {
           console.log("getUser 에러입니다", error);
-        }
+        },
       );
     } catch (e) {
       console.log("걍 에러");
@@ -90,14 +90,13 @@ const UserLogin = () => {
           }
 
           setSuccess(true);
+
           console.log("로그인 성공");
-          // setAuthApiHeaders();
-          // Navigate("/");
         },
         () => {
           console.log("로그인 실패");
           setSuccess(false);
-        }
+        },
       );
     } catch (error) {
       console.log("3333", error);

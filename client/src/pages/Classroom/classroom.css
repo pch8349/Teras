@@ -9,9 +9,9 @@
   margin-top: 20px;
 }
 
-.header {
-  display: flex;
-  align-items: center;
+.headerContainer {
+  display: grid;
+  grid-template-columns: 350px 1000px;
   grid-row-start: 1;
   grid-row-end: 2;
 }
@@ -23,21 +23,23 @@
   grid-template-rows: 600px 100px;
 }
 
-.subjectBox {
-  height: 70px;
-  width: 170px;
-  border-radius: 25px;
-  background-color: #16995a;
-  flex: 2 1 0;
-  color: white;
-  font-weight: bold;
-  font-size: 30px;
-  text-align: center;
-  line-height: 70px;
+.subjectBoxContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.goalBoxContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column-start: 2;
+  grid-column-end: 3;
 }
 
 .goalBox {
-  flex: 8 1 0;
   display: flex;
-  justify-content: center;
+  align-items: center;
 }

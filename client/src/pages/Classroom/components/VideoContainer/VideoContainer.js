@@ -10,12 +10,12 @@ import VideocamIcon from "@mui/icons-material/Videocam";
 import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import ScreenShareIcon from "@mui/icons-material/ScreenShare";
 
-const OPENVIDU_SERVER_URL = "https://i7a706.p.ssafy.io:4443";
+const OPENVIDU_SERVER_URL = "https://i7a706.p.ssafy.io:7060";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 function VideoContainer() {
-  const mySessionId = localStorage.getItem("userId");
-  const myUserName = localStorage.getItem("userName");
+  const mySessionId = "SessionA";
+  const myUserName = "OpenVidu_User_";
 
   const [micOn, setMicOn] = useState(false);
   const [videoOn, setVideoOn] = useState(false);
@@ -116,6 +116,11 @@ function VideoContainer() {
         });
     });
   }, [session]);
+
+  useEffect(() => {
+    console.log(publisher);
+    console.log(subscribers);
+  });
 
   const onbeforeunload = () => {
     leaveSession();

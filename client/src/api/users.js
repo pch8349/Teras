@@ -2,7 +2,7 @@ import { apiInstance, authApiInstance } from "./index";
 import axios from "axios";
 
 const api = apiInstance();
-const autApi = authApiInstance();
+const authApi = authApiInstance();
 
 export const doLogin = async (user, success, fail) => {
   await api.post(`/auth/login`, user).then(success).catch(fail);
@@ -17,6 +17,7 @@ export async function userCheck(userId, success, fail) {
 }
 
 export async function getUser(success, fail) {
+<<<<<<< HEAD
   console.log("겟유저 내부", sessionStorage.getItem("accessToken"));
   await autApi
     .get("/users", {
@@ -26,6 +27,13 @@ export async function getUser(success, fail) {
     })
     .then(success)
     .catch(fail);
+=======
+  await authApi.get("/users").then(success).catch(fail);
+}
+
+export async function getTimetable(success, fail) {
+  await authApi.get("/timetable").then(success).catch(fail);
+>>>>>>> 3777c5c ([FE] openvidu host update)
 }
 
 export const getSchool = async (params, success, fail) => {

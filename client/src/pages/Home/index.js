@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import "./home.css";
-import TimeTable from "./components/Timetable/timetable";
-import ClassroomModal from "./components/ClassroomModal/ClassroomModal";
+import TimeTable from "./components/Timetable/Timetable";
 import Main from "./components/Main/Main";
 import Notice from "./components/Notice/Notice";
 import Assignment from "./components/Assignment/Assignment";
@@ -84,16 +83,9 @@ const Home = (tmp) => {
           <div className="profileContainer">
             <Profile />
           </div>
-          <div className="timeTableGridContainer">
-            <div className="classRoomButtonContainer">
-              {/* Link 써서 주소로보내기 */}
-              {/*   ex.      <Link to="/signup" className="">회원가입</Link> */}
-              <ClassroomModal />
-            </div>
+          <div className="timeTableFlexContainer">
             <div className="timeTableContainer">
-              <TimeTable
-                rows={["수학", "영어", "국어", "진로", "화학I", "체육", "도덕"]}
-              />
+              <TimeTable />
             </div>
           </div>
         </div>
