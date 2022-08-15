@@ -29,6 +29,7 @@ export async function getUser(success, fail) {
 }
 
 export async function getTimetable(success, fail) {
+  console.log("겟유저 내부", sessionStorage.getItem("accessToken"));
   await authApi
     .get("/timetable", {
       headers: {
