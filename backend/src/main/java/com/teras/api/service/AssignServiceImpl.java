@@ -59,6 +59,11 @@ public class AssignServiceImpl implements AssignService {
 					.findByClassCodeAndSubjectCodeOrderByDeadlineAsc(user.getClassCode(), subject, pageable).get()) {
 				list.add(new AssignmentDto(assign));
 			}
+		} else {
+			for (Assignment assign : assignmentRepository
+					.findByClassCodeOrderByDeadlineAsc(user.getClassCode(), pageable).get()) {
+				list.add(new AssignmentDto(assign));
+			}
 		}
 
 		return list;
