@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import com.teras.api.request.OpenviduRemoveUserReq;
 import com.teras.api.response.OpenviduGetRes;
 import com.teras.api.response.OpenviduPostRes;
 import com.teras.api.service.OpenviduService;
+import com.teras.common.auth.SsafyUserDetails;
 import com.teras.common.model.response.BaseResponseBody;
 import com.teras.db.dto.OpenviduDto;
 import com.teras.db.entity.Openvidu;
@@ -34,6 +36,7 @@ import io.openvidu.java.client.Session;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import springfox.documentation.annotations.ApiIgnore;
 
 @Api(value = "openvidu처리 API", tags = { "Openvidu." })
 @RestController
@@ -68,9 +71,12 @@ public class OpenviduController {
 	}
 
 	@PostMapping
-	public ResponseEntity<? extends BaseResponseBody> registerSession(
+	public ResponseEntity<? extends BaseResponseBody> registerSession(@ApiIgnore Authentication authentication,
 			@RequestBody OpenviduRegisterPostReq registerInfo) {
-		Openvidu openvidu = openviduService.createSession(registerInfo);
+		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+		String userId = userDetails.getUsername();
+
+		Openvidu openvidu = openviduService.createSession(registerInfo, userId);
 
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
 	}

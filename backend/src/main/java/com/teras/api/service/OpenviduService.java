@@ -12,7 +12,7 @@ public interface OpenviduService {
 	void leaveRoom();
 	void fetchInfo();
 	void fetchAll();
-	Openvidu createSession(OpenviduRegisterPostReq registerInfo);
+	Openvidu createSession(OpenviduRegisterPostReq registerInfo, String userId);
 	OpenviduDto searchOpenvidu(String sessionId);
 	
 	

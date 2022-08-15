@@ -49,15 +49,16 @@ public class AssignServiceImpl implements AssignService {
 	@Override
 	public List<AssignmentDto> findAssignByClassCodeAndSubjectCode(String userId, String subjectCode, int page) {
 		User user = userRepository.findByUserId(userId).get();
-		SubjectDetail subject = subjectDetailRepository.findBySubjectCode(subjectCode).get();
-
 		Pageable pageable = PageRequest.of(page, 10, Sort.by("assignNo").descending());
-
 		List<AssignmentDto> list = new ArrayList<AssignmentDto>();
 
-		for (Assignment assign : assignmentRepository
-				.findByClassCodeAndSubjectCodeOrderByDeadlineAsc(user.getClassCode(), subject, pageable).get()) {
-			list.add(new AssignmentDto(assign));
+		if (subjectCode != "ALL") {
+			SubjectDetail subject = subjectDetailRepository.findBySubjectCode(subjectCode).get();
+
+			for (Assignment assign : assignmentRepository
+					.findByClassCodeAndSubjectCodeOrderByDeadlineAsc(user.getClassCode(), subject, pageable).get()) {
+				list.add(new AssignmentDto(assign));
+			}
 		}
 
 		return list;

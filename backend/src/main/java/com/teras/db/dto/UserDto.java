@@ -14,6 +14,8 @@ public class UserDto {
 
 	String phoneNumber;
 
+	String schoolName;
+	
 	String classCode;
 	
 	String classNumber;
@@ -33,6 +35,7 @@ public class UserDto {
 		authority = user.getAuthority().toString();
 		gradeNumber = user.getClassCode().getGradeNumber();
 		classNumber = user.getClassCode().getClassNumber();
+		schoolName = user.getClassCode().getSchoolCode().getSchoolName();
 		if(user.getSubjectCode()!= null)
 			subjectCode = user.getSubjectCode().getSubjectCode();
 	}

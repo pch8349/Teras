@@ -2,6 +2,9 @@ package com.teras.db.dto;
 
 import com.teras.db.entity.Openvidu;
 
+import lombok.Data;
+
+@Data
 public class OpenviduDto {
 	String goal;
 	String subjectCode;
