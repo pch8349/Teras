@@ -5,5 +5,5 @@ import java.util.List;
 import com.teras.db.dto.TimeTableDto;
 
 public interface TimeTableService {
-	List<TimeTableDto> getTimeTable(String userId);
+	List<Object> getTimeTable(String userId);
 }

@@ -19,6 +19,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     
     int countByUserId(String userId);
     
-    List<User> findByClassCode(ClassEntity classEntity);
+    Optional<List<User>> findByClassCode(ClassEntity classEntity);
     Integer countByClassCode(ClassEntity classEntity);
+
 }

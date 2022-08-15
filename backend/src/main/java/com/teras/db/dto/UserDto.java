@@ -15,6 +15,14 @@ public class UserDto {
 	String phoneNumber;
 
 	String classCode;
+	
+	String classNumber;
+	
+	String gradeNumber;
+	
+	String authority;
+	
+	String subjectCode;
 
 	public UserDto(User user) {
 		id = user.getUserId();
@@ -22,7 +30,10 @@ public class UserDto {
 		email = user.getEmail();
 		phoneNumber = user.getPhoneNumber();
 		classCode = user.getClassCode().getClassCode();
+		authority = user.getAuthority().toString();
+		gradeNumber = user.getClassCode().getGradeNumber();
+		classNumber = user.getClassCode().getClassNumber();
+		if(user.getSubjectCode()!= null)
+			subjectCode = user.getSubjectCode().getSubjectCode();
 	}
-	
-	
 }

@@ -9,20 +9,21 @@ public class AssignmentDto {
 	private Long assignNo;
 	private String title;
 	private String content;
-	private String userId;
-	private String subjectCode;
+	private String name;
+	private String subjectName;
 	private String createdDate;
 	private String deadLine;
 	private String uuid;
-	
+
 	public AssignmentDto(Assignment assign) {
 		assignNo = assign.getAssignNo();
 		title = assign.getTitle();
 		content = assign.getContent();
-		userId = assign.getUserId().getUserId();
-		subjectCode = assign.getSubjectCode().getSubjectCode();
+		name = assign.getUserId().getName();
+		subjectName = assign.getSubjectCode().getSubjectName();
 		createdDate = assign.getCreatedDate().toString();
 		deadLine = assign.getDeadline().toString();
-		uuid = assign.getUuid().getUuid();
+		if (assign.getUuid() != null)
+			uuid = assign.getUuid().getUuid();
 	}
 }

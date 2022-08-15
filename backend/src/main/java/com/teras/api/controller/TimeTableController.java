@@ -18,33 +18,23 @@ import io.swagger.annotations.Api;
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
- * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
+ * �쑀�� 愿��젴 API �슂泥� 泥섎━瑜� �쐞�븳 而⑦듃濡ㅻ윭 �젙�쓽.
  */
-@Api(value = "유저 API", tags = {"User"})
+@Api(value = "�쑀�� API", tags = { "User" })
 @RestController
 @RequestMapping("/timetable")
 public class TimeTableController {
 	@Autowired
 	TimeTableService timeTableService;
-	
+
 	@GetMapping()
 	public ResponseEntity<? extends TimeTableGetRes> getTimeTable(@ApiIgnore Authentication authentication) {
-		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
 		String userId = userDetails.getUsername();
-		
-		List<TimeTableDto> list = timeTableService.getTimeTable(userId);
-//		for(TimeTableDto dto : list) {
-//			System.out.println(dto);
-//		}
-		
-		ResponseEntity<TimeTableGetRes> response = ResponseEntity.status(200).body(TimeTableGetRes.of(200, "aaaaa", list));
-		
-		for(TimeTableDto dto : response.getBody().getList()) {
-			System.out.println(dto);
-		}
-		
-		return response;
-//		return ResponseEntity.status(200).body(TimeTableGetRes.of(200, "SUCCESS", list));
-		
+
+		List<Object> list = timeTableService.getTimeTable(userId);
+
+		return ResponseEntity.status(200).body(TimeTableGetRes.of(200, "SUCCESS", list));
+
 	}
 }

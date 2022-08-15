@@ -9,16 +9,16 @@ public class NoticeDto {
 	private Long noticeNo;
 	private String title;
 	private String content;
-	private String userId;
+	private String name;
 	private String createdDate;
 	private String uuid;
 
 	public NoticeDto(Notice notice) {
-		this.noticeNo = notice.getNoticeNo();
-		this.title = notice.getTitle();
-		this.content = notice.getContent();
-		this.userId = notice.getUser().getUserId();
-		this.createdDate = notice.getCreatedDate().toString();
+		noticeNo = notice.getNoticeNo();
+		title = notice.getTitle();
+		content = notice.getContent();
+		name = notice.getUser().getName();
+		createdDate = notice.getCreatedDate().toString();
 		if (notice.getAttach() != null)
 			this.uuid = notice.getAttach().getUuid();
 	}

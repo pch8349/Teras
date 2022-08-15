@@ -43,16 +43,19 @@ public class FileServiceImpl implements FileService {
 	@Override
 	public ResponseEntity<Object> downloadFile(String uuid) {
 		Attachment attach = attachmentRepository.findByUuid(uuid).get();
-		String path = "C:\\Users\\patt1\\Desktop\\" + attach.getFilePath();
+		String path = "/ubuntu/home/" + attach.getFilePath();
 
 		try {
 			Path filePath = Paths.get(path);
 			Resource resource = new InputStreamResource(Files.newInputStream(filePath));
+			System.out.println("a");
 
 			File file = new File(path);
+			System.out.println("a");
 
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName()).build()); //
+			System.out.println("a");
 
 			return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
 		} catch (Exception e) {

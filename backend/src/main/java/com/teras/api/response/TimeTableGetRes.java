@@ -13,17 +13,13 @@ import lombok.Setter;
 @Getter
 @ApiModel("TimeTableGetRes")
 public class TimeTableGetRes extends BaseResponseBody{
-	List<TimeTableDto> list;
+	List<Object> list;
 	
-	public static TimeTableGetRes of(Integer statusCode, String message, List<TimeTableDto> list) {
+	public static TimeTableGetRes of(Integer statusCode, String message, List<Object> list) {
 		TimeTableGetRes res = new TimeTableGetRes();
 		res.setStatusCode(statusCode);
 		res.setMessage(message);
 		res.setList(list);
-		
-//		for(TimeTableDto dto : res.getList()) {
-//			System.out.println(dto);
-//		}
 		
 		return res;
 	}

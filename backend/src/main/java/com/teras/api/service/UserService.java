@@ -16,4 +16,5 @@ public interface UserService {
 	int idCheck(String id);
 	List<UserDto> getClassmates(ClassEntity classCode);
 	int getClassmatesTotal(ClassEntity classCode);
+
 }
