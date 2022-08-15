@@ -20,7 +20,7 @@ const Title = styled.div`
   text-align: center;
   font-size: 1.8rem;
   font-weight: 600;
-  margin-bottom: 1.5rem;
+  margin: 1.5rem 0;
 `;
 
 const StyledTable = styled.table`
@@ -56,13 +56,13 @@ const PageContainer = styled.div`
   margin-top: 1rem;
 `;
 
+
 function NoticeList() {
     const Navigate = useNavigate();
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [totalItemsCount, setTotalItemsCount] = useState(0);
-    const [isTotalItemsCountLoading, setIsTotalItemsCountLoading] =
-      useState(true);
+    const [isTotalItemsCountLoading, setIsTotalItemsCountLoading] = useState(true);
     const [page, setPage] = useState(0);
     
 
@@ -84,7 +84,8 @@ function NoticeList() {
           setData(res.data.list);
           setIsLoading(false);
         });
-      }
+      };
+      console.log(data)
     }, [isLoading]);
 
 
@@ -102,7 +103,7 @@ function NoticeList() {
         <ButtonContainer>
           <Button
             name='글쓰기'
-            onClick={()=> Navigate("./write")} />
+            onClick={()=> Navigate("./register")} />
         </ButtonContainer>
         <StyledTable>
           <colgroup>
