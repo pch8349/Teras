@@ -53,9 +53,6 @@
   transition: transform 0.2s;
 }
 
-.profileContainer:hover {
-  transform: scale(1.03);
-}
 
 .timeTableFlexContainer {
   display: flex;
@@ -77,10 +74,6 @@
   background-color: #66c560;
 }
 
-.timeTableContainer:hover {
-  transform: scale(1.03);
-}
-
 .dashBoardFlexContainer {
   display: flex;
   justify-content: center;
@@ -97,10 +90,6 @@
   grid-template-rows: 50px 700px;
   width: 980px;
   height: 750px;
-}
-
-.dashBoardContainer:hover {
-  transform: scale(1.01);
 }
 
 .navTabContainer {

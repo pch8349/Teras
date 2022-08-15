@@ -1,7 +1,6 @@
 import React, {createRef, useCallback, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { registerNotice  } from '../../../../api/notice'
-import { errorAlert, successAlert } from '../../../../modules/alert'
 import styled from 'styled-components';
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor } from "@toast-ui/react-editor";

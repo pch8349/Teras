@@ -5,6 +5,7 @@ import NoticeItem from "./NoticeItem";
 import { getNoticeList } from '../../../../api/notice';
 import Button from '../../../../components/Button/Button';
 import Pagination from 'react-js-pagination';
+import '../../../../assets/pagination.css'
 
 
 
@@ -98,7 +99,6 @@ function NoticeList() {
 
     return (
     <>
-      <Title>공지사항</Title>
       <Container>
         <ButtonContainer>
           <Button
