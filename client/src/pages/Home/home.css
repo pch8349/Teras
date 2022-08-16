@@ -53,7 +53,6 @@
   transition: transform 0.2s;
 }
 
-
 .timeTableFlexContainer {
   display: flex;
   justify-content: center;
@@ -71,7 +70,7 @@
   width: 290px;
   height: 450px;
   border-radius: 15px;
-  background-color: #7CCC77;
+  background-color: #7ccc77;
 }
 
 .dashBoardFlexContainer {
@@ -92,13 +91,6 @@
   height: 750px;
 }
 
-<<<<<<< HEAD
-=======
-.dashBoardContainer:hover {
-  /* transform: scale(1.01); */
-}
-
->>>>>>> 46abf97 ([FE] frontend main)
 .navTabContainer {
   display: flex;
   align-items: stretch;
@@ -115,7 +107,7 @@
 .navTabButton {
   color: white;
   flex-grow: 1;
-  background-color: #7CCC77;
+  background-color: #7ccc77;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   border-width: 0 thin;
