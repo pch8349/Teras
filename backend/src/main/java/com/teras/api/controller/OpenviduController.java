@@ -97,11 +97,7 @@ public class OpenviduController {
 	public ResponseEntity<? extends BaseResponseBody> deleteOpenvidu(@ApiIgnore Authentication authentication,
 			@PathVariable(name = "sessionId") String sessionId) {
 		
-//		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
-//		String userId = userDetails.getUsername();
-		//OpenviduDto openvidu = openviduService.searchOpenvidu(sessionId);
-		//db업데이트
-		openviduService.endInfo(sessionId);
+		openviduService.endInfo(authentication,sessionId);
 		
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
 	}

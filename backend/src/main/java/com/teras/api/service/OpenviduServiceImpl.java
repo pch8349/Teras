@@ -1,6 +1,7 @@
 package com.teras.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonObject;
@@ -74,7 +75,7 @@ public class OpenviduServiceImpl implements OpenviduService {
 	}
 
 	@Override
-    public Openvidu endInfo(String sessionId) {
+    public Openvidu endInfo(Authentication authentication,String sessionId) {
 		
 		Openvidu openvidu = openviduRepository.findById(sessionId).orElse(null);
 		if (openvidu != null) {
