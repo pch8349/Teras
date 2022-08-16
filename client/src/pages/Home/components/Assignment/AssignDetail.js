@@ -19,8 +19,14 @@ const DetailContainer = styled.div`
 `;
 
 const TitleContainer = styled.div`
+  display: flex;
+  justify-content: flex-front;
+  .notice {
+    font-size:1.5rem;
+    color:#349466;
+  }
   .title {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: 600;
   }
   .code {
@@ -30,45 +36,49 @@ const TitleContainer = styled.div`
   }
 `;
 
+const SubContainer = styled.div`
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+`;
+
 const BoardContainer = styled.div`
-  border: 1px solid #dadde6;
+  border-top: 1px solid #dadde6;
+  border-bottom: 1px solid #dadde6;
   box-sizing: border-box;
   width: 100%;
-  padding: 0 3rem;
+  padding: 1rem 3rem;
   border-radius: 5px;
   margin-top: 0.5rem;
   min-height: 20rem;
 `;
 
 const FileContainer = styled.div`
-  height: 5rem;
-  margin-top: 2rem;
-  .desc {
-    font-size: 1.2rem;
-    padding-left: 0.5rem;
+  margin-top: 1rem;
+  .dropzone {
+    text-align: center;
+    padding: 20px;
+    border: 3px dashed #eeeeee;
+    background-color: #fafafa;
+    color: #bdbdbd;
   }
-  .fileList {
-    margin-top: 1rem;
-    padding: 0.5rem 2.5rem;
-    border: 1px solid #dadde6;
-    border-radius: 5px;
-    .fileItem {
+  .files {
+    margin-top: 0.5rem;
+    display: flex;
+    padding: 0rem 0.5rem;
+    .file {
       display: flex;
-      height: 1.5rem;
-      align-items: center;
+      border-radius: 5px;
+      border: 1px solid #e4e4e4;
+      padding: 0.2rem 0.4rem;
+      margin-right: 0.5rem;
       .icon {
-        width: 1rem;
-        margin-right: 0.2rem;
+        width: 0.7rem;
+        margin-right: 0.3rem;
       }
-      .file {
-        cursor: pointer;
-        display: block;
-        background-color: white;
-        border: none;
-        color: #555555;
-        &:hover {
-          color: #000000;
-        }
+      .desc {
+        font-size: 0.9rem;
+        color: #666666;
       }
     }
   }
@@ -93,7 +103,7 @@ function AssignDetail() {
   });
   const [commentData, setCommentData] = useState({
     content: "",
-    uuid: "",
+    uuid: null,
     assignNo: "",
   });
   const [data, setData] = useState({
@@ -102,7 +112,7 @@ function AssignDetail() {
       content: "",
       uuid: "",
       subjectName: "",
-      createDate: "",
+      createdDate: "",
       name: "",
       deadLine: "",
   });
@@ -155,7 +165,7 @@ function AssignDetail() {
   // }, [isFileLoading]);
 
   const onChange = (e) => {
-    setData({
+    setCommentData({
       ...commentData,
       [e.target.name]: e.target.value,
     })
@@ -173,11 +183,7 @@ function AssignDetail() {
   };
 
   const onSubmit = () => {
-    setCommentData({
-      ...commentData,
-      assignNo: data.assignNo,
-    })
-
+    commentData.assignNo = data.assignNo;
     submitAssign(commentData)
     .then(() => {
       successAlert("글 등록에 성공하였습니다.");
@@ -230,24 +236,37 @@ function AssignDetail() {
 
   return (
   <DetailContainer>
-    <TitleContainer>{data.subjectName} {data.title} {data.deadLine}</TitleContainer>
+    <TitleContainer>
+      <div className='notice'>[{data.subjectName}]</div> 
+      <div className='title'>{data.title}</div>
+    </TitleContainer>
+    <SubContainer>
       <div>{data.name}</div>
+      <div>기한 : {data.createdDate} - {data.deadLine}</div>
+    </SubContainer>
+      
       {!isLoading && (
       <BoardContainer>
           <Viewer initialValue={`${data.content}`} />
       </BoardContainer>
       )}
     {data.uuid && (
-      <FileContainer>
-        <div className="desc" onClick={onDownload}>첨부파일</div>
-      </FileContainer>
+      <div>
+        <h5>첨부파일(1)</h5>
+        <FileIcon
+          extension={makeExtension(file.fileName)}
+          {...defaultStyles[makeExtension(file.fileName)]}
+        />
+      </div>
     )}
     <CommentContainer>
+      <div>과제 제출하기</div>
+      <label for='comment'></label>
       <TextField 
-        name="content"
+        id="comment"
         value={commentData.content}
+        name="content"
         variant="outlined"
-        defaultValue='내용을 입력해주세요.'
         multiline
         fullWidth
         color="success"
@@ -284,11 +303,11 @@ function AssignDetail() {
         name='제출하기'
         onClick={onSubmit}
       />
-    </CommentContainer>
-    <Button 
-      name='목록보기'
+      <Button 
+      name='목록'
       onClick={()=> Navigate("../")}
       />
+    </CommentContainer>
   </DetailContainer>
   )
 }

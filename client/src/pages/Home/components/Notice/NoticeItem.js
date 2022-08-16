@@ -17,6 +17,7 @@ const StyledTd = styled.td`
   vertical-align: middle;
   text-align: ${(props) => props.ta || "center"};
   padding: 0 1.5rem;
+  box-shadow: 0.2px 0.2px #525252;
 `;
 
 function NoticeItem({data, index}) {

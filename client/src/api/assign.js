@@ -26,5 +26,5 @@ export const getAssignDetail = async (assignNo, success, fail) => {
 };
 
 export const submitAssign = async (content, success, fail) => {
-  return await api.post("/assign/comment", content).then(success).catch(fail);
+  return await tokenApi.post("/assign/comment", content).then(success).catch(fail);
 };

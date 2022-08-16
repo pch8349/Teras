@@ -9,18 +9,19 @@ import { FileIcon, defaultStyles } from "react-file-icon";
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-const Title = styled.div`
-  text-align: center;
-  font-size: 1.8rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-`;
+const RegisterContainer = styled.div`
+  margin: 3rem 5rem;
+`
 
 const InputContainer = styled.div`
   display: flex;
   width: 100%;
   box-sizing: border-box;
-  border-top: 1px solid #dadde6;
+  border-top: 1px solid #349466;
+  margin-bottom: 1rem;
+  height: 60px;
+  background-color: #EDFFE7;
+  justify-content: space-evenly;
   select {
     width: 10rem;
     border: none;
@@ -28,10 +29,12 @@ const InputContainer = styled.div`
     font-size: 1rem;
   }
   input {
-    width: 100%;
-    border: none;
-    padding: 1rem 0.5rem;
+    width: 80%;
+    border: 1px solid #dadde6;
+    height: 40px;
     font-size: 1.2rem;
+    margin-top: 8px;
+    placeholder: '제목을 입력해주세요';
   }
 `;
 
@@ -151,26 +154,25 @@ function NoticeRegister() {
 
 
   return (
-    <div>
-      <Title>공지사항 작성하기</Title>
+    <RegisterContainer>
       {/* 제목 */}
       <InputContainer>
+      <h5>제목</h5>
         <label for='title'></label>
         <input id='title' name='title' value = {data.title} onChange={onChange}></input>
       </InputContainer>
       {/* 내용 */}
-      <InputContainer>
-        <label for='content'></label>
-        <Editor 
-          name="content"
-          initialValue={data.content}
-          previewStyle="tab"
-          height="400px"
-          initialEditType="markdown"
-          useCommandShortcut={true}
-          ref={editorRef}
-         />
-      </InputContainer>
+      <label for='content'></label>
+      <Editor 
+        id="content"
+        name="content"
+        initialValue={data.content}
+        previewStyle="tab"
+        height="400px"
+        initialEditType="wysiwyg"
+        useCommandShortcut={true}
+        ref={editorRef}
+        />
       <FileContainer>
         <Dropzone onDrop={handleDrop} className="dropzone">
           {({ getRootProps, getInputProps }) => (
@@ -201,7 +203,7 @@ function NoticeRegister() {
 
       <button onClick={onCancel}>뒤로가기</button>
       <button onClick={onSubmit}>등록하기</button>
-    </div>
+    </RegisterContainer>
   )
 }
 

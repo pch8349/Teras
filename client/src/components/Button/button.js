@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 const StyledButton = styled.button`
   width: ${(props) => (props.width ? props.width : "10rem")};
-  height: ${(props) => (props.height ? props.height : "2rem")};
+  height: ${(props) => (props.height ? props.height : "2.5rem")};
   font-size: ${(props) => (props.fontSize ? props.fontSize : "1rem")};
-  background-color: ${(props) => (props.bc ? props.bc : "#fec25c")};
+  background-color: ${(props) => (props.bc ? props.bc : "#1d995d")};
   margin-top: ${(props) => (props.mt ? props.mt : "")};
   margin-left: ${(props) => (props.ml ? props.ml : "")};
   margin-bottom: ${(props) => (props.mb ? props.mb : "")};
@@ -16,9 +16,10 @@ const StyledButton = styled.button`
   font-family: "Noto Sans KR", sans-serif;
   transition: 0.2s;
   cursor: pointer;
+  color: #fff;
   &:hover {
     background-color: ${(props) =>
-      props.hoverColor ? props.hoverColor : "#dca03a"};
+      props.hoverColor ? props.hoverColor : "#216F49"};
   }
   &:disabled {
     background-color: whitesmoke;

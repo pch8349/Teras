@@ -12,19 +12,28 @@ import { registerAssign  } from '../../../../api/assign'
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
+const RegisterContainer = styled.div`
+  margin: 3rem 5rem;
+`;
 
-const Title = styled.div`
-  text-align: center;
-  font-size: 1.8rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
+const StyledDate = styled.div`
+  display: inline-flex;
+  justify-content: flex-start;
+  width: 50%;
 `;
 
 const InputContainer = styled.div`
   display: flex;
   width: 100%;
   box-sizing: border-box;
-  border-top: 1px solid #dadde6;
+  border-top: 1px solid #349466;
+  margin-bottom: 1rem;
+  height: 60px;
+  background-color: #EDFFE7;
+  justify-content: space-evenly;
+  notice {
+    text-size: 1.5rem;
+  }
   select {
     width: 10rem;
     border: none;
@@ -32,10 +41,11 @@ const InputContainer = styled.div`
     font-size: 1rem;
   }
   input {
-    width: 100%;
-    border: none;
-    padding: 1rem 0.5rem;
+    width: 80%;
+    border: 1px solid #dadde6;
+    height: 40px;
     font-size: 1.2rem;
+    margin-top: 8px;
   }
 `;
 
@@ -70,6 +80,10 @@ const FileContainer = styled.div`
     }
   }
 `;
+
+const MyDatePicker = styled(DatePicker)`
+  width: 100%;
+`
 
 
 function AssignRegister() {
@@ -138,7 +152,7 @@ function AssignRegister() {
     })
 
     // 배포시에는 지워줘야 합니다.
-    axios.defaults.baseURL = "http://i7a706.p.ssafy.io:8080/";
+    axios.defaults.baseURL = "https://i7a706.p.ssafy.io:8080/";
     await axios.post("/file/upload", formData, config).then((res) => {
       setData({
         ...data,
@@ -156,41 +170,40 @@ function AssignRegister() {
 
 
   return (
-    <div>
-      <Title>과제 작성하기</Title>
-      <div>
-        <p>제출 날짜</p>
-        <DatePicker 
-          locale={ko}
-          closeOnscroll={true}
-          selected={endDate} 
-          onChange={date => setEndDate(date)}
-          minDate = {new Date()}
-          showTimeSelect
-          timeFormat="HH:mm"
-          timeIntervals={60}
-          timeCaption="time"
-          dateFormat="yyyy-MM-dd HH:mm"
-        />
-      </div>
+    <RegisterContainer>
       {/* 제목 */}
       <InputContainer>
+        <div className='notice'>제목</div>
         <label for='title'></label>
         <input id='title' name='title' value = {data.title} onChange={onChange}></input>
+        <StyledDate>
+          <div>마감 시간</div>
+          <MyDatePicker 
+            locale={ko}
+            closeOnscroll={true}
+            selected={endDate} 
+            onChange={date => setEndDate(date)}
+            minDate = {new Date()}
+            showTimeSelect
+            timeFormat="HH:mm"
+            timeIntervals={60}
+            timeCaption="time"
+            dateFormat="yyyy-MM-dd HH:mm"
+            width="50%"
+          />
+        </StyledDate>
       </InputContainer>
       {/* 내용 */}
-      <InputContainer>
-        <label for='content'></label>
-        <Editor 
-          name="content"
-          initialValue={data.content}
-          previewStyle="tab"
-          height="400px"
-          initialEditType="markdown"
-          useCommandShortcut={true}
-          ref={editorRef}
-         />
-      </InputContainer> 
+      <label for='content'></label>
+      <Editor 
+        name="content"
+        initialValue={data.content}
+        previewStyle="tab"
+        height="400px"
+        initialEditType="markdown"
+        useCommandShortcut={true}
+        ref={editorRef}
+        />
       <FileContainer>
         <Dropzone onDrop={handleDrop} className="dropzone">
           {({ getRootProps, getInputProps }) => (
@@ -221,7 +234,7 @@ function AssignRegister() {
       
       <button onClick={onCancel}>뒤로가기</button>
       <button onClick={onSubmit}>등록하기</button>
-    </div>
+    </RegisterContainer>
   )
 }
 
