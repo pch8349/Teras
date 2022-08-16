@@ -89,121 +89,123 @@ public class OpenviduController {
 		return ResponseEntity.status(200).body(OpenviduGetRes.of(200, "SUCCESS", openvidu));
 	}
 
-	@ApiOperation(value = "get session 토큰", notes = "세션 id의 정보로 토큰을 가져온다.")
-	@PostMapping("/get-token")
-	public ResponseEntity<OpenviduPostRes> getToken(
-			@RequestBody @ApiParam(value = "getToken", required = true) OpenviduPostReq openviduPostReq) {
+//	@ApiOperation(value = "get session 토큰", notes = "세션 id의 정보로 토큰을 가져온다.")
+//	@PostMapping("/get-token")
+//	public ResponseEntity<OpenviduPostRes> getToken(
+//			@RequestBody @ApiParam(value = "getToken", required = true) OpenviduPostReq openviduPostReq) {
+//
+//		System.out.println("Getting sessionId and token | {sessionName}=" + openviduPostReq.getSessionName());
+//		String sessionName = openviduPostReq.getSessionName();
+//
+//		// The video-call to connect ("TUTORIAL")
+//
+//		// Role associated to this user
+//		OpenViduRole role = OpenViduRole.PUBLISHER;
+//
+//		// Build connectionProperties object with the serverData and the role
+//		ConnectionProperties connectionProperties = new ConnectionProperties.Builder().type(ConnectionType.WEBRTC)
+//				.role(role).data("").build();
+//
+//		// enterRoom
+//		// 세션이 있으면 -> 참가자로서 입장
+//		if (this.mapSessions.get(sessionName) != null) {
+//			// Session already exists
+//			System.out.println("Existing session " + sessionName);
+//			try {
+//
+//				// Generate a new token with the recently created connectionProperties
+//				String token = this.mapSessions.get(sessionName).createConnection(connectionProperties).getToken();
+//
+//				// Update our collection storing the new token
+//				this.mapSessionNamesTokens.get(sessionName).put(token, role);
+//
+//				// Prepare the response with the token
+//				// Return the response to the client
+//				return ResponseEntity.ok(OpenviduPostRes.of(200, "Success", token));
+//
+//			} catch (OpenViduJavaClientException e1) {
+//				// If internal error generate an error message and return it to client
+//				return ResponseEntity.status(401).body(OpenviduPostRes.of(401, "Invalid", null));
+//			} catch (OpenViduHttpException e2) {
+//				if (404 == e2.getStatus()) {
+//					// Invalid sessionId (user left unexpectedly). Session object is not valid
+//					// anymore. Clean collections and continue as new session
+//					this.mapSessions.remove(sessionName);
+//					this.mapSessionNamesTokens.remove(sessionName);
+//				}
+//			}
+//		}
+//
+//		// New session 새로운 방 생성
+//		try {
+//			// Create a new OpenVidu Session
+//			// System.out.println("hello");
+//			Session session = this.openVidu.createSession();
+//			System.out.println("New session " + sessionName);
+//			// Generate a new token with the recently created connectionProperties
+//			String token = session.createConnection(connectionProperties).getToken();
+//
+//			// Store the session and the token in our collections
+//			this.mapSessions.put(sessionName, session);
+//			this.mapSessionNamesTokens.put(sessionName, new ConcurrentHashMap<>());
+//			this.mapSessionNamesTokens.get(sessionName).put(token, role);
+//
+//			// Prepare the response with the sessionId and the token
+//			System.out.println(token);
+//			// Return the response to the client
+//			return ResponseEntity.ok(OpenviduPostRes.of(200, "Success", token));
+//
+//		} catch (Exception e) {
+//			// If error generate an error message and return it to client
+//			return ResponseEntity.status(401).body(OpenviduPostRes.of(401, "Invalid1", null));
+//		}
+//	}
+//
+//	
+//	@ApiOperation(value = "user 지우기", notes = "유처가 세션을 나간다. 마지막 사람까지 나갈경우 세션은 없어진다.") // body{tokenName:'aaa'}
+//	@RequestMapping(value = "/remove-user", method = RequestMethod.POST)
+//	public ResponseEntity<? extends BaseResponseBody> removeUser(
+//			@RequestBody @ApiParam(value = "user지우기", required = true) OpenviduRemoveUserReq openviduRemoveUserReq)
+//			throws Exception {
+//
+//		System.out.println("Removing user | {sessionName, token}=" + openviduRemoveUserReq.toString());
+//
+//		// Retrieve the params from BODY
+//		String sessionName = openviduRemoveUserReq.getSessionName();
+//		String token = openviduRemoveUserReq.getToken();
+//
+//		// If the session exists
+//		if (this.mapSessions.get(sessionName) != null && this.mapSessionNamesTokens.get(sessionName) != null) {
+//
+//			// If the token exists
+//			if (this.mapSessionNamesTokens.get(sessionName).remove(token) != null) {
+//				// User left the session
+//				if (this.mapSessionNamesTokens.get(sessionName).isEmpty()) {
+//					// Last user left: session must be removed
+//					this.mapSessions.remove(sessionName);
+//				}
+//				return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+//			} else {
+//				// The TOKEN wasn't valid
+//				System.out.println("Problems in the app server: the TOKEN wasn't valid");
+//				return ResponseEntity.status(500)
+//						.body(BaseResponseBody.of(500, "Problems in the app server: the TOKEN wasn't valid"));
+//			}
+//
+//		} else {
+//			// The SESSION does not exist
+//			System.out.println("Problems in the app server: the SESSION does not exist");
+//			return ResponseEntity.status(500)
+//					.body(BaseResponseBody.of(500, "Problems in the app server: the SESSION does not exist"));
+//		}
+//	}
 
-		System.out.println("Getting sessionId and token | {sessionName}=" + openviduPostReq.getSessionName());
-		String sessionName = openviduPostReq.getSessionName();
-
-		// The video-call to connect ("TUTORIAL")
-
-		// Role associated to this user
-		OpenViduRole role = OpenViduRole.PUBLISHER;
-
-		// Build connectionProperties object with the serverData and the role
-		ConnectionProperties connectionProperties = new ConnectionProperties.Builder().type(ConnectionType.WEBRTC)
-				.role(role).data("").build();
-
-		// enterRoom
-		// 세션이 있으면 -> 참가자로서 입장
-		if (this.mapSessions.get(sessionName) != null) {
-			// Session already exists
-			System.out.println("Existing session " + sessionName);
-			try {
-
-				// Generate a new token with the recently created connectionProperties
-				String token = this.mapSessions.get(sessionName).createConnection(connectionProperties).getToken();
-
-				// Update our collection storing the new token
-				this.mapSessionNamesTokens.get(sessionName).put(token, role);
-
-				// Prepare the response with the token
-				// Return the response to the client
-				return ResponseEntity.ok(OpenviduPostRes.of(200, "Success", token));
-
-			} catch (OpenViduJavaClientException e1) {
-				// If internal error generate an error message and return it to client
-				return ResponseEntity.status(401).body(OpenviduPostRes.of(401, "Invalid", null));
-			} catch (OpenViduHttpException e2) {
-				if (404 == e2.getStatus()) {
-					// Invalid sessionId (user left unexpectedly). Session object is not valid
-					// anymore. Clean collections and continue as new session
-					this.mapSessions.remove(sessionName);
-					this.mapSessionNamesTokens.remove(sessionName);
-				}
-			}
-		}
-
-		// New session 새로운 방 생성
-		try {
-			// Create a new OpenVidu Session
-			// System.out.println("hello");
-			Session session = this.openVidu.createSession();
-			System.out.println("New session " + sessionName);
-			// Generate a new token with the recently created connectionProperties
-			String token = session.createConnection(connectionProperties).getToken();
-
-			// Store the session and the token in our collections
-			this.mapSessions.put(sessionName, session);
-			this.mapSessionNamesTokens.put(sessionName, new ConcurrentHashMap<>());
-			this.mapSessionNamesTokens.get(sessionName).put(token, role);
-
-			// Prepare the response with the sessionId and the token
-			System.out.println(token);
-			// Return the response to the client
-			return ResponseEntity.ok(OpenviduPostRes.of(200, "Success", token));
-
-		} catch (Exception e) {
-			// If error generate an error message and return it to client
-			return ResponseEntity.status(401).body(OpenviduPostRes.of(401, "Invalid1", null));
-		}
-	}
-
-	@ApiOperation(value = "user 지우기", notes = "유처가 세션을 나간다. 마지막 사람까지 나갈경우 세션은 없어진다.") // body{tokenName:'aaa'}
-	@RequestMapping(value = "/remove-user", method = RequestMethod.POST)
-	public ResponseEntity<? extends BaseResponseBody> removeUser(
-			@RequestBody @ApiParam(value = "user지우기", required = true) OpenviduRemoveUserReq openviduRemoveUserReq)
-			throws Exception {
-
-		System.out.println("Removing user | {sessionName, token}=" + openviduRemoveUserReq.toString());
-
-		// Retrieve the params from BODY
-		String sessionName = openviduRemoveUserReq.getSessionName();
-		String token = openviduRemoveUserReq.getToken();
-
-		// If the session exists
-		if (this.mapSessions.get(sessionName) != null && this.mapSessionNamesTokens.get(sessionName) != null) {
-
-			// If the token exists
-			if (this.mapSessionNamesTokens.get(sessionName).remove(token) != null) {
-				// User left the session
-				if (this.mapSessionNamesTokens.get(sessionName).isEmpty()) {
-					// Last user left: session must be removed
-					this.mapSessions.remove(sessionName);
-				}
-				return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-			} else {
-				// The TOKEN wasn't valid
-				System.out.println("Problems in the app server: the TOKEN wasn't valid");
-				return ResponseEntity.status(500)
-						.body(BaseResponseBody.of(500, "Problems in the app server: the TOKEN wasn't valid"));
-			}
-
-		} else {
-			// The SESSION does not exist
-			System.out.println("Problems in the app server: the SESSION does not exist");
-			return ResponseEntity.status(500)
-					.body(BaseResponseBody.of(500, "Problems in the app server: the SESSION does not exist"));
-		}
-	}
-
-	@ApiOperation(value = "session 닫기", notes = "해당하는 sessionName의 세션을 지운다.") // body{tokenName:'aaa'}
+	
+	@ApiOperation(value = "session 닫기", notes = "해당하는 sessionName의 세션을 지운다.")
 	@RequestMapping(value = "/close-session/{sessionName}", method = RequestMethod.DELETE)
-	public ResponseEntity<? extends BaseResponseBody> closeSession(@PathVariable String sessionName) throws Exception {
+	public ResponseEntity<? extends BaseResponseBody> closeSession1(@PathVariable  String sessionName) throws Exception {
 
-		System.out.println("Closing session | {sessionName}=" + sessionName);
+		System.out.println("Closing session | {sessionName}="+sessionName );
 
 		// Retrieve the param from BODY
 		String session = sessionName;
@@ -219,10 +221,72 @@ public class OpenviduController {
 		} else {
 			// The SESSION does not exist
 			System.out.println("Problems in the app server: the SESSION does not exist");
-			return ResponseEntity.status(500)
-					.body(BaseResponseBody.of(500, "Problems in the app server: the SESSION does not exist"));
+			return ResponseEntity.status(500).body(BaseResponseBody.of(500, "Problems in the app server: the SESSION does not exist"));
 		}
-
+		
 	}
+	
+	
+	
+	@RequestMapping(value = "/api/close-session", method = RequestMethod.DELETE)
+	public ResponseEntity<JsonObject> closeSession(@RequestBody Map<String, Object> sessionName) throws Exception {
+		// Retrieve the param from BODY
+		String session = (String) sessionName.get("sessionName");
+		
+		System.out.println("Closing session | {sessionName}=" + session);
+
+		// If the session exists
+		if (this.mapSessions.get(session) != null && this.mapSessionNamesTokens.get(session) != null) {
+			Session s = this.mapSessions.get(session);
+			s.close();
+			this.mapSessions.remove(session);
+			this.mapSessionNamesTokens.remove(session);
+			this.sessionRecordings.remove(s.getSessionId());
+//			return new ResponseEntity<>(HttpStatus.OK);
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+		} else {
+			// The SESSION does not exist
+			System.out.println("Problems in the app server: the SESSION does not exist");
+//			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(500).body(BaseResponseBody.of(500, "INTERNAL_SERVER_ERROR"));
+		}
+	}
+
+	
+	
+	
+	//openvidu_classroom 
+//	@RequestMapping(value = "/delete/{lessonId}", method = RequestMethod.DELETE)
+//	public ResponseEntity<Lesson> deleteLesson(@PathVariable(value = "lessonId") String lessonId) {
+//		if (!this.userIsLogged()) { 
+//			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+//		}
+//
+//		long id_lesson = -1;
+//		try {
+//			id_lesson = Long.parseLong(lessonId);
+//		} catch (NumberFormatException e) {
+//			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//		}
+//
+//		Lesson c = lessonRepository.findById(id_lesson).get();
+//
+//		checkAuthorization(c, c.getTeacher());
+//
+//		// Removing the deleted lesson from its attenders
+//		Collection<Lesson> lessons = new HashSet<>();
+//		lessons.add(c);
+//		Collection<User> users = userRepository.findByLessonsIn(lessons);
+//		for (User u : users) {
+//			u.getLessons().remove(c);
+//		}
+//		userRepository.saveAll(users);
+//		c.getAttenders().clear();
+//
+//		lessonRepository.delete(c);
+//		return new ResponseEntity<>(c, HttpStatus.OK);
+//	}
+//	
+	
 
 }
