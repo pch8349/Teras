@@ -14,7 +14,7 @@ public interface OpenviduService {
 	void fetchAll();
 	Openvidu createSession(OpenviduRegisterPostReq registerInfo, String userId);
 	OpenviduDto searchOpenvidu(String sessionId);
-	
+	Openvidu endInfo(String sessionId);
 	
 }
 	

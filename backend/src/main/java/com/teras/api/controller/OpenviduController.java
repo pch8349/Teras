@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,7 @@ import io.openvidu.java.client.Session;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.var;
 import springfox.documentation.annotations.ApiIgnore;
 
 @Api(value = "openvidu처리 API", tags = { "Openvidu." })
@@ -91,6 +93,18 @@ public class OpenviduController {
 		return ResponseEntity.status(200).body(OpenviduGetRes.of(200, "SUCCESS", openvidu));
 	}
 
+	@DeleteMapping("/del/{sessionId}")
+	public ResponseEntity<? extends BaseResponseBody> deleteOpenvidu(@ApiIgnore Authentication authentication,
+			@PathVariable(name = "sessionId") String sessionId) {
+		
+//		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+//		String userId = userDetails.getUsername();
+		//OpenviduDto openvidu = openviduService.searchOpenvidu(sessionId);
+		//db업데이트
+		openviduService.endInfo(sessionId);
+		
+		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+	}
 //	@ApiOperation(value = "get session 토큰", notes = "세션 id의 정보로 토큰을 가져온다.")
 //	@PostMapping("/get-token")
 //	public ResponseEntity<OpenviduPostRes> getToken(
@@ -189,7 +203,8 @@ public class OpenviduController {
 //		}
 //		
 //	}
-//	
+
+	
 	//강제적으로 연결 끊기
 	//public ResponseEntity<? extends BaseResponseBody>
 	@RequestMapping(value = "/force-disconnect", method = RequestMethod.DELETE)
@@ -197,12 +212,12 @@ public class OpenviduController {
 		try {
 			// Retrieve the param from BODY
 			String session = (String) params.get("sessionName");
-			String connectionId = (String) params.get("connectionId");
+			String sessionId = (String) params.get("sessionId");
 
 			// If the session exists
 			if (this.mapSessions.get(session) != null && this.mapSessionNamesTokens.get(session) != null) {
 				Session s = this.mapSessions.get(session);
-				s.forceDisconnect(connectionId);
+				s.forceDisconnect(sessionId);
 				return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 			} else {
 				// The SESSION does not exist
