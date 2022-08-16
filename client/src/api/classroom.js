@@ -5,7 +5,11 @@ const authApi = authApiInstance();
 
 export async function openSession(session, success, fail) {
   await api
-    .post(`/api/openvidu`, JSON.stringify(session))
+    .post(`/api/openvidu`, JSON.stringify(session), {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    })
     .then(success)
     .catch(fail);
 }

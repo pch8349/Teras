@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "storage/UserSlice";
 import "./timetableItem.css";
-import { createSession, getSession } from "../../../../api/classroom";
+import { getSession } from "../../../../api/classroom";
 
 function TimetableItem({ period, item, active }) {
   const user = useSelector(selectUser);
@@ -23,21 +23,26 @@ function TimetableItem({ period, item, active }) {
         goal: goal,
         classCode: item,
         period: period,
-        sessionId: `${item}_ENGLISH`,
+        sessionId: item,
+        subject: "수학",
       },
     });
   };
 
   const joinClass = async () => {
     await getSession(
-      `${localStorage.getItem("classCode")}_${item}`,
+      `${user.classCode}`,
       (response) => {
-        console.log(response.data);
-        // navigate("/classroom", {
-        //   state: {
-        //     goal: goal,
-        //   },
-        // });
+        console.log(response.data.openvidu);
+        navigate("/classroom", {
+          state: {
+            goal: response.data.openvidu.goal,
+            hostId: response.data.openvidu.hostId,
+            classCode: user.classCode,
+            sessionId: user.classCode,
+            subject: item,
+          },
+        });
       },
       (error) => {
         console.log(error);

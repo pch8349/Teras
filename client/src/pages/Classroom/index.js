@@ -6,27 +6,28 @@ import VideoContainer from "./components/VideoContainer/VideoContainer";
 
 function Classroom() {
   const location = useLocation();
-  const subject = "3교시 - 영어";
+  const subject = location.state.subject;
   const goal = location.state.goal;
   const sessionId = location.state.sessionId;
   const classCode = location.state.classCode;
   const period = location.state.period;
+  const hostId = location.state.hostId;
 
   return (
     <div className="classroomFelxContainer">
       <div className="classroomGridContainer">
         <div className="headerContainer">
           <div className="subjectBoxContainer">
-            <Box sx={{}}>
-              {period} - {classCode} - {sessionId}
-            </Box>
+            <div className="subjectBox">
+              {period}교시 {subject}
+            </div>
           </div>
           <div className="goalBoxContainer">
             <Box
               sx={{
                 bgcolor: "white",
                 borderRadius: 30,
-                width: 800,
+                width: 900,
                 height: 60,
                 boxShadow: 5,
               }}
@@ -55,11 +56,13 @@ function Classroom() {
             </Box>
           </div>
         </div>
+        <div className="roleTabContainer"></div>
         <VideoContainer
           sessionId={sessionId}
           classCode={classCode}
           goal={goal}
           preiod={period}
+          hostId={hostId}
         />
       </div>
     </div>
