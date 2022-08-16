@@ -18,7 +18,6 @@ const Grade = () => {
   const [english, setEnglish] = useState(false);
   const [science, setScience] = useState(false);
 
-
   const data = [
     {
       name: "3월",
