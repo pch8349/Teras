@@ -1,5 +1,7 @@
 package com.teras.api.service;
 
+import org.springframework.security.core.Authentication;
+
 import com.google.gson.JsonObject;
 import com.teras.api.request.OpenviduRegisterPostReq;
 import com.teras.db.dto.OpenviduDto;
@@ -14,7 +16,7 @@ public interface OpenviduService {
 	void fetchAll();
 	Openvidu createSession(OpenviduRegisterPostReq registerInfo, String userId);
 	OpenviduDto searchOpenvidu(String sessionId);
-	
+	Openvidu endInfo(Authentication authentication,String sessionId);
 	
 }
 	
