@@ -22,7 +22,8 @@ function Profile() {
           <img src={"/avatar.png"} alt="avatar" height="70" />
           <div>
             <p>
-              배명고등학교 {user.classCode.slice(-4, -2).replace(/(^0+)/, "")}
+              {user.schoolName}
+              {user.classCode.slice(-4, -2).replace(/(^0+)/, "")}
               학년 {user.classCode.slice(-2).replace(/(^0+)/, "")}반
             </p>
             <p>

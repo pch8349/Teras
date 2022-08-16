@@ -85,13 +85,20 @@
 }
 
 .dashBoardContainer {
-  transition: transform 0.2s;
+  /* transition: transform 0.2s; */
   display: grid;
   grid-template-rows: 50px 700px;
   width: 980px;
   height: 750px;
 }
 
+<<<<<<< HEAD
+=======
+.dashBoardContainer:hover {
+  /* transform: scale(1.01); */
+}
+
+>>>>>>> 46abf97 ([FE] frontend main)
 .navTabContainer {
   display: flex;
   align-items: stretch;

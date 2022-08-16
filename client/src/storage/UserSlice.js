@@ -5,14 +5,8 @@ export const userSlice = createSlice({
   initialState: {
     // 사용하려는 데이터에 값이 있어야 하기 때문에 데이터 지정해주기
     user: {
-      // id: "",
-      // name: "",
-      // email: "",
-      // phoneNumber: "",
-      // classCode: "",
       isLogin: false,
     },
-    // isLogin: false,
   },
   reducers: {
     //state나 redux state를 업데이트 해주는 함수 역할을 함
