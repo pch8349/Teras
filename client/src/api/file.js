@@ -11,7 +11,7 @@ export const getDownloadFile = async(uuid, success, fail) => {
 }; 
 
 export const getFileName = async(uuid, success, fail) => {
-  return await fileApi.get(`file/file?uuid=${uuid}`).then(success).catch(fail);
+  return await fileApi.get(`file/?uuid=${uuid}`).then(success).catch(fail);
 }; 
   
 export const postDownloadFile = async(uuid, success, fail) => {

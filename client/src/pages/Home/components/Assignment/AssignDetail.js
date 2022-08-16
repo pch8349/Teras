@@ -54,6 +54,40 @@ const BoardContainer = styled.div`
 `;
 
 const FileContainer = styled.div`
+  height: 5rem;
+  margin: 1rem 0;
+  .desc {
+    font-size: 1.2rem;
+    padding-left: 0.5rem;
+  }
+  .fileList {
+    margin-top: 1rem;
+    padding: 0.5rem 2.5rem;
+    border: 1px solid #dadde6;
+    border-radius: 5px;
+    .fileItem {
+      display: flex;
+      height: 1.5rem;
+      align-items: center;
+      .icon {
+        width: 1rem;
+        margin-right: 0.2rem;
+      }
+      .file {
+        cursor: pointer;
+        display: block;
+        background-color: white;
+        border: none;
+        color: #555555;
+        &:hover {
+          color: #000000;
+        }
+      }
+    }
+  }
+`;
+
+const CommentFileContainer = styled.div`
   margin-top: 1rem;
   .dropzone {
     text-align: center;
@@ -99,6 +133,7 @@ function AssignDetail() {
     uuid:"",
   });
   const [file, setFile] = useState({
+    fileName:"이것은파일",
     uuid:"",
   });
   const [commentData, setCommentData] = useState({
@@ -251,14 +286,23 @@ function AssignDetail() {
       </BoardContainer>
       )}
     {data.uuid && (
-      <div>
-        <h5>첨부파일(1)</h5>
-        <FileIcon
-          extension={makeExtension(file.fileName)}
-          {...defaultStyles[makeExtension(file.fileName)]}
-        />
-      </div>
-    )}
+      <FileContainer>
+        <div className="desc">첨부파일</div>
+          <div className="fileList">
+            <div className="fileItem">
+              <div className="icon" >
+                <FileIcon
+                  extension={makeExtension(file.fileName)}
+                  {...defaultStyles[makeExtension(file.fileName)]}
+                />
+              </div>
+              <button className="file" onClick={onDownload}>
+                {file.fileName}
+              </button>
+          </div>
+        </div>
+      </FileContainer>
+      )}
     <CommentContainer>
       <div>과제 제출하기</div>
       <label for='comment'></label>
@@ -272,7 +316,7 @@ function AssignDetail() {
         color="success"
         onChange={onChange}
       />
-      <FileContainer>
+      <CommentFileContainer>
         <Dropzone onDrop={handleDrop} className="dropzone">
           {({ getRootProps, getInputProps }) => (
             <div {...getRootProps({ className: "dropzone" })}>
@@ -298,7 +342,7 @@ function AssignDetail() {
             ))}
           </div>
         )}
-      </FileContainer>
+      </CommentFileContainer>
       <Button 
         name='제출하기'
         onClick={onSubmit}
