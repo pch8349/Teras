@@ -14,6 +14,7 @@ import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import ScreenShareIcon from "@mui/icons-material/ScreenShare";
 import { openSession } from "../../../../api/classroom";
 import { useNavigate } from "react-router-dom";
+import { deleteSession } from "../../../../api/classroom";
 
 const OPENVIDU_SERVER_URL = "https://i7a706.p.ssafy.io:7060";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
@@ -149,12 +150,13 @@ function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
   }, [session]);
 
   useEffect(() => {
-    const host = subscribers.find((subscriber) => {
-      if (subscriber.stream.connection.connectionId === hostId) return true;
-    });
-    console.log(host);
-
-    setHost(host);
+    if (host === undefined) {
+      const host = subscribers.find((subscriber) => {
+        if (subscriber.stream.connection.connectionId === hostId) return true;
+      });
+      console.log(host);
+      setHost(host);
+    }
   }, [subscribers]);
 
   useEffect(() => {
@@ -189,6 +191,16 @@ function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
           },
         },
       );
+
+      deleteSession(
+        mySessionId,
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.log(error);
+        },
+      );
     } else {
       mySession.disconnect();
     }
@@ -203,7 +215,7 @@ function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
     // setPublisher(undefined);
     // setCurrentVideoDevice(undefined);
 
-    navigate("/main");
+    // navigate("/main");
   };
 
   const switchCamera = async () => {
@@ -353,19 +365,49 @@ function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
     setVideoOn(!videoOn);
   };
 
+  const handleScreenShare = () => {
+    var newScreenShare = OV.initPublisher(undefined, {
+      videoSource: "screen",
+    });
+
+    newScreenShare.once("accessAllowed", (event) => {
+      newScreenShare.stream
+        .getMediaStream()
+        .getVideoTracks()[0]
+        .addEventListener("ended", () => {
+          console.log('User pressed the "Stop sharing" button');
+          session.unpublish(host);
+          session.publish(publisher);
+          setHost(publisher);
+        });
+      session.unpublish(publisher);
+      session.publish(newScreenShare);
+      setHost(newScreenShare);
+    });
+
+    newScreenShare.once("accessDenied", (event) => {
+      console.warn("ScreenShare: Access Denied");
+    });
+
+    //newPublisher.once("accessAllowed", () => {
+    // await session.unpublish(mainStreamManager);
+    // await session.publish(newScreenShare);
+    // setHost(newScreenShare);
+  };
+
   return (
     <>
       <div className="mainContainer">
         <div className="videoContainer">
           {host !== undefined ? (
-            <div className="teacherVideoContainer">
+            <div className="mainVideoContainer">
               <UserVideoComponent streamManager={host} />
             </div>
           ) : null}
-          <div className="studentVideosContainer">
+          <div className="subVideosContainer">
             {user.authority === "STUDENT" ? (
               <div
-                className="studentVideoContainer"
+                className="subVideoContainer"
                 // onClick={() => handleMainVideoStream(mainStreamManager)}
               >
                 <UserVideoComponent streamManager={publisher} />
@@ -401,9 +443,9 @@ function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
             onClick={handleMicButton}
           >
             {micOn ? (
-              <MicIcon fontSize="large" />
-            ) : (
               <MicOffIcon fontSize="large" />
+            ) : (
+              <MicIcon fontSize="large" />
             )}
           </div>
           <div
@@ -411,12 +453,15 @@ function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
             onClick={handleVideoButton}
           >
             {videoOn ? (
-              <VideocamIcon fontSize="large" />
-            ) : (
               <VideocamOffIcon fontSize="large" />
+            ) : (
+              <VideocamIcon fontSize="large" />
             )}
           </div>
-          <div className="classroomButton greenButton">
+          <div
+            className="classroomButton greenButton"
+            onClick={handleScreenShare}
+          >
             <ScreenShareIcon fontSize="large" />
           </div>
           <div className="classroomButton redButton" onClick={handleOpenModal}>

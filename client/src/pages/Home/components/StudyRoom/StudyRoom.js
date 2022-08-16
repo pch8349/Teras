@@ -1,7 +1,8 @@
 import React from "react";
+import "./studyRoom.css";
 
 function main() {
-  return <div>스터디룸</div>;
+  return <div className="studyRoomContainer"></div>;
 }
 
 export default main;
