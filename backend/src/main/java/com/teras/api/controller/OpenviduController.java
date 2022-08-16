@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.JsonObject;
 import com.teras.api.request.OpenviduPostReq;
 import com.teras.api.request.OpenviduRegisterPostReq;
 import com.teras.api.request.OpenviduRemoveUserReq;
@@ -29,6 +30,7 @@ import com.teras.db.entity.Openvidu;
 import io.openvidu.java.client.ConnectionProperties;
 import io.openvidu.java.client.ConnectionType;
 import io.openvidu.java.client.OpenVidu;
+import io.openvidu.java.client.OpenViduException;
 import io.openvidu.java.client.OpenViduHttpException;
 import io.openvidu.java.client.OpenViduJavaClientException;
 import io.openvidu.java.client.OpenViduRole;
@@ -160,97 +162,95 @@ public class OpenviduController {
 //			return ResponseEntity.status(401).body(OpenviduPostRes.of(401, "Invalid1", null));
 //		}
 //	}
+
+
+	
+//	@ApiOperation(value = "session 닫기", notes = "해당하는 sessionName의 세션을 지운다.")
+//	@RequestMapping(value = "/close-session/{sessionName}", method = RequestMethod.DELETE)
+//	public ResponseEntity<? extends BaseResponseBody> closeSession1(@PathVariable  String sessionName) throws Exception {
 //
-//	
-//	@ApiOperation(value = "user 지우기", notes = "유처가 세션을 나간다. 마지막 사람까지 나갈경우 세션은 없어진다.") // body{tokenName:'aaa'}
-//	@RequestMapping(value = "/remove-user", method = RequestMethod.POST)
-//	public ResponseEntity<? extends BaseResponseBody> removeUser(
-//			@RequestBody @ApiParam(value = "user지우기", required = true) OpenviduRemoveUserReq openviduRemoveUserReq)
-//			throws Exception {
+//		System.out.println("Closing session | {sessionName}="+sessionName );
 //
-//		System.out.println("Removing user | {sessionName, token}=" + openviduRemoveUserReq.toString());
-//
-//		// Retrieve the params from BODY
-//		String sessionName = openviduRemoveUserReq.getSessionName();
-//		String token = openviduRemoveUserReq.getToken();
+//		// Retrieve the param from BODY
+//		String session = sessionName;
 //
 //		// If the session exists
-//		if (this.mapSessions.get(sessionName) != null && this.mapSessionNamesTokens.get(sessionName) != null) {
-//
-//			// If the token exists
-//			if (this.mapSessionNamesTokens.get(sessionName).remove(token) != null) {
-//				// User left the session
-//				if (this.mapSessionNamesTokens.get(sessionName).isEmpty()) {
-//					// Last user left: session must be removed
-//					this.mapSessions.remove(sessionName);
-//				}
-//				return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-//			} else {
-//				// The TOKEN wasn't valid
-//				System.out.println("Problems in the app server: the TOKEN wasn't valid");
-//				return ResponseEntity.status(500)
-//						.body(BaseResponseBody.of(500, "Problems in the app server: the TOKEN wasn't valid"));
-//			}
-//
+//		if (this.mapSessions.get(session) != null && this.mapSessionNamesTokens.get(session) != null) {
+//			Session s = this.mapSessions.get(session);
+//			s.close();
+//			this.mapSessions.remove(session);
+//			this.mapSessionNamesTokens.remove(session);
+//			this.sessionRecordings.remove(s.getSessionId());
+//			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 //		} else {
 //			// The SESSION does not exist
 //			System.out.println("Problems in the app server: the SESSION does not exist");
-//			return ResponseEntity.status(500)
-//					.body(BaseResponseBody.of(500, "Problems in the app server: the SESSION does not exist"));
+//			return ResponseEntity.status(500).body(BaseResponseBody.of(500, "Problems in the app server: the SESSION does not exist"));
+//		}
+//		
+//	}
+//	
+	//강제적으로 연결 끊기
+	//public ResponseEntity<? extends BaseResponseBody>
+	@RequestMapping(value = "/force-disconnect", method = RequestMethod.DELETE)
+	public ResponseEntity<? extends BaseResponseBody> forceDisconnect(@RequestBody Map<String, Object> params) {
+		try {
+			// Retrieve the param from BODY
+			String session = (String) params.get("sessionName");
+			String connectionId = (String) params.get("connectionId");
+
+			// If the session exists
+			if (this.mapSessions.get(session) != null && this.mapSessionNamesTokens.get(session) != null) {
+				Session s = this.mapSessions.get(session);
+				s.forceDisconnect(connectionId);
+				return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+			} else {
+				// The SESSION does not exist
+				return ResponseEntity.status(500).body(BaseResponseBody.of(500, "Problems in the app server: the SESSION does not exist"));
+			}
+		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
+			e.printStackTrace();
+			return getErrorResponse(e);
+		}
+	}
+
+
+	private ResponseEntity<? extends BaseResponseBody> getErrorResponse(OpenViduException e) 
+	{		
+		JsonObject json = new JsonObject();
+		json.addProperty("cause", e.getCause().toString());
+		json.addProperty("error", e.getMessage());
+		json.addProperty("exception", e.getClass().getCanonicalName());
+		return ResponseEntity.status(500).body(BaseResponseBody.of(500, "500 error"));
+	}
+	
+	
+	
+	
+	
+//	@RequestMapping(value = "/close-session", method = RequestMethod.DELETE)
+//	public ResponseEntity<JsonObject> closeSession(@RequestBody Map<String, Object> sessionName) throws Exception {
+//		// Retrieve the param from BODY
+//		String session = (String) sessionName.get("sessionName");
+//		
+//		System.out.println("Closing session | {sessionName}=" + session);
+//
+//		// If the session exists
+//		if (this.mapSessions.get(session) != null && this.mapSessionNamesTokens.get(session) != null) {
+//			Session s = this.mapSessions.get(session);
+//			s.close();
+//			this.mapSessions.remove(session);
+//			this.mapSessionNamesTokens.remove(session);
+//			this.sessionRecordings.remove(s.getSessionId());
+////			return new ResponseEntity<>(HttpStatus.OK);
+//			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+//		} else {
+//			// The SESSION does not exist
+//			System.out.println("Problems in the app server: the SESSION does not exist");
+////			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//			return ResponseEntity.status(500).body(BaseResponseBody.of(500, "INTERNAL_SERVER_ERROR"));
 //		}
 //	}
-
-	
-	@ApiOperation(value = "session 닫기", notes = "해당하는 sessionName의 세션을 지운다.")
-	@RequestMapping(value = "/close-session/{sessionName}", method = RequestMethod.DELETE)
-	public ResponseEntity<? extends BaseResponseBody> closeSession1(@PathVariable  String sessionName) throws Exception {
-
-		System.out.println("Closing session | {sessionName}="+sessionName );
-
-		// Retrieve the param from BODY
-		String session = sessionName;
-
-		// If the session exists
-		if (this.mapSessions.get(session) != null && this.mapSessionNamesTokens.get(session) != null) {
-			Session s = this.mapSessions.get(session);
-			s.close();
-			this.mapSessions.remove(session);
-			this.mapSessionNamesTokens.remove(session);
-			this.sessionRecordings.remove(s.getSessionId());
-			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-		} else {
-			// The SESSION does not exist
-			System.out.println("Problems in the app server: the SESSION does not exist");
-			return ResponseEntity.status(500).body(BaseResponseBody.of(500, "Problems in the app server: the SESSION does not exist"));
-		}
-		
-	}
-	
-	
-	
-	@RequestMapping(value = "/api/close-session", method = RequestMethod.DELETE)
-	public ResponseEntity<JsonObject> closeSession(@RequestBody Map<String, Object> sessionName) throws Exception {
-		// Retrieve the param from BODY
-		String session = (String) sessionName.get("sessionName");
-		
-		System.out.println("Closing session | {sessionName}=" + session);
-
-		// If the session exists
-		if (this.mapSessions.get(session) != null && this.mapSessionNamesTokens.get(session) != null) {
-			Session s = this.mapSessions.get(session);
-			s.close();
-			this.mapSessions.remove(session);
-			this.mapSessionNamesTokens.remove(session);
-			this.sessionRecordings.remove(s.getSessionId());
-//			return new ResponseEntity<>(HttpStatus.OK);
-			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
-		} else {
-			// The SESSION does not exist
-			System.out.println("Problems in the app server: the SESSION does not exist");
-//			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-			return ResponseEntity.status(500).body(BaseResponseBody.of(500, "INTERNAL_SERVER_ERROR"));
-		}
-	}
 
 	
 	
