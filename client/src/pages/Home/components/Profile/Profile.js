@@ -5,10 +5,17 @@ import "./profile.css";
 
 function Profile() {
   const user = useSelector(selectUser);
+  const [attendance, setAttendance] = useState(false);
   const [showCurrentStatus, setShowCurrentStatus] = useState(false);
+  const [attendanceTime, setAttendanceTime] = useState();
 
   const checkTime = () => {
     setShowCurrentStatus(true);
+  };
+
+  const handleAttendance = () => {
+    let today = new Date();
+    setAttendanceTime(today.toLocaleTimeString());
   };
 
   useEffect(() => {
@@ -32,7 +39,12 @@ function Profile() {
           </div>
         </div>
         <div className="attendanceButtonContainer">
-          <button>출석</button>
+          <button
+            className={attendanceTime ? "attended" : "attendanceButton"}
+            onClick={handleAttendance}
+          >
+            {attendanceTime ? attendanceTime : "출석"}
+          </button>
         </div>
       </div>
     </>

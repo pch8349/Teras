@@ -17,3 +17,14 @@ export async function openSession(session, success, fail) {
 export async function getSession(sessionId, success, fail) {
   await api.get(`/api/openvidu/${sessionId}`).then(success).catch(fail);
 }
+
+export async function deleteSession(sessionId, success, fail) {
+  await api
+    .delete(`/api/openvidu/del/${sessionId}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    })
+    .then(success)
+    .catch(fail);
+}

@@ -114,7 +114,7 @@ const UserLogin = () => {
     <NewRoot>
       <BackForm>
         <LoginContent>
-          <LogoForm src={`https://file.rendit.io/n/hqghxg3SfioHvsa6lVy3.png`} />
+          <LogoForm src={"/Teras_logo_login.png"} />
           <form onSubmit={OnSubmit}>
             <TextBigInter>아이디</TextBigInter>
             <IdForm

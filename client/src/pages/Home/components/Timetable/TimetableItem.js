@@ -34,15 +34,15 @@ function TimetableItem({ period, item, active }) {
       `${user.classCode}`,
       (response) => {
         console.log(response.data.openvidu);
-        navigate("/classroom", {
-          state: {
-            goal: response.data.openvidu.goal,
-            hostId: response.data.openvidu.hostId,
-            classCode: user.classCode,
-            sessionId: user.classCode,
-            subject: item,
-          },
-        });
+        // navigate("/classroom", {
+        //   state: {
+        //     goal: response.data.openvidu.goal,
+        //     hostId: response.data.openvidu.hostId,
+        //     classCode: user.classCode,
+        //     sessionId: user.classCode,
+        //     subject: item,
+        //   },
+        // });
       },
       (error) => {
         console.log(error);
