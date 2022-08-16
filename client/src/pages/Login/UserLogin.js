@@ -58,6 +58,8 @@ const UserLogin = () => {
               phoneNumber: res.phoneNumber,
               classCode: res.classCode,
               authority: res.authority,
+              schoolName: res.schoolName,
+              subjectCode: res.subjectCode,
               isLogin: true,
               // },
             }),

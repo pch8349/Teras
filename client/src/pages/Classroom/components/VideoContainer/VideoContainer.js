@@ -1,8 +1,11 @@
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { selectUser } from "storage/UserSlice";
 import UserVideoComponent from "./UserVideoComponent";
 import "./UserVideo.css";
+import { Modal, Box, Button, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import MicIcon from "@mui/icons-material/Mic";
 import MicOffIcon from "@mui/icons-material/MicOff";
@@ -10,14 +13,18 @@ import VideocamIcon from "@mui/icons-material/Videocam";
 import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import ScreenShareIcon from "@mui/icons-material/ScreenShare";
 import { openSession } from "../../../../api/classroom";
+import { useNavigate } from "react-router-dom";
 
 const OPENVIDU_SERVER_URL = "https://i7a706.p.ssafy.io:7060";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
-function VideoContainer({ sessionId, goal, period, classCode }) {
+function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
+  const navigate = useNavigate();
+  const user = useSelector(selectUser);
   const mySessionId = sessionId;
-  const myUserName = "OpenVidu_User";
+  const myUserName = user.name;
 
+  const [openLeaveSessionModal, setOpenLeaveSessionModal] = useState(false);
   const [micOn, setMicOn] = useState(false);
   const [videoOn, setVideoOn] = useState(false);
   const [session, setSession] = useState();
@@ -26,8 +33,10 @@ function VideoContainer({ sessionId, goal, period, classCode }) {
   const [subscribers, setSubscribers] = useState([]);
   const [currentVideoDevice, setCurrentVideoDevice] = useState();
   const [OV, setOV] = useState(null);
+  const [host, setHost] = useState();
 
-  useEffect(() => {}, []);
+  const handleOpenModal = () => setOpenLeaveSessionModal(true);
+  const handleCloseModal = () => setOpenLeaveSessionModal(false);
 
   useEffect(() => {
     // mount시 세션 초기화
@@ -99,23 +108,25 @@ function VideoContainer({ sessionId, goal, period, classCode }) {
             insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
             mirror: false, // Whether to mirror your local video or not
           });
-          console.log("here");
-          console.log(publisher);
-          // await openSession(
-          //   {
-          //     sessionId: mySessionId,
-          //     hostId: publisher.stream.connection.connectionId,
-          //     goal: goal,
-          //     classCode: classCode,
-          //     period: period,
-          //   },
-          //   (response) => {
-          //     console.log(response);
-          //   },
-          //   (error) => {
-          //     console.log(error);
-          //   },
-          // );
+
+          if (user.authority === "TEACHER") {
+            await openSession(
+              {
+                sessionId: mySessionId,
+                hostId: publisher.stream.session.connection.connectionId,
+                goal: goal,
+                classCode: classCode,
+              },
+              (response) => {
+                console.log(response);
+              },
+              (error) => {
+                console.log(error);
+              },
+            );
+
+            setHost(publisher);
+          }
 
           // --- 6) Publish your stream ---
 
@@ -138,6 +149,15 @@ function VideoContainer({ sessionId, goal, period, classCode }) {
   }, [session]);
 
   useEffect(() => {
+    const host = subscribers.find((subscriber) => {
+      if (subscriber.stream.connection.connectionId === hostId) return true;
+    });
+    console.log(host);
+
+    setHost(host);
+  }, [subscribers]);
+
+  useEffect(() => {
     console.log(publisher);
     console.log(subscribers);
   });
@@ -156,7 +176,20 @@ function VideoContainer({ sessionId, goal, period, classCode }) {
   const leaveSession = () => {
     const mySession = session;
 
-    if (mySession) {
+    if (user.authority === "TEACHER") {
+      axios.delete(
+        OPENVIDU_SERVER_URL + `/openvidu/api/sessions/${mySessionId}`,
+        {
+          headers: {
+            Authorization:
+              "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,POST",
+          },
+        },
+      );
+    } else {
       mySession.disconnect();
     }
 
@@ -170,7 +203,7 @@ function VideoContainer({ sessionId, goal, period, classCode }) {
     // setPublisher(undefined);
     // setCurrentVideoDevice(undefined);
 
-    window.location.href = "/";
+    navigate("/main");
   };
 
   const switchCamera = async () => {
@@ -206,6 +239,15 @@ function VideoContainer({ sessionId, goal, period, classCode }) {
       }
     } catch (e) {
       console.error(e);
+      axios.post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions", {
+        headers: {
+          Authorization:
+            "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,POST",
+        },
+      });
     }
   };
 
@@ -302,67 +344,165 @@ function VideoContainer({ sessionId, goal, period, classCode }) {
   };
 
   const handleMicButton = () => {
+    publisher.publishAudio(micOn);
     setMicOn(!micOn);
   };
 
   const handleVideoButton = () => {
+    publisher.publishVideo(videoOn);
     setVideoOn(!videoOn);
   };
 
   return (
-    <div className="mainContainer">
-      <div className="videoContainer">
-        {publisher !== undefined ? (
-          <div className="teacherVideoContainer">
-            <UserVideoComponent streamManager={publisher} />
-          </div>
-        ) : null}
-        <div className="studentVideosContainer">
-          {mainStreamManager !== undefined ? (
-            <div
-              className="studentVideoContainer"
-              onClick={() => handleMainVideoStream(mainStreamManager)}
-            >
-              <UserVideoComponent streamManager={mainStreamManager} />
+    <>
+      <div className="mainContainer">
+        <div className="videoContainer">
+          {host !== undefined ? (
+            <div className="teacherVideoContainer">
+              <UserVideoComponent streamManager={host} />
             </div>
           ) : null}
-          {subscribers.map((sub, i) => (
-            <div
-              key={i}
-              className="studentVideoContainer"
-              onClick={() => handleMainVideoStream(sub)}
-            >
-              <UserVideoComponent streamManager={sub} />
-            </div>
-          ))}
+          <div className="studentVideosContainer">
+            {user.authority === "STUDENT" ? (
+              <div
+                className="studentVideoContainer"
+                // onClick={() => handleMainVideoStream(mainStreamManager)}
+              >
+                <UserVideoComponent streamManager={publisher} />
+              </div>
+            ) : null}
+            {subscribers.map((sub, i) => {
+              if (
+                host !== undefined &&
+                sub.stream.connection.connectionId ===
+                  host.stream.connection.connectionId
+              ) {
+                return null;
+              } else {
+                return (
+                  <div
+                    key={i}
+                    className="studentVideoContainer"
+                    // onClick={() => handleMainVideoStream(sub)}
+                  >
+                    <UserVideoComponent
+                      streamManager={sub}
+                      authority={user.authority}
+                    />
+                  </div>
+                );
+              }
+            })}
+          </div>
+        </div>
+        <div className="buttonContainer">
+          <div
+            className="classroomButton greenButton"
+            onClick={handleMicButton}
+          >
+            {micOn ? (
+              <MicIcon fontSize="large" />
+            ) : (
+              <MicOffIcon fontSize="large" />
+            )}
+          </div>
+          <div
+            className="classroomButton greenButton"
+            onClick={handleVideoButton}
+          >
+            {videoOn ? (
+              <VideocamIcon fontSize="large" />
+            ) : (
+              <VideocamOffIcon fontSize="large" />
+            )}
+          </div>
+          <div className="classroomButton greenButton">
+            <ScreenShareIcon fontSize="large" />
+          </div>
+          <div className="classroomButton redButton" onClick={handleOpenModal}>
+            <CloseIcon fontSize="large" />
+          </div>
         </div>
       </div>
-      <div className="buttonContainer">
-        <div className="classroomButton greenButton" onClick={handleMicButton}>
-          {micOn ? (
-            <MicIcon fontSize="large" />
-          ) : (
-            <MicOffIcon fontSize="large" />
-          )}
-        </div>
-        <div
-          className="classroomButton greenButton"
-          onClick={handleVideoButton}
+      <Modal
+        keepMounted
+        open={openLeaveSessionModal}
+        onClose={handleCloseModal}
+        aria-labelledby="keep-mounted-modal-title"
+        aria-describedby="keep-mounted-modal-description"
+      >
+        <Box
+          className="studentModalContainer"
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            height: 200,
+            bgcolor: "background.paper",
+            borderRadius: 2,
+            boxShadow: 24,
+            p: 4,
+          }}
         >
-          {videoOn ? (
-            <VideocamIcon fontSize="large" />
-          ) : (
-            <VideocamOffIcon fontSize="large" />
-          )}
-        </div>
-        <div className="classroomButton greenButton">
-          <ScreenShareIcon fontSize="large" />
-        </div>
-        <div className="classroomButton redButton" onClick={leaveSession}>
-          <CloseIcon fontSize="large" />
-        </div>
-      </div>
-    </div>
+          <div className="classroomTitle">
+            <Box
+              sx={{
+                bgcolor: "green",
+                display: "inline",
+                fontWeight: "bold",
+                mx: 0.5,
+                fontSize: 20,
+                py: 1,
+                px: 2,
+                borderRadius: 1,
+              }}
+              color="white"
+            >
+              {period}교시
+            </Box>
+            <Box
+              sx={{
+                color: "green",
+                display: "inline",
+                fontWeight: "bold",
+                mx: 0.5,
+                px: 2,
+                fontSize: 20,
+              }}
+            >
+              영어 - 김민성 선생님
+            </Box>
+          </div>
+          <Typography
+            sx={{ fontWeight: "bold", mb: 1, fontSize: 25 }}
+            variant="h6"
+            component="h2"
+          >
+            {user.authority === "TEACHER"
+              ? "수업을 종료하시겠습니까?"
+              : "수업을 나가시겠습니까?"}
+          </Typography>
+          <div className="modalButtonContainer">
+            <Button
+              sx={{
+                width: 200,
+                height: 50,
+                border: 1.2,
+                fontWeight: "bold",
+                fontSize: 16,
+              }}
+              variant="outlined"
+              color="error"
+              onClick={leaveSession}
+            >
+              {user.authority === "TEACHER" ? "수업 종료하기" : "수업 나가기"}
+            </Button>
+          </div>
+        </Box>
+      </Modal>
+    </>
   );
 }
 
