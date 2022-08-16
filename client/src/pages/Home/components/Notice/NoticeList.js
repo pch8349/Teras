@@ -10,8 +10,6 @@ import { useSelector } from 'react-redux';
 import { selectUser } from "storage/UserSlice";
 
 
-
-
 const Container = styled.div`
   width: 100%;
   padding : 3rem 5rem;

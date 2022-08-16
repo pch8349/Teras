@@ -36,17 +36,13 @@ function Main_Notice({}) {
 
   return (
     <Container>
+      <SubjectText>공지사항</SubjectText>
+
       <StyledTable>
         <colgroup>
           <StyledCol width="70%"></StyledCol>
           <StyledCol width="30%"></StyledCol>
         </colgroup>
-        <thead>
-          <tr>
-            <StyledTh>제목</StyledTh>
-            <StyledTh>작성자</StyledTh>
-          </tr>
-        </thead>
         <tbody>
           {data &&
             !isLoading &&
@@ -65,6 +61,15 @@ function Main_Notice({}) {
   );
 }
 
+const SubjectText = styled.div`
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  margin: 10px 0 30px 10px;
+  font-size: 17px;
+  font-weight: bold;
+`;
+
 const StyledTr = styled.tr`
   cursor: pointer;
   &:hover {
@@ -80,9 +85,12 @@ const StyledTd = styled.td`
   vertical-align: middle;
   text-align: ${(props) => props.ta || "center"};
   padding: 0 1.5rem;
+  box-shadow: 0 0.4px #525252;
 `;
 
 const Container = styled.div`
+  flex-direction: column;
+  display: flex;
   width: 100%;
   box-sizing: border-box;
   height: 80%;
@@ -94,19 +102,6 @@ const StyledTable = styled.table`
 
 const StyledCol = styled.col`
   width: ${(props) => props.width};
-`;
-
-const StyledTh = styled.td`
-  background-color: #fec25c;
-  height: 2.2rem;
-  vertical-align: middle;
-  text-align: center;
-  font-weight: 600;
-  border-radius: 3px;
-  color: black;
-  & + & {
-    border-left: 2px solid white;
-  }
 `;
 
 export default Main_Notice;

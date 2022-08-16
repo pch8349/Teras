@@ -1,68 +1,28 @@
 import React, { useEffect, useState } from "react";
-import Backdrop from "@mui/material/Backdrop";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import GradeGraph from "pages/Home/components/Grade/GradeGraph";
 import styled from "styled-components";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-const Part = styled.div`
-  justify-content: center;
-  flex-direction: row;
-  margin: 5px 5px 5px 5px;
-  width: 400px;
-  height: 300px;
-  background-color: #d4f2c7;
-  border-radius: 5px;
-`;
-
 function Test() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [data, setData] = useState();
+  const dumy = { value: "값", num: 123 };
 
-  return (
-    <div>
-      <Part onClick={handleOpen}>
-        <GradeGraph arr={[{ value: true }, { value: true }, { value: true }]} />
-      </Part>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h6" component="h2">
-              Text in a modal
-            </Typography>
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
-          </Box>
-        </Fade>
-      </Modal>
-    </div>
-  );
+  useEffect(() => {
+    setData(dumy);
+    console.log("데이타", data);
+  }, []);
+
+  const OnClick = () => {
+    setData((prev) => {
+      console.log(prev);
+      if (prev === undefined) {
+        return dumy;
+      } else {
+        return [prev, dumy];
+      }
+    });
+    console.log("온클릭", data);
+  };
+
+  return <div onClick={OnClick}>하이</div>;
 }
 
 export default Test;
