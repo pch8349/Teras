@@ -10,24 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.teras.db.embeddedId.ScoreId;
+
 import lombok.Data;
 import lombok.Getter;
 
 
-@Data
-@Embeddable
-class ScoreId implements Serializable {
-    @ManyToOne
-    @JoinColumn(name = "userId", nullable = true)
-    User userId;
-	
-    @ManyToOne
-    @JoinColumn(name = "subjectCode", nullable = true)
-    SubjectDetail subjectCode;
-
-	@Column(name = "date", nullable = false)
-    String date;
-}
 
 @Entity
 @Getter
