@@ -1934,3 +1934,41 @@ java.lang.IllegalArgumentException: Invalid character found in method name [0x16
 2022-08-16 17:17:32.601  INFO 4104 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
 2022-08-16 17:17:32.631  INFO 4104 --- [restartedMain] com.teras.TerasApplication               : Started TerasApplication in 1.367 seconds (JVM running for 9254.655)
 2022-08-16 17:17:32.632  INFO 4104 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-08-16 17:23:16.881  INFO 4104 --- [Thread-124] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2022-08-16 17:23:16.884  INFO 4104 --- [Thread-124] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-08-16 17:23:16.884  INFO 4104 --- [Thread-124] com.zaxxer.hikari.HikariDataSource       : HikariPool-25 - Shutdown initiated...
+2022-08-16 17:23:16.885  INFO 4104 --- [Thread-124] com.zaxxer.hikari.HikariDataSource       : HikariPool-25 - Shutdown completed.
+2022-08-16 17:23:17.231  INFO 4104 --- [restartedMain] com.teras.TerasApplication               : Starting TerasApplication using Java 1.8.0_192 on DESKTOP-KVCQHCD with PID 4104 (C:\Users\SSAFY\Desktop\TERAS\backend\bin\main started by SSAFY in C:\Users\SSAFY\Desktop\TERAS\backend)
+2022-08-16 17:23:17.232  INFO 4104 --- [restartedMain] com.teras.TerasApplication               : No active profile set, falling back to default profiles: default
+2022-08-16 17:23:17.605  INFO 4104 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-08-16 17:23:17.643  INFO 4104 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 37 ms. Found 10 JPA repository interfaces.
+2022-08-16 17:23:17.690  INFO 4104 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@f63eaf3' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-08-16 17:23:17.691  INFO 4104 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-08-16 17:23:17.785  INFO 4104 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-08-16 17:23:17.785  INFO 4104 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-08-16 17:23:17.785  INFO 4104 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.45]
+2022-08-16 17:23:17.800  INFO 4104 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-08-16 17:23:17.800  INFO 4104 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 567 ms
+2022-08-16 17:23:17.838  INFO 4104 --- [restartedMain] o.s.boot.web.servlet.RegistrationBean    : Filter characterEncodingFilter was not registered (possibly already registered?)
+2022-08-16 17:23:17.838 DEBUG 4104 --- [restartedMain] o.s.web.filter.CharacterEncodingFilter   : Filter 'characterEncodingFilter' configured for use
+2022-08-16 17:23:17.869  INFO 4104 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-08-16 17:23:17.872  INFO 4104 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-26 - Starting...
+2022-08-16 17:23:17.894  INFO 4104 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-26 - Start completed.
+2022-08-16 17:23:17.894  INFO 4104 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+2022-08-16 17:23:18.011  INFO 4104 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-08-16 17:23:18.011  INFO 4104 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-08-16 17:23:18.026  INFO 4104 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-08-16 17:23:18.174  WARN 4104 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-08-16 17:23:18.318 DEBUG 4104 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 34 mappings in 'requestMappingHandlerMapping'
+2022-08-16 17:23:18.358  INFO 4104 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2022-08-16 17:23:18.412 DEBUG 4104 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/] in 'viewControllerHandlerMapping'
+2022-08-16 17:23:18.436 DEBUG 4104 --- [restartedMain] o.s.w.s.c.annotation.WebMvcConfigurer    : Default resource handling disabled
+2022-08-16 17:23:18.481 DEBUG 4104 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/**] in 'resourceHandlerMapping'
+2022-08-16 17:23:18.482  INFO 4104 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@590200d0, org.springframework.security.web.context.SecurityContextPersistenceFilter@50c11f59, org.springframework.security.web.header.HeaderWriterFilter@68284452, org.springframework.web.filter.CorsFilter@70900d63, org.springframework.security.web.authentication.logout.LogoutFilter@47b2d940, com.teras.common.auth.JwtAuthenticationFilter@66490ea0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@38922c61, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1232f5f5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@195a7d8b, org.springframework.security.web.session.SessionManagementFilter@16936fa8, org.springframework.security.web.access.ExceptionTranslationFilter@38aa1222, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6f9d8dad]
+2022-08-16 17:23:18.495  INFO 4104 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-08-16 17:23:18.499 DEBUG 4104 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-08-16 17:23:18.508 DEBUG 4104 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-08-16 17:23:18.515  WARN 4104 --- [restartedMain] o.s.b.a.m.MustacheAutoConfiguration      : Cannot find template location: classpath:/templates/ (please add some templates, check your Mustache configuration, or set spring.mustache.check-template-location=false)
+2022-08-16 17:23:18.580  INFO 4104 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-08-16 17:23:18.609  INFO 4104 --- [restartedMain] com.teras.TerasApplication               : Started TerasApplication in 1.395 seconds (JVM running for 9600.646)
+2022-08-16 17:23:18.610  INFO 4104 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged

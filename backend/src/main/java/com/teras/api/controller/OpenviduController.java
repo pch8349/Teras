@@ -93,6 +93,7 @@ public class OpenviduController {
 		return ResponseEntity.status(200).body(OpenviduGetRes.of(200, "SUCCESS", openvidu));
 	}
 
+	
 	@DeleteMapping("/del/{sessionId}")
 	public ResponseEntity<? extends BaseResponseBody> deleteOpenvidu(@ApiIgnore Authentication authentication,
 			@PathVariable(name = "sessionId") String sessionId) {
