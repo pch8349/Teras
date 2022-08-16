@@ -61,8 +61,10 @@ const UserLogin = () => {
               schoolName: res.schoolName,
               subjectCode: res.subjectCode,
               isLogin: true,
+              schoolName: res.schoolName,
+              subjectCode: res.subjectCode,
               // },
-            }),
+            })
             // isLogined(true)
           );
 
@@ -70,7 +72,7 @@ const UserLogin = () => {
         },
         (error) => {
           console.log("getUser 에러입니다", error);
-        },
+        }
       );
     } catch (e) {
       console.log("걍 에러");
@@ -95,7 +97,7 @@ const UserLogin = () => {
         () => {
           console.log("로그인 실패");
           setSuccess(false);
-        },
+        }
       );
     } catch (error) {
       console.log("3333", error);

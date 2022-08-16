@@ -53,7 +53,6 @@
   transition: transform 0.2s;
 }
 
-
 .timeTableFlexContainer {
   display: flex;
   justify-content: center;
@@ -71,7 +70,7 @@
   width: 290px;
   height: 450px;
   border-radius: 15px;
-  background-color: #7CCC77;
+  background-color: #7ccc77;
 }
 
 .dashBoardFlexContainer {
@@ -85,7 +84,7 @@
 }
 
 .dashBoardContainer {
-  transition: transform 0.2s;
+  /* transition: transform 0.2s; */
   display: grid;
   grid-template-rows: 50px 700px;
   width: 980px;
@@ -108,7 +107,7 @@
 .navTabButton {
   color: white;
   flex-grow: 1;
-  background-color: #7CCC77;
+  background-color: #7ccc77;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   border-width: 0 thin;
