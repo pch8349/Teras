@@ -17,35 +17,76 @@ const RegisterContainer = styled.div`
 `;
 
 const StyledDate = styled.div`
-  display: inline-flex;
-  justify-content: flex-start;
-  width: 50%;
+  grid-column: span 3;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  justify-content: center;
+  width:100%;
+  div {
+    grid-column: span 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color:#1c1c1c;
+  }
+  .react-datepicker-wrapper {
+    width: 95%;
+    grid-column: span 3;
+    margin: auto;
+    margin-right:0.5rem;
+  }
+  input {
+    grid-column: span 3;
+    border: 1px solid #dadde6;
+    height: 40px;
+    text-align: center;
+    font-size: 1rem;
+    margin: auto;
+    border-radius:4px;
+  }
+`;
+
+const StyledTitle = styled.div`
+  grid-column: span 4;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  justify-content: center;
+  width:100%;
+  div {
+    grid-column: span 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color:#1c1c1c;
+
+  }
+  input {
+    padding: 0 1rem;
+    grid-column: span 5;
+    width:90%;
+    border: 1px solid #dadde6;
+    height: 40px;
+    font-size: 1.2rem;
+    margin: auto;
+    margin-right: 1.5em;
+    border-radius:4px;
+  }
 `;
 
 const InputContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   width: 100%;
   box-sizing: border-box;
   border-top: 1px solid #349466;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   height: 60px;
   background-color: #EDFFE7;
   justify-content: space-evenly;
   notice {
     text-size: 1.5rem;
-  }
-  select {
-    width: 10rem;
-    border: none;
-    padding: 1rem 0.5rem;
-    font-size: 1rem;
-  }
-  input {
-    width: 80%;
-    border: 1px solid #dadde6;
-    height: 40px;
-    font-size: 1.2rem;
-    margin-top: 8px;
   }
 `;
 
@@ -82,6 +123,7 @@ const FileContainer = styled.div`
 `;
 
 const MyDatePicker = styled(DatePicker)`
+  grid-column: span 3;
   width: 100%;
 `
 
@@ -173,9 +215,10 @@ function AssignRegister() {
     <RegisterContainer>
       {/* 제목 */}
       <InputContainer>
-        <div className='notice'>제목</div>
-        <label for='title'></label>
-        <input id='title' name='title' value = {data.title} onChange={onChange}></input>
+        <StyledTitle>
+          <div className='notice'>제목</div>
+          <input id='title' name='title' value = {data.title} onChange={onChange}></input>
+        </StyledTitle>
         <StyledDate>
           <div>마감 시간</div>
           <MyDatePicker 
@@ -200,7 +243,7 @@ function AssignRegister() {
         initialValue={data.content}
         previewStyle="tab"
         height="400px"
-        initialEditType="markdown"
+        initialEditType="wysiwyg"
         useCommandShortcut={true}
         ref={editorRef}
         />

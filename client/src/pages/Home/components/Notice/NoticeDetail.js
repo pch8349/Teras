@@ -53,7 +53,7 @@ const BoardContainer = styled.div`
 
 const FileContainer = styled.div`
   height: 5rem;
-  margin-top: 2rem;
+  margin: 1rem 0;
   .desc {
     font-size: 1.2rem;
     padding-left: 0.5rem;
@@ -93,7 +93,7 @@ function NoticeDetail() {
   const [isFileLoading, setIsFileLoading] = useState(true);
   const [file, setFile] = useState({
     uuid:"",
-    fileName:"",
+    fileName:"이것은 파일 이름",
   });
   const [data, setData] = useState({
       noticeNo: "",
@@ -125,21 +125,26 @@ function NoticeDetail() {
     }
   }, [isLoading]);
 
-  useEffect(() => {
-    if (data.uuid) {
-      getFileName(data.uuid)
-      .then((res)=> {
-        setFile(res.data.fileName)
-      })
-      .catch((e) => {
-        Swal.fire({
-          icon: 'error',
-          title: `${e.response.status} Error`,
-          text: '파일 이름을 불러오지 못 했습니다.',
-        })
-      })
-    }
-  },[]);
+
+
+  // useEffect(() => {
+  //   console.log(data.uuid)
+  //   if (data.uuid) {
+  //     getFileName(data.uuid)
+  //     .then((res)=> {
+  //       setFile(res.data.fileName);
+  //       setIsFileLoading(false);
+  //     })
+  //     .catch((e) => {
+  //       Swal.fire({
+  //         icon: 'error',
+  //         title: `${e.response.status} Error`,
+  //         text: '파일 이름을 불러오지 못 했습니다.',
+  //       });
+  //       setIsFileLoading(false);
+  //     })
+  //   }
+  // },[isFileLoading]);
 
 
 
@@ -212,13 +217,22 @@ function NoticeDetail() {
         </BoardContainer>
           )}
       {data.uuid && (
-      <div>
-        <h5>첨부파일(1)</h5>
-        <FileIcon
-          extension={makeExtension(file.fileName)}
-          {...defaultStyles[makeExtension(file.fileName)]}
-        />
-      </div>
+      <FileContainer>
+        <div className="desc">첨부파일</div>
+          <div className="fileList">
+            <div className="fileItem">
+              <div className="icon" >
+                <FileIcon
+                  extension={makeExtension(file.fileName)}
+                  {...defaultStyles[makeExtension(file.fileName)]}
+                />
+              </div>
+              <button className="file" onClick={onDownload}>
+                {file.fileName}
+              </button>
+          </div>
+        </div>
+      </FileContainer>
       )}
       <Button 
         name="목록"
