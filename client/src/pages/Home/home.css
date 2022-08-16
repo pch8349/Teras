@@ -29,9 +29,67 @@
 
 .navBar {
   display: flex;
+  justify-content: flex-start;
+  align-items: center;
   flex-direction: row-reverse;
   grid-column-start: 2;
   grid-column-end: 3;
+}
+
+.logoutButtonContainer {
+  position: relative;
+  margin-right: 50px;
+}
+
+.logoutButton {
+  display: block;
+  width: 130px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  color: #66c560;
+  background-color: #f4f4f4;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.35s;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  border: 3px solid transparent;
+  position: absolute;
+  transform: rotate(45deg);
+  right: 0;
+  top: 0;
+  z-index: -1;
+  transition: all 0.35s;
+}
+
+.icon svg {
+  width: 20px;
+  position: absolute;
+  top: calc(50% - 10px);
+  left: calc(50% - 10px);
+  transform: rotate(-45deg);
+  fill: #66c560;
+  transition: all 0.35s;
+}
+
+.logoutButton:hover {
+  width: 150px;
+  background: transparent;
+  border: none;
+  color: #66c560;
+  cursor: pointer;
+}
+
+.logoutButton:hover + .icon {
+  border: 3px solid #66c560;
+  right: -20%;
 }
 
 .sideBarGridContainer {
@@ -62,7 +120,6 @@
 }
 
 .timeTableContainer {
-  transition: transform 0.2s;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -84,7 +141,6 @@
 }
 
 .dashBoardContainer {
-  /* transition: transform 0.2s; */
   display: grid;
   grid-template-rows: 50px 700px;
   width: 980px;

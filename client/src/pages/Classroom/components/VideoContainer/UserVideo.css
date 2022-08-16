@@ -27,7 +27,7 @@ p {
   grid-row-end: 2;
 }
 
-.teacherVideoContainer {
+.mainVideoContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,7 +35,7 @@ p {
   grid-column-end: 2;
 }
 
-.studentVideosContainer {
+.subVideosContainer {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -45,7 +45,7 @@ p {
   padding-top: 20px;
 }
 
-.studentVideoContainer {
+.subVideoContainer {
   display: flex;
   justify-content: center;
   align-items: center;
