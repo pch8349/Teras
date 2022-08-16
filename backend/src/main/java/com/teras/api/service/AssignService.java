@@ -11,9 +11,8 @@ import com.teras.db.entity.Assignment;
 
 public interface AssignService {
 
-	List<AssignmentDto> findAssignByClassCodeAndSubjectCode(String userId, String subjectCode, int page);
-	
-	List<AssignmentDto> findAssignByClassCode(String userId, int page);
+	List<AssignmentDto> getAssignByClassCodeAndSubjectCode(String userId, String subjectCode, int page);
+	List<AssignmentDto> getAssignByClassCodeAndSubjectCode(String userId, String subjectCode);
 
 	Assignment createAssign(AssignRegisterPostReq registerInfo, String userId);
 

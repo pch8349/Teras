@@ -38,13 +38,13 @@ public class AssignController {
 	@Autowired
 	AssignService assignService;
 
-	@GetMapping("/{pageNo}")
-	public ResponseEntity<? extends AssignSearchGetRes> searchAllAssignment(@ApiIgnore Authentication authentication,
-			@PathVariable(name = "pageNo") int page) {
+	@GetMapping("/{subjectCode}")
+	public ResponseEntity<? extends AssignSearchGetRes> searchAssignment(@ApiIgnore Authentication authentication,
+			@PathVariable(name = "subjectCode") String subjectCode) {
 		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
 		String userId = userDetails.getUsername();
 
-		List<AssignmentDto> list = assignService.findAssignByClassCode(userId, page);
+		List<AssignmentDto> list = assignService.getAssignByClassCodeAndSubjectCode(userId, subjectCode);
 
 		return ResponseEntity.status(200).body(AssignSearchGetRes.of(200, "SUCCESS", list));
 	}
@@ -55,7 +55,7 @@ public class AssignController {
 		SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
 		String userId = userDetails.getUsername();
 
-		List<AssignmentDto> list = assignService.findAssignByClassCodeAndSubjectCode(userId, subjectCode, page);
+		List<AssignmentDto> list = assignService.getAssignByClassCodeAndSubjectCode(userId, subjectCode, page);
 
 		return ResponseEntity.status(200).body(AssignSearchGetRes.of(200, "SUCCESS", list));
 	}
@@ -93,5 +93,4 @@ public class AssignController {
 
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
 	}
-
 }

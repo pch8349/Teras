@@ -11,6 +11,5 @@ public class OpenviduRegisterPostReq {
 	String sessionId;
 	String hostId;
 	String goal;
-	int period;
 	String classCode;
 }

@@ -47,12 +47,12 @@ public class AssignServiceImpl implements AssignService {
 	AttachmentRepository attachmentRepository;
 
 	@Override
-	public List<AssignmentDto> findAssignByClassCodeAndSubjectCode(String userId, String subjectCode, int page) {
+	public List<AssignmentDto> getAssignByClassCodeAndSubjectCode(String userId, String subjectCode, int page) {
 		User user = userRepository.findByUserId(userId).get();
 		Pageable pageable = PageRequest.of(page, 10, Sort.by("assignNo").descending());
 		List<AssignmentDto> list = new ArrayList<AssignmentDto>();
 
-		if (subjectCode != "ALL") {
+		if (!subjectCode.toUpperCase().equals("ALL")) {
 			SubjectDetail subject = subjectDetailRepository.findBySubjectCode(subjectCode).get();
 
 			for (Assignment assign : assignmentRepository
@@ -68,21 +68,16 @@ public class AssignServiceImpl implements AssignService {
 
 		return list;
 	}
+	
+
 
 	@Override
-	public List<AssignmentDto> findAssignByClassCode(String userId, int page) {
+	public List<AssignmentDto> getAssignByClassCodeAndSubjectCode(String userId, String subjectCode) {
 		User user = userRepository.findByUserId(userId).get();
-
-		Pageable pageable = PageRequest.of(page, 10, Sort.by("assignNo").descending());
-
+		
 		List<AssignmentDto> list = new ArrayList<AssignmentDto>();
-
-		for (Assignment assign : assignmentRepository.findByClassCodeOrderByDeadlineAsc(user.getClassCode(), pageable)
-				.get()) {
-			list.add(new AssignmentDto(assign));
-		}
-
-		return list;
+		
+		return null;
 	}
 
 	@Override

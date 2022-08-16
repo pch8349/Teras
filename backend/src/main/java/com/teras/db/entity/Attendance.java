@@ -17,7 +17,7 @@ import lombok.Getter;
 @Embeddable
 class AttendanceId implements Serializable {
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = true)
+    @JoinColumn(name = "userId", nullable = false)
     User userId;
 	
 	@Column(name = "date", nullable = false)
@@ -31,6 +31,6 @@ public class Attendance {
 	@EmbeddedId
 	AttendanceId attendanceId;
 	
-	@Column(name = "isAttendance", nullable = false)
-    String isAttendance;
+	@Column(name = "statement", nullable = false)
+    int statement;
 }
