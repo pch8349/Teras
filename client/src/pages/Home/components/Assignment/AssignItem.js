@@ -16,6 +16,7 @@ const StyledTd = styled.td`
   height: 3rem;
   vertical-align: middle;
   text-align: ${(props) => props.ta || "center"};
+  box-shadow: 0.2px 0.2px #525252;
 `;
 
 function AssignItem({data, index}) {

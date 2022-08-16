@@ -53,9 +53,6 @@
   transition: transform 0.2s;
 }
 
-.profileContainer:hover {
-  transform: scale(1.03);
-}
 
 .timeTableFlexContainer {
   display: flex;
@@ -74,11 +71,7 @@
   width: 290px;
   height: 450px;
   border-radius: 15px;
-  background-color: #66c560;
-}
-
-.timeTableContainer:hover {
-  transform: scale(1.03);
+  background-color: #7CCC77;
 }
 
 .dashBoardFlexContainer {
@@ -99,10 +92,6 @@
   height: 750px;
 }
 
-.dashBoardContainer:hover {
-  transform: scale(1.01);
-}
-
 .navTabContainer {
   display: flex;
   align-items: stretch;
@@ -119,7 +108,7 @@
 .navTabButton {
   color: white;
   flex-grow: 1;
-  background-color: #66c560;
+  background-color: #7CCC77;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   border-width: 0 thin;

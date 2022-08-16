@@ -5,19 +5,19 @@ import { getAssignList } from '../../../../api/assign';
 import Button from '../../../../components/Button/Button';
 import Pagination from 'react-js-pagination';
 import AssignItem from './AssignItem';
+import { useSelector } from 'react-redux';
+import { selectUser } from "storage/UserSlice";
+import { MenuItem, Select, InputLabel, FormControl } from '@mui/material';
+
+
+const ListContainer = styled.div`
+`;
 
 const Container = styled.div`
   width: 100%;
-  padding: 1rem 5rem;
+  padding : 3rem 5rem;
   box-sizing: border-box;
   height: 80%;
-`;
-
-const Title = styled.div`
-  text-align: center;
-  font-size: 1.8rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
 `;
 
 const StyledTable = styled.table`
@@ -27,9 +27,14 @@ const StyledTable = styled.table`
 const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   box-sizing: border-box;
   margin-bottom: 1rem;
+`;
+
+const StyledSelect = styled.div`
+  width: 5rem;
+  height: 2rem;
 `;
 
 const StyledCol = styled.col`
@@ -71,11 +76,12 @@ function AssignList() {
   const [totalItemsCount, setTotalItemsCount] = useState(0);
   const [isTotalItemsCountLoading, setIsTotalItemsCountLoading] = useState(true);
   const [page, setPage] = useState(0);
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     if (isTotalItemsCountLoading) {
       getAssignList(subjectCode[selectedSubject], page).then((res) => {
-        setTotalItemsCount(res.data.total*10 + res.data.list.length);
+        setTotalItemsCount(res.data.list.length);
         setIsTotalItemsCountLoading(false);
       });
     } else {
@@ -116,29 +122,35 @@ function AssignList() {
     });
   }, [selectedSubject])
 
-
   return (
-  <>
-    <Title>공지사항</Title>
+  <ListContainer>
     <Container>
       <ButtonContainer>
-        <div>
-          <select 
-            onChange = {onDropDown}
-            >
-            <option value="전체">전체</option>
-            <option value="국어">국어</option>
-            <option value="수학">수학</option>
-            <option value="영어">영어</option>
-            <option value="사회">사회</option>
-            <option value="과학">과학</option>
-            <option value="음악">음악</option>
-            <option value="미술">미술</option>
-          </select>
-        </div>
-        <Button
-          name='글쓰기'
-          onClick={()=> Navigate("./register")} />
+      <StyledSelect width="10rem" height="2rem">
+        <FormControl fullWidth={true} size='small'>
+          <InputLabel id="demo-simple-select-label">과목</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="과목"
+            onChange={onDropDown}
+          >
+            <MenuItem value='전체'>전체</MenuItem>
+            <MenuItem value="국어">국어</MenuItem>
+            <MenuItem value="수학">수학</MenuItem>
+            <MenuItem value="영어">영어</MenuItem>
+            <MenuItem value="사회">사회</MenuItem>
+            <MenuItem value="과학">과학</MenuItem>
+            <MenuItem value="음악">음악</MenuItem>
+            <MenuItem value="미술">미술</MenuItem>
+          </Select>
+        </FormControl>
+      </StyledSelect>
+        {user.authority === "TEACHER" && (
+            <Button
+              name='글쓰기'
+              onClick={()=> Navigate("./register")} />
+          )}
       </ButtonContainer>
       <StyledTable>
         <colgroup>
@@ -169,7 +181,6 @@ function AssignList() {
             ))}
         </tbody>
       </StyledTable>
-      </Container>
       <PageContainer>
         <Pagination
           activePage={page + 1}
@@ -181,7 +192,8 @@ function AssignList() {
           onChange={handlePageChange}
         />
     </PageContainer>
-  </>
+      </Container>
+  </ListContainer>
   )
 }
 

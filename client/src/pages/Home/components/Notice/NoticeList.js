@@ -5,22 +5,18 @@ import NoticeItem from "./NoticeItem";
 import { getNoticeList } from '../../../../api/notice';
 import Button from '../../../../components/Button/Button';
 import Pagination from 'react-js-pagination';
+import '../../../../assets/pagination.css'
+import { useSelector } from 'react-redux';
+import { selectUser } from "storage/UserSlice";
 
 
 
 
 const Container = styled.div`
   width: 100%;
-  padding: 1rem 5rem;
+  padding : 3rem 5rem;
   box-sizing: border-box;
   height: 80%;
-`;
-
-const Title = styled.div`
-  text-align: center;
-  font-size: 1.8rem;
-  font-weight: 600;
-  margin: 1.5rem 0;
 `;
 
 const StyledTable = styled.table`
@@ -40,13 +36,13 @@ const StyledCol = styled.col`
 `;
 
 const StyledTh = styled.td`
-  background-color: #fec25c;
+  background-color: #ffeebb;
   height: 2.2rem;
   vertical-align: middle;
   text-align: center;
   font-weight: 600;
   border-radius: 3px;
-  color: black;
+  color: #fff;
   & + & {
     border-left: 2px solid white;
   }
@@ -64,6 +60,7 @@ function NoticeList() {
     const [totalItemsCount, setTotalItemsCount] = useState(0);
     const [isTotalItemsCountLoading, setIsTotalItemsCountLoading] = useState(true);
     const [page, setPage] = useState(0);
+    const user = useSelector(selectUser);
     
 
     useEffect(() => {
@@ -76,7 +73,7 @@ function NoticeList() {
           setIsLoading(true);
         }
       }, [isTotalItemsCountLoading]);
-    
+
     // useEffect 데이터 read
     useEffect(() => {
       if (isLoading) {
@@ -85,7 +82,6 @@ function NoticeList() {
           setIsLoading(false);
         });
       };
-      console.log(data)
     }, [isLoading]);
 
 
@@ -98,12 +94,13 @@ function NoticeList() {
 
     return (
     <>
-      <Title>공지사항</Title>
       <Container>
         <ButtonContainer>
-          <Button
-            name='글쓰기'
-            onClick={()=> Navigate("./register")} />
+          {user.authority === "TEACHER" && (
+            <Button
+              name='글쓰기'
+              onClick={()=> Navigate("./register")} />
+          )}
         </ButtonContainer>
         <StyledTable>
           <colgroup>
@@ -132,7 +129,6 @@ function NoticeList() {
               ))}
           </tbody>
         </StyledTable>
-        </Container>
         <PageContainer>
           <Pagination
             activePage={page + 1}
@@ -144,6 +140,7 @@ function NoticeList() {
             onChange={handlePageChange}
           />
       </PageContainer>
+        </Container>
     </>
   )
 }

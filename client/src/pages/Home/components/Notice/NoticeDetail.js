@@ -4,8 +4,10 @@ import styled from 'styled-components';
 import { getNoticeDetail } from '../../../../api/notice'
 import { errorAlert } from '../../../../modules/alert';
 import { FileIcon, defaultStyles } from "react-file-icon";
-import { getDownloadFile, postDownloadFile } from '../../../../api/file';
+import { getDownloadFile, getFileName, postDownloadFile } from '../../../../api/file';
 import { Viewer } from '@toast-ui/react-editor';
+import Swal from 'sweetalert2';
+import Button from 'components/Button/Button';
 
 const DetailContainer = styled.div`
   padding: 3rem 5rem;
@@ -15,8 +17,14 @@ const DetailContainer = styled.div`
 `;
 
 const TitleContainer = styled.div`
+  display: flex;
+  justify-content: flex-front;
+  .notice {
+    font-size:1.5rem;
+    color:#349466;
+  }
   .title {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: 600;
   }
   .code {
@@ -26,11 +34,18 @@ const TitleContainer = styled.div`
   }
 `;
 
+const SubContainer = styled.div`
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+`
+
 const BoardContainer = styled.div`
-  border: 1px solid #dadde6;
+  border-top: 1px solid #dadde6;
+  border-bottom: 1px solid #dadde6;
   box-sizing: border-box;
   width: 100%;
-  padding: 0 3rem;
+  padding: 1rem 3rem;
   border-radius: 5px;
   margin-top: 0.5rem;
   min-height: 20rem;
@@ -72,42 +87,60 @@ const FileContainer = styled.div`
 
 
 function NoticeDetail() {
-    const Navigate = useNavigate();
-    const params = useParams();
-    const [isLoading, setIsLoading] = useState(true);
-    const [isFileLoading, setIsFileLoading] = useState(true);
-    const [file, setFile] = useState({
-      uuid:"",
-    });
-    const [data, setData] = useState({
-        noticeNo: "",
-        title: "",
-        content: "",
-        uuid: "",
-        createDate: "",
-        userId: "",
-    });
+  const Navigate = useNavigate();
+  const params = useParams();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFileLoading, setIsFileLoading] = useState(true);
+  const [file, setFile] = useState({
+    uuid:"",
+    fileName:"",
+  });
+  const [data, setData] = useState({
+      noticeNo: "",
+      title: "",
+      content: "",
+      uuid: "",
+      createDate: "",
+      userId: "",
+  });
 
-    useEffect(() => {
-      if (isLoading) {
-        getNoticeDetail(params.noticeNo)
-        .then((res) => {
-          setData(res.data.notice);
+  useEffect(() => {
+    if (isLoading) {
+      getNoticeDetail(params.noticeNo)
+      .then((res) => {
+        setData(res.data.notice);
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        if (e.response.status == 401) {
+          errorAlert(401);
+        } else {
+          errorAlert(e.response.status, "공지사항을 불러오지 못했습니다.");
+        }
+        Navigate("../");
+        return () => {
           setIsLoading(false);
+        };
+      });
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (data.uuid) {
+      getFileName(data.uuid)
+      .then((res)=> {
+        setFile(res.data.fileName)
+      })
+      .catch((e) => {
+        Swal.fire({
+          icon: 'error',
+          title: `${e.response.status} Error`,
+          text: '파일 이름을 불러오지 못 했습니다.',
         })
-        .catch((e) => {
-          if (e.response.status == 401) {
-            errorAlert(401);
-          } else {
-            errorAlert(e.response.status, "공지사항을 불러오지 못했습니다.");
-          }
-          Navigate("../");
-          return () => {
-            setIsLoading(false);
-          };
-        });
-      }
-    }, [isLoading]);
+      })
+    }
+  },[]);
+
 
 
     // useEffect(() => {
@@ -142,7 +175,11 @@ function NoticeDetail() {
         console.log(res)
         window.open(res)
       }).catch((e) => {
-        alert("다운로드에 실패하였습니다.")
+        Swal.fire({
+          icon: 'error',
+          title: `${e.response.status} Error`,
+          text: '다운로드에 실패하였습니다.',
+        })
       });
     };
 
@@ -155,18 +192,38 @@ function NoticeDetail() {
       return fileExtension;
     };
 
+    const onCancle = () => {
+      Navigate('../')
+    }
+
   return (
     <DetailContainer>
-        <TitleContainer>{data.title}</TitleContainer>
-          <div>{data.userId}</div>
+        <TitleContainer>
+          <div className='notice'>[공지]</div>
+          <div className='title'>{data.title}</div>
+        </TitleContainer>
+        <SubContainer>          
+          <div>{data.name}</div>
+          <div>{data.createdDate}</div>
+        </SubContainer>
           {!isLoading && (
         <BoardContainer>
             <Viewer initialValue={`${data.content}`} />
         </BoardContainer>
           )}
-      <FileContainer>
-        <div className="desc" onClick={onDownload}>첨부파일</div>
-      </FileContainer>
+      {data.uuid && (
+      <div>
+        <h5>첨부파일(1)</h5>
+        <FileIcon
+          extension={makeExtension(file.fileName)}
+          {...defaultStyles[makeExtension(file.fileName)]}
+        />
+      </div>
+      )}
+      <Button 
+        name="목록"
+        onClick={onCancle} 
+        />
     </DetailContainer>
   )
 }
