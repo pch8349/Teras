@@ -94,14 +94,23 @@ public class OpenviduController {
 	}
 
 	
+//	@DeleteMapping("/del/{sessionId}")
+//	public ResponseEntity<? extends BaseResponseBody> deleteOpenvidu(@ApiIgnore Authentication authentication,
+//			@PathVariable(name = "sessionId") String sessionId) {
+//		
+//		openviduService.endInfo(authentication,sessionId);
+//		
+//		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+//	}
+	
 	@DeleteMapping("/del/{sessionId}")
-	public ResponseEntity<? extends BaseResponseBody> deleteOpenvidu(@ApiIgnore Authentication authentication,
-			@PathVariable(name = "sessionId") String sessionId) {
-		
-		openviduService.endInfo(authentication,sessionId);
+	public ResponseEntity<? extends BaseResponseBody> deleteOpenvidu(@PathVariable(name = "sessionId") String sessionId) {
+		openviduService.deletePost(sessionId);
 		
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+		//return "redirect:/";
 	}
+	
 //	@ApiOperation(value = "get session 토큰", notes = "세션 id의 정보로 토큰을 가져온다.")
 //	@PostMapping("/get-token")
 //	public ResponseEntity<OpenviduPostRes> getToken(

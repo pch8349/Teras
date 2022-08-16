@@ -17,6 +17,8 @@ public interface OpenviduService {
 	Openvidu createSession(OpenviduRegisterPostReq registerInfo, String userId);
 	OpenviduDto searchOpenvidu(String sessionId);
 	Openvidu endInfo(Authentication authentication,String sessionId);
+	void deletePost(String sessionId);
+
 	
 }
 	

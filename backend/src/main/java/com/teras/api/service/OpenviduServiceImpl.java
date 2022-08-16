@@ -74,17 +74,22 @@ public class OpenviduServiceImpl implements OpenviduService {
 		return openviduRepository.save(openvidu);
 	}
 
+	//openviduServicelmpl
 	@Override
     public Openvidu endInfo(Authentication authentication,String sessionId) {
-		
 		Openvidu openvidu = openviduRepository.findById(sessionId).orElse(null);
+		System.out.println(openviduRepository.save(openvidu));
 		if (openvidu != null) {
 			openviduRepository.delete(openvidu);
 		}
+		
 		return openviduRepository.save(openvidu);
     }
 
-	
+	@Override
+    public void deletePost(String sessionId) {
+		openviduRepository.deleteById(sessionId);
+	}
 	
 	@Override
 	public OpenviduDto searchOpenvidu(String sessionId) {
