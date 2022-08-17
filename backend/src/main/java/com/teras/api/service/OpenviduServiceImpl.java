@@ -76,7 +76,7 @@ public class OpenviduServiceImpl implements OpenviduService {
 
 	//openviduServicelmpl
 	@Override
-    public Openvidu endInfo(Authentication authentication,String sessionId) {
+    public Openvidu endInfo(String sessionId) {
 		Openvidu openvidu = openviduRepository.findById(sessionId).orElse(null);
 		System.out.println(openviduRepository.save(openvidu));
 		if (openvidu != null) {
