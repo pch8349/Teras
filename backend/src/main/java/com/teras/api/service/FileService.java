@@ -13,4 +13,5 @@ public interface FileService {
 	ResponseEntity<Object> downloadFile(String uuid);
 	
 	Attachment createFile(String uuid, String fileName, String fileType, String filePath);
+	String uuidToFileName(String uuid);
 }

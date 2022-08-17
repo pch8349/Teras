@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teras.api.request.AssignCommentRegisterPostReq;
@@ -37,6 +36,10 @@ public class AssignController {
 
 	@Autowired
 	AssignService assignService;
+
+	public ResponseEntity<? extends AssignSearchGetRes> getAssignment(@ApiIgnore Authentication authentication) {
+
+	}
 
 	@GetMapping("/{subjectCode}")
 	public ResponseEntity<? extends AssignSearchGetRes> searchAssignment(@ApiIgnore Authentication authentication,

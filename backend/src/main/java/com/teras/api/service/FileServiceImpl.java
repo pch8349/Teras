@@ -70,4 +70,9 @@ public class FileServiceImpl implements FileService {
 		return attachmentRepository.save(attachment);
 	}
 
+	@Override
+	public String uuidToFileName(String uuid) {
+		return attachmentRepository.findByUuid(uuid).get().getFileName();
+	}
+
 }

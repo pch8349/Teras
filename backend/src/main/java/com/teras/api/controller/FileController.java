@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.teras.api.request.FileDownloadPostReq;
+import com.teras.api.response.FileNameGetRes;
 import com.teras.api.response.FileUploadPostRes;
 import com.teras.api.service.FileService;
+import com.teras.common.model.response.BaseResponseBody;
 
 @RestController
 @RequestMapping("/file")
@@ -37,8 +39,17 @@ public class FileController {
 	}
 	
 	@GetMapping("/download")
-	public ResponseEntity<Object> getdownload(@RequestParam("uuid") String uuid) {
+	public ResponseEntity<Object> getdownload(@RequestParam String uuid) {
 
 		return fileService.downloadFile(uuid);
 	}
+	
+	@GetMapping()
+	public ResponseEntity<? extends BaseResponseBody> uuidToFileName(@RequestParam String uuid) {
+		
+		String fileName = fileService.uuidToFileName(uuid);
+
+		return ResponseEntity.status(200).body(FileNameGetRes.of(200, "SUCCESS", fileName));
+	}
+
 }
