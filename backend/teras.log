@@ -785,3 +785,41 @@ java.lang.IllegalArgumentException: Entity must not be null.
 2022-08-17 14:53:31.438  INFO 13596 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
 2022-08-17 14:53:31.471  INFO 13596 --- [restartedMain] com.teras.TerasApplication               : Started TerasApplication in 1.381 seconds (JVM running for 149.099)
 2022-08-17 14:53:31.473  INFO 13596 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-08-17 14:54:50.603  INFO 13596 --- [Thread-19] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2022-08-17 14:54:50.607  INFO 13596 --- [Thread-19] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-08-17 14:54:50.608  INFO 13596 --- [Thread-19] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2022-08-17 14:54:50.614  INFO 13596 --- [Thread-19] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2022-08-17 14:54:50.816  INFO 13596 --- [restartedMain] com.teras.TerasApplication               : Starting TerasApplication using Java 1.8.0_192 on DESKTOP-KVCQHCD with PID 13596 (C:\Users\SSAFY\Desktop\TERAS\backend\bin\main started by SSAFY in C:\Users\SSAFY\Desktop\TERAS\backend)
+2022-08-17 14:54:50.816  INFO 13596 --- [restartedMain] com.teras.TerasApplication               : No active profile set, falling back to default profiles: default
+2022-08-17 14:54:51.176  INFO 13596 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-08-17 14:54:51.215  INFO 13596 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 39 ms. Found 11 JPA repository interfaces.
+2022-08-17 14:54:51.262  INFO 13596 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@3b12d359' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-08-17 14:54:51.262  INFO 13596 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-08-17 14:54:51.351  INFO 13596 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-08-17 14:54:51.351  INFO 13596 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-08-17 14:54:51.352  INFO 13596 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.45]
+2022-08-17 14:54:51.383  INFO 13596 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-08-17 14:54:51.383  INFO 13596 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 565 ms
+2022-08-17 14:54:51.421  INFO 13596 --- [restartedMain] o.s.boot.web.servlet.RegistrationBean    : Filter characterEncodingFilter was not registered (possibly already registered?)
+2022-08-17 14:54:51.422 DEBUG 13596 --- [restartedMain] o.s.web.filter.CharacterEncodingFilter   : Filter 'characterEncodingFilter' configured for use
+2022-08-17 14:54:51.453  INFO 13596 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-08-17 14:54:51.457  INFO 13596 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Starting...
+2022-08-17 14:54:51.479  INFO 13596 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Start completed.
+2022-08-17 14:54:51.479  INFO 13596 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+2022-08-17 14:54:51.637  INFO 13596 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-08-17 14:54:51.638  INFO 13596 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-08-17 14:54:51.652  INFO 13596 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-08-17 14:54:51.806  WARN 13596 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-08-17 14:54:51.968 DEBUG 13596 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 35 mappings in 'requestMappingHandlerMapping'
+2022-08-17 14:54:52.015  INFO 13596 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2022-08-17 14:54:52.067 DEBUG 13596 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/] in 'viewControllerHandlerMapping'
+2022-08-17 14:54:52.082 DEBUG 13596 --- [restartedMain] o.s.w.s.c.annotation.WebMvcConfigurer    : Default resource handling disabled
+2022-08-17 14:54:52.126 DEBUG 13596 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/**] in 'resourceHandlerMapping'
+2022-08-17 14:54:52.127  INFO 13596 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@58d39a5, org.springframework.security.web.context.SecurityContextPersistenceFilter@49b28c52, org.springframework.security.web.header.HeaderWriterFilter@6497a21b, org.springframework.web.filter.CorsFilter@35b4ccbc, org.springframework.security.web.authentication.logout.LogoutFilter@685fcae0, com.teras.common.auth.JwtAuthenticationFilter@1a9ba009, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1c736345, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@45ad8daa, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@63c58fa0, org.springframework.security.web.session.SessionManagementFilter@c1f9211, org.springframework.security.web.access.ExceptionTranslationFilter@66467a43, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@14bd3852]
+2022-08-17 14:54:52.140  INFO 13596 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-08-17 14:54:52.145 DEBUG 13596 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-08-17 14:54:52.153 DEBUG 13596 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-08-17 14:54:52.161  WARN 13596 --- [restartedMain] o.s.b.a.m.MustacheAutoConfiguration      : Cannot find template location: classpath:/templates/ (please add some templates, check your Mustache configuration, or set spring.mustache.check-template-location=false)
+2022-08-17 14:54:52.222  INFO 13596 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-08-17 14:54:52.254  INFO 13596 --- [restartedMain] com.teras.TerasApplication               : Started TerasApplication in 1.456 seconds (JVM running for 229.882)
+2022-08-17 14:54:52.256  INFO 13596 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
