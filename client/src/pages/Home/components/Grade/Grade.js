@@ -14,87 +14,111 @@ import styled from "styled-components";
 import GradeGraph from "./GradeGraph";
 
 const Grade = () => {
-  const [math, setMath] = useState(false);
+  const [art, setArt] = useState(false);
   const [english, setEnglish] = useState(false);
+  const [korean, setKorean] = useState(false);
+  const [math, setMath] = useState(false);
+  const [music, setMusic] = useState(false);
+  const [social, setSocial] = useState(false);
   const [science, setScience] = useState(false);
 
-  const data = [
-    {
-      name: "3월",
-      수학: 60,
-      영어: 88,
-      과학: 24,
-    },
-    {
-      name: "4월",
-      수학: 30,
-      영어: 39,
-      과학: 21,
-    },
-    {
-      name: "5월",
-      수학: 20,
-      영어: 98,
-      과학: 90,
-    },
-    {
-      name: "6월",
-      수학: 78,
-      영어: 83,
-      과학: 80,
-    },
-    {
-      name: "7월",
-      수학: 89,
-      영어: 48,
-      과학: 81,
-    },
-    {
-      name: "8월",
-      수학: 39,
-      영어: 38,
-      과학: 25,
-    },
-    {
-      name: "9월",
-      수학: 90,
-      영어: 100,
-      과학: 100,
-    },
-  ];
-
   const OnClick = (e) => {
-    if (e === "수학") setMath(!math);
+    if (e === "미술") setArt(!art);
     else if (e === "영어") setEnglish(!english);
-    else setScience(!science);
+    else if (e === "국어") setKorean(!korean);
+    else if (e === "수학") setMath(!math);
+    else if (e === "음악") setMusic(!music);
+    else if (e === "사회문화") setSocial(!social);
+    else if (e === "과학") setScience(!science);
   };
 
   useEffect(() => {}, [math]);
   useEffect(() => {}, [english]);
-  useEffect(() => {}, [science]);
+  useEffect(() => {}, [art]);
+  useEffect(() => {}, [korean]);
+  useEffect(() => {}, [music]);
+  useEffect(() => {}, [social]);
 
   return (
-    <>
-      <GradeGraph
-        arr={[{ value: math }, { value: english }, { value: science }]}
-      />
-      <LegendItem onClick={() => OnClick("수학")}>수학</LegendItem>
-      <LegendItem onClick={() => OnClick("영어")}>영어</LegendItem>
-      <LegendItem onClick={() => OnClick("과학")}>과학</LegendItem>
-    </>
+    <MainFlexGrid>
+      <GraphAria>
+        <GradeGraph
+          arr={[
+            { value: art },
+            { value: english },
+            { value: korean },
+            { value: math },
+            { value: music },
+            { value: social },
+            { value: science },
+          ]}
+        />
+      </GraphAria>
+
+      <FlexRow>
+        <LegendItem color="#6BFAE7" onClick={() => OnClick("미술")}>
+          미술
+        </LegendItem>
+        <LegendItem color="#D34DFF" onClick={() => OnClick("영어")}>
+          영어
+        </LegendItem>
+        <LegendItem color="#FCEB60" onClick={() => OnClick("국어")}>
+          국어
+        </LegendItem>
+        <LegendItem color="#28A128" onClick={() => OnClick("수학")}>
+          수학
+        </LegendItem>
+        <LegendItem color="#FF503F" onClick={() => OnClick("음악")}>
+          음악
+        </LegendItem>
+        <LegendItem color="#566BE3" onClick={() => OnClick("사회문화")}>
+          사회문화
+        </LegendItem>
+        <LegendItem color="#76E356" onClick={() => OnClick("과학")}>
+          과학
+        </LegendItem>
+      </FlexRow>
+    </MainFlexGrid>
   );
 };
 
-const Graded = styled.div`
-width: 2000px
-height: 2000px
-display: 
+const GraphAria = styled.div`
+  margin: 50px auto 50px auto;
+  width: 70%;
+  height: 70%;
+`;
+
+const MainFlexGrid = styled.div`
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  width: flex;
+`;
+
+const FlexRow = styled.div`
+  gap: 35x;
+  width: 100%;
+  text-align: center;
+  margin: 0 0 0 0;
+  flex-direction: row;
+  justify-content: center;
+  align-self: stretch;
+  display: flex;
 `;
 
 const LegendItem = styled.div`
-  height: 50px;
-  width: 100px;
-  background-color: gray;
+  border-radius: 5px;
+  margin: 0 10px 0 10px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  height: 30px;
+  width: 50px;
+  font-size: 12px;
+  background-color: ${(props) => props.color};
+  cursor: pointer;
 `;
 
 export default Grade;

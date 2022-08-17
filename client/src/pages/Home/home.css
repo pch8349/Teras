@@ -155,6 +155,7 @@
 }
 
 .componentContainer {
+  text-align: center;
   grid-row-start: 2;
   grid-row-end: 3;
   background-color: white;

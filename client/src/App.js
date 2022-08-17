@@ -28,12 +28,12 @@ const App = () => {
             <Route path="/test" element={<Test />} />
             <Route path="/*" element={<Home />} />
             <Route path="/classroom" element={<Classroom />} />
-            <Route path="/classmake" element={<ClassMake />} />
           </Routes>
         </>
       ) : (
         <>
           <Routes>
+            <Route path="/test" element={<Test />} />
             <Route path="/" element={<UserLogin />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signupfin" element={<SignUpFin />} />
