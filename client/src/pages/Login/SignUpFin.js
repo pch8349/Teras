@@ -26,10 +26,7 @@ const SignUpFin = ({}) => {
 
           <FlexRow1>
             <LinkContainer>
-              <Link
-                to={"/login"}
-                style={{ textDecoration: "none", color: "black" }}
-              >
+              <Link to={"/"} style={{ textDecoration: "none", color: "black" }}>
                 <TextSmallInter>로그인하기</TextSmallInter>
               </Link>
             </LinkContainer>

@@ -21,16 +21,17 @@ import {
 } from "./styles/LoginText";
 import { DropDown } from "./styles/DropDown";
 import { GreenBtn, YellowBtn } from "./styles/LoginBtn";
-import { signUp, userCheck } from "../../api/users";
+import { classCreate, signUp, userCheck } from "../../api/users";
 import { ClassNames } from "@emotion/react";
 import { errorAlert, successAlert, warnAlert } from "./styles/alert";
+import { ReactNewWindowStyles } from "react-new-window-styles";
+import SchoolCode from "./SchoolSearch/SchoolCode";
 
 //영어 대,소문자, 0~9, -_ 이렇게 가능함을 나타냄. 3~23자 제한
 const USER_REGEX = /^[a-zA-Z][a-zA-z0-9-_]{3,23}$/;
 //영 대/소문자, 0~9, 특수문자, 8~24자 제한
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const NUM_REGEX = /^(?=.*[0-9]).{11}$/;
-const TEXT_REGEX = /^.{0, 24}$/;
 
 const SignUp = ({}) => {
   const Navigate = useNavigate();
@@ -39,12 +40,15 @@ const SignUp = ({}) => {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
   const [matchpw, setMatchPw] = useState("");
+  const [schoolname, setSchoolName] = useState("");
   const [schoolcode, setSchoolCode] = useState("");
+  const [gradecode, setGradeCode] = useState("");
   const [classcode, setClassCode] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [flag, setFlag] = useState(1);
+  const [openSchoolSearch, setOpenSchoolSearch] = useState(false);
   const [trigger, setTrigger] = useState("");
 
   const [validId, setValidId] = useState(false);
@@ -53,6 +57,9 @@ const SignUp = ({}) => {
   const [validName, setValidName] = useState(false);
   const [validEmail, setValidEmail] = useState(false);
   const [validPhone, setValidPhone] = useState(false);
+  const [validSchoolName, setValidSchoolName] = useState(false);
+  const [validGrade, setValidGrade] = useState(false);
+  const [validClass, setValidClass] = useState(false);
 
   const body = {
     id: id,
@@ -61,12 +68,30 @@ const SignUp = ({}) => {
     email: email,
     phoneNumber: phone,
     authority: role,
-    classCode: "S0000035400101",
+    classCode: schoolcode + gradecode + classcode,
+  };
+
+  const ClassMake = async (e) => {
+    try {
+      await classCreate(
+        {
+          schoolCode: schoolcode,
+          gradeNumber: gradecode,
+          classNumber: classcode,
+        },
+        (response) => {
+          console.log("성공");
+        },
+        () => {
+          console.log("전송 실패");
+        }
+      );
+    } catch (error) {
+      console.log("아예실패");
+    }
   };
 
   const NewUser = async (e) => {
-    console.log("login flag", flag);
-    console.log(body);
     e.preventDefault();
     if (
       role !== "" &&
@@ -76,10 +101,12 @@ const SignUp = ({}) => {
       validMatch &&
       validName &&
       validEmail &&
-      validPhone
+      validPhone &&
+      validSchoolName &&
+      validGrade &&
+      validClass
     ) {
       try {
-        console.log("입력버튼");
         await signUp(
           body,
           () => {
@@ -87,7 +114,8 @@ const SignUp = ({}) => {
             Navigate("/signupfin");
           },
           () => {
-            errorAlert(null, "회원가입에 실패했습니다.");
+            errorAlert(null, "반을 생성했습니다. 다시 입력버튼을 눌러주세요.");
+            ClassMake();
           }
         );
       } catch (error) {
@@ -95,28 +123,33 @@ const SignUp = ({}) => {
       }
     } else {
       warnAlert("빈 입력사항을 확인해주세요.");
-      console.log(
-        role,
-        flag,
-        validId,
-        validPw,
-        validMatch,
-        validName,
-        validEmail,
-        validPhone
-      );
     }
   };
+
+  const openSchoolCode = () => {
+    setOpenSchoolSearch(true);
+  };
+  const closeSchoolCode = () => {
+    setOpenSchoolSearch(false);
+    if (schoolname.length > 0) setValidSchoolName(true);
+  };
+
   const getDropDownValue = (role) => {
     setRole(role);
-    console.log(role);
+  };
+  const getDropDownGrade = (role) => {
+    setValidGrade(true);
+    setGradeCode(role);
+  };
+  const getDropDownClass = (role) => {
+    setValidClass(true);
+    setClassCode(role);
   };
 
   //아이디 중복 검사
   const IdCheck = async (e) => {
     e.preventDefault();
     setTrigger((n) => n + 1);
-    console.log("이번");
     if (flag === 0 && validId) {
       successAlert("사용 가능한 아이디입니다");
     } else if (flag === 1 && validId) {
@@ -124,14 +157,12 @@ const SignUp = ({}) => {
     }
   };
   useEffect(() => {
-    console.log("일번");
     async function get() {
       try {
         await userCheck(id, (response) => {
           setFlag(() => {
             return response.data.flag;
           });
-          console.log("IdCheck", flag);
         });
       } catch (error) {
         console.log("error");
@@ -143,28 +174,25 @@ const SignUp = ({}) => {
   const onValidCheck = useCallback((e) => {
     if (e[0].id === "id") {
       const result = USER_REGEX.test(e[0].value);
-      console.log("id", result);
       setValidId(result);
     } else if (e[0].id === "pw") {
       const result = PWD_REGEX.test(e[0].value);
-      console.log("pw", result);
       setValidPw(result);
     } else if (e[0].id === "matchpw") {
       const result = pw === matchpw;
-      console.log("pwd", result);
       setValidMatch(result);
     } else if (e[0].id === "name") {
       const result = name.length > 0;
-      console.log("name", result);
       setValidName(result);
     } else if (e[0].id === "email") {
       const result = email.length < 0;
-      console.log("asdfasdf", email);
       setValidEmail(result);
     } else if (e[0].id === "phone") {
       const result = NUM_REGEX.test(e[0].value);
-      console.log("phone", result);
       setValidPhone(result);
+    } else if (e[0].id === "schoolname") {
+      const result = schoolname.length > 0;
+      setValidSchoolName(result);
     }
   }, []);
 
@@ -178,42 +206,48 @@ const SignUp = ({}) => {
     }
   };
 
+  useEffect(() => {}, [validSchoolName]);
+
   useEffect(() => {
     // 함수형의 동기를 맞추기 위해 useEffect를 한번 더 사용
-    console.log(validId);
   }, [validId]);
 
-  useEffect(() => {
-    console.log(validPw);
-  }, [validPw]);
+  useEffect(() => {}, [validPw]);
+
+  useEffect(() => {}, [validMatch]);
 
   useEffect(() => {
-    console.log(validMatch);
-  }, [validMatch]);
-
-  useEffect(() => {
-    console.log(pw, matchpw);
     setValidMatch(pw === matchpw);
   }, [pw, matchpw]);
 
   useEffect(() => {
-    console.log(validName);
     setValidName(name !== "");
   }, [name, validName]);
 
   useEffect(() => {
-    console.log(validEmail);
     setValidEmail(email !== "");
   }, [email, validEmail]);
 
-  useEffect(() => {
-    console.log(validPhone);
-  }, [validPhone]);
+  useEffect(() => {}, [validPhone]);
 
   return (
     <NewRoot>
       <BackForm>
         <LoginContent>
+          {openSchoolSearch && (
+            <ReactNewWindowStyles
+              title="학교명찾기"
+              onClose={closeSchoolCode}
+              windowProps={{ width: 600, height: 650 }}
+            >
+              <SchoolCode
+                setSchoolCode={setSchoolCode}
+                setSchoolName={setSchoolName}
+                setValidSchoolName={setValidSchoolName}
+                onClose={closeSchoolCode}
+              />
+            </ReactNewWindowStyles>
+          )}
           <Logofixed
             src={`https://file.rendit.io/n/GuXE32OOzWWWXqrS8jTY.png`}
           />
@@ -302,25 +336,6 @@ const SignUp = ({}) => {
             }}
           />
           <EmptyPart />
-          {/* <FlexRow>
-            <DropDown
-              arr={[
-                { id: "TEACHER", name: "교사" },
-                { id: "STUDENT", name: "학생" },
-              ]} // 배열로 선택할 값 전달
-              getDropDownValue={getDropDownValue} // 자식 컴포넌트에서 보낸 값 받기 위함
-            />
-            <DropDown
-              arr={[
-                { id: "TEACHER", name: "교사" },
-                { id: "STUDENT", name: "학생" },
-              ]} // 배열로 선택할 값 전달
-              getDropDownValue={getDropDownValue} // 자식 컴포넌트에서 보낸 값 받기 위함
-            />
-          </FlexRow>
-          <FlexRow>
-            <EmptyPart></EmptyPart>
-          </FlexRow> */}
           <FlexRow>
             <TextBigInter>이메일</TextBigInter>
             <FlexColumn>
@@ -357,6 +372,67 @@ const SignUp = ({}) => {
             }}
           />
           <EmptyPart />
+          <FlexRow>
+            <TextBigInter>학교명 입력</TextBigInter>
+            <FlexColumn>{idUnderLine()}</FlexColumn>
+          </FlexRow>
+          <FlexRow>
+            <IdForm
+              value={schoolname}
+              readOnly
+              onChange={({ target: { value } }) => {
+                setFlag((n) => {
+                  return n + 1;
+                });
+                onValidCheck([{ id: "id", value: value }]);
+              }}
+            />
+            <YellowBtn
+              onClick={() => {
+                openSchoolCode();
+              }}
+            >
+              학교 검색
+            </YellowBtn>
+          </FlexRow>
+          <EmptyPart />
+          <FlexRow>
+            <TextBigInter>학년</TextBigInter>
+            <div style={{ width: "145px" }}></div>
+            <TextBigInter>반</TextBigInter>
+          </FlexRow>
+          <FlexRow>
+            <DropDown
+              arr={[
+                { id: "01", name: 1 },
+                { id: "02", name: 2 },
+                { id: "03", name: 3 },
+              ]} // 배열로 선택할 값 전달
+              getDropDownValue={getDropDownGrade} // 자식 컴포넌트에서 보낸 값 받기 위함
+            />
+            <DropDown
+              arr={[
+                { id: "01", name: 1 },
+                { id: "02", name: 2 },
+                { id: "03", name: 3 },
+                { id: "04", name: 4 },
+                { id: "05", name: 5 },
+                { id: "06", name: 6 },
+                { id: "07", name: 7 },
+                { id: "08", name: 8 },
+                { id: "09", name: 9 },
+                { id: "10", name: 10 },
+                { id: "11", name: 11 },
+                { id: "12", name: 12 },
+                { id: "13", name: 13 },
+              ]} // 배열로 선택할 값 전달
+              getDropDownValue={getDropDownClass} // 자식 컴포넌트에서 보낸 값 받기 위함
+            />
+          </FlexRow>
+          <FlexRow>
+            <EmptyPart></EmptyPart>
+          </FlexRow>
+          <EmptyPart />
           <FlexRow1>
             <LinkContainer>
               <Link to={"/"} style={{ textDecoration: "none", color: "black" }}>
@@ -375,7 +451,6 @@ const SignUp = ({}) => {
 const Logofixed = styled.img`
   width: 129px;
   height: 169px;
-
   margin: 0px 0px 15px 0px;
 `;
 const FlexColumn = styled.div`
