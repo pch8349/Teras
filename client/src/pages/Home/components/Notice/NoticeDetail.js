@@ -110,6 +110,9 @@ function NoticeDetail() {
       .then((res) => {
         setData(res.data.notice);
         setIsLoading(false);
+        if (res.data.notice.uuid) {
+          getFileName(res.data.notice.uuid).then((res)=> {setFile(res.data)})
+        }
       })
       .catch((e) => {
         if (e.response.status == 401) {
@@ -127,24 +130,6 @@ function NoticeDetail() {
 
 
 
-  // useEffect(() => {
-  //   console.log(data.uuid)
-  //   if (data.uuid) {
-  //     getFileName(data.uuid)
-  //     .then((res)=> {
-  //       setFile(res.data.fileName);
-  //       setIsFileLoading(false);
-  //     })
-  //     .catch((e) => {
-  //       Swal.fire({
-  //         icon: 'error',
-  //         title: `${e.response.status} Error`,
-  //         text: '파일 이름을 불러오지 못 했습니다.',
-  //       });
-  //       setIsFileLoading(false);
-  //     })
-  //   }
-  // },[isFileLoading]);
 
 
 

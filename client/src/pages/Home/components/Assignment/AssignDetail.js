@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components';
 import { errorAlert, successAlert } from '../../../../modules/alert';
 import { FileIcon, defaultStyles } from "react-file-icon";
-import { getDownloadFile, postDownloadFile } from '../../../../api/file';
+import { getDownloadFile, getFileName, postDownloadFile } from '../../../../api/file';
 import { Viewer } from '@toast-ui/react-editor';
 import Button from '../../../../components/Button/Button';
 import { TextField } from '@mui/material';
@@ -158,6 +158,9 @@ function AssignDetail() {
       .then((res) => {
         setData(res.data.assign);
         setIsLoading(false);
+        if (res.data.assign.uuid) {
+          getFileName(res.data.assign.uuid).then((res)=>{setFile(res.data)})
+        }
       })
       .catch((e) => {
         if (e.response.status === 401) {

@@ -117,8 +117,6 @@ function AssignList() {
       setIsLoading(false);
     })
     .catch((error) => {
-      console.log(error)
-      console.log(subjectCode[selectedSubject])
     });
   }, [selectedSubject])
 
@@ -155,10 +153,11 @@ function AssignList() {
       <StyledTable>
         <colgroup>
           <StyledCol width="10%"></StyledCol>
-          <StyledCol width="45%"></StyledCol>
+          <StyledCol width="35%"></StyledCol>
           <StyledCol width="15%"></StyledCol>
           <StyledCol width="15%"></StyledCol>
           <StyledCol width="15%"></StyledCol>
+          <StyledCol width="10%"></StyledCol>
         </colgroup>
         <thead>
           <tr>
@@ -167,6 +166,7 @@ function AssignList() {
             <StyledTh>작성자</StyledTh>
             <StyledTh>등록일</StyledTh>
             <StyledTh>마감일</StyledTh>
+            <StyledTh>제출여부</StyledTh>
           </tr>
         </thead>
         <tbody>

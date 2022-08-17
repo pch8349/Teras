@@ -5,26 +5,32 @@ import Swal from 'sweetalert2';
 import MyClassItem from './MyClassItem';
 import styled from 'styled-components';
 
+
+const ListContainer = styled.div`
+  overflow: auto;
+`
+
 const TitleContainer = styled.div`
   display: flex;
   height: 100px;
   width: 100%;
   text-align: center;
   justify-content: center;
-  box-shadow: 0px 0.2px #525252;
   line-height: 100px;
   font-size: 1.5em;
+  box-shadow: 0px 0.2px #525252;
 `
 
 const TeacherContainer = styled.div`
   display: flex;
-  height: 100px;
+  flex-direction: column;
+  height: 300px;
   width: 100%;
   text-align: center;
   justify-content: center;
-  box-shadow: 0px 0.2px #525252;
   line-height: 100px;
   font-size: 1.5em;
+  align-items: center;
 `
 
 const StudentContainer = styled.div`
@@ -42,10 +48,12 @@ const StudentItem = styled.div`
 `
 
 function MyClassList() {
-  const [data, setData] = useState({});
+  var [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isTeacherLoading, setIsTeacherLoading] = useState(false);
   const Navigate = useNavigate();
-  const [total, setTotal] = useState(0);
+  var [total, setTotal] = useState(0);
+  const [teacherData, setTeacherData] = useState(null);
   
   useEffect(() => {
     if (isLoading) {
@@ -62,33 +70,73 @@ function MyClassList() {
           text: '우리반을 불러올 수 없습니다.',
         });
         Navigate('../');
-        setIsLoading(false);
       })
+    }else{
+      setIsTeacherLoading(true);
     };
   }, [isLoading]);
 
+  useEffect(() => {
+    if (isTeacherLoading) {
+      getMyClass()
+      .then((res) => {
+        res.data.list.forEach((element) => {
+          if (element.authority === 'TEACHER') {
+            setTeacherData(element);
+            setIsTeacherLoading(false);
+          };
+        })
+      })
+    }
+  },[isTeacherLoading]);         
+
+
+  useEffect(() => {
+    if (data) {
+      for (var j = 0; j<total; j++) {
+        if (data[j].authority === 'TEACHER') {
+          data.splice(j, 1);
+          j--;
+          total--;
+        }
+      }
+    }
+  },[data])
+  
   return (
-    <div>
+    <ListContainer>
+      {teacherData &&
+        !isTeacherLoading && (
       <TitleContainer>
-        {data[0].gradeNumber.slice(1,2)}학년 {data[0].classNumber.slice(1,2)}반
+        {teacherData.gradeNumber.slice(1,2)}학년 {teacherData.classNumber.slice(1,2)}반
       </TitleContainer>
+        )}
       <TeacherContainer>
         담임 선생님
+        {teacherData &&
+          !isTeacherLoading && (
+            <MyClassItem
+              index={1}
+              key={teacherData.id}
+              data={teacherData}
+            />
+          )}
+        학생
       </TeacherContainer>
       <StudentContainer>
         <StudentItem>
         {data &&
-          !isLoading &&
+          !isLoading && 
           data.map((item, idx) => (
-            <MyClassItem
-              index={total - idx - 1}
-              key={item.id}
-              data={item}
-            />
+              <MyClassItem
+                index={total - idx - 1}
+                key={item.id}
+                data={item}
+              />
           ))}
         </StudentItem>
       </StudentContainer>
-    </div>
+    </ListContainer>
   )
 }
 
