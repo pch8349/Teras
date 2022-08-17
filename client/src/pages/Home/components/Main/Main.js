@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 
 function Main() {
   const [open, setOpen] = useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   useEffect(() => {
@@ -30,17 +31,19 @@ function Main() {
       </FlexRow>
       <FlexRow>
         <Part onClick={handleOpen}>
-          <GradeGraph
-            arr={[
-              { value: true },
-              { value: true },
-              { value: true },
-              { value: true },
-              { value: true },
-              { value: true },
-              { value: true },
-            ]}
-          />
+          <GraphAria>
+            <GradeGraph
+              arr={[
+                { value: true },
+                { value: true },
+                { value: true },
+                { value: true },
+                { value: true },
+                { value: true },
+                { value: true },
+              ]}
+            />
+          </GraphAria>
         </Part>
         <Modal
           aria-labelledby="transition-modal-title"
@@ -82,11 +85,19 @@ function Main() {
   );
 }
 
+const GraphAria = styled.div`
+  margin: 20px 80px 50px auto;
+  width: 90%;
+  height: 90%;
+`;
+
 const FlexRow = styled.div`
+  margin: 20px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  gap: 20px;
 `;
 
 const MainFlexGrid = styled.div`
@@ -97,16 +108,18 @@ const MainFlexGrid = styled.div`
 `;
 
 const Part = styled.div`
+  box-shadow: 0 0 3px 3px rgba(100, 100, 100, 0.1);
   justify-content: center;
   flex-direction: row;
   margin: 5px 5px 5px 5px;
   width: 400px;
   height: 300px;
-  background-color: #d4f2c7;
+  background-color: #ebffd2;
   border-radius: 5px;
   transition: transform 0.2s;
   &: hover {
     transform: scale(1.03);
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
   }
 `;
 const style = {

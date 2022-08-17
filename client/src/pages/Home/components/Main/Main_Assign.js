@@ -36,27 +36,26 @@ function Main_Assign({}) {
 
   return (
     <Container>
+      <SubjectText>
+        <div onClick={() => Navigate(`/assign`)}>과제</div>
+      </SubjectText>
       <StyledTable>
         <colgroup>
           <StyledCol width="70%"></StyledCol>
           <StyledCol width="30%"></StyledCol>
         </colgroup>
-        <thead>
-          <tr>
-            <StyledTh>제목</StyledTh>
-            <StyledTh>작성자</StyledTh>
-          </tr>
-        </thead>
         <tbody>
           {data &&
             !isLoading &&
             data.slice(0, 4).map((item, totalItemsCount) => (
-              <StyledTr
-                data={item}
-                key={item.assignNo}
-                onClick={() => Navigate(`/assign/${item.assignNo}`)}
-              >
-                <StyledTd>{item.title}</StyledTd>
+              <StyledTr data={item} key={item.assignNo}>
+                <StyledTd>
+                  <TextClick
+                    onClick={() => Navigate(`/assign/${item.assignNo}`)}
+                  >
+                    {item.title}
+                  </TextClick>
+                </StyledTd>
                 <StyledTd>{item.name}</StyledTd>
               </StyledTr>
             ))}
@@ -66,24 +65,40 @@ function Main_Assign({}) {
   );
 }
 
-const StyledTr = styled.tr`
+const TextClick = styled.div`
   cursor: pointer;
   &:hover {
-    background-color: ${({ theme }) => theme.noticeHoverColor};
+    font-weight: bold;
   }
-  & + & {
-    border-top: 1px solid #dedede;
+`;
+
+const SubjectText = styled.div`
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  margin: 10px 0 30px 10px;
+  font-size: 17px;
+  font-weight: bold;
+`;
+
+const StyledTr = styled.tr`
+  border-bottom: 1px solid #ddd;
+  &:hover {
+    background-color: ${({ theme }) => theme.noticeHoverColor};
   }
 `;
 
 const StyledTd = styled.td`
+  border-bottom: 1px solid #ddd;
   height: 3rem;
   vertical-align: middle;
-  text-align: ${(props) => props.ta || "center"};
+  text-align: ${(props) => props.ta || "left"};
   padding: 0 1.5rem;
 `;
 
 const Container = styled.div`
+  flex-direction: column;
+  display: flex;
   width: 100%;
   box-sizing: border-box;
   height: 80%;
@@ -91,23 +106,11 @@ const Container = styled.div`
 
 const StyledTable = styled.table`
   width: 100%;
+  border-collapse: collapse;
 `;
 
 const StyledCol = styled.col`
   width: ${(props) => props.width};
-`;
-
-const StyledTh = styled.td`
-  background-color: #fec25c;
-  height: 2.2rem;
-  vertical-align: middle;
-  text-align: center;
-  font-weight: 600;
-  border-radius: 3px;
-  color: black;
-  & + & {
-    border-left: 2px solid white;
-  }
 `;
 
 export default Main_Assign;

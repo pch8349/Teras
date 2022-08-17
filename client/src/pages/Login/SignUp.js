@@ -374,7 +374,6 @@ const SignUp = ({}) => {
           <EmptyPart />
           <FlexRow>
             <TextBigInter>학교명 입력</TextBigInter>
-            <FlexColumn>{idUnderLine()}</FlexColumn>
           </FlexRow>
           <FlexRow>
             <IdForm

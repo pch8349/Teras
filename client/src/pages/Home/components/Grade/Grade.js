@@ -56,20 +56,34 @@ const Grade = () => {
       </GraphAria>
 
       <FlexRow>
-        <LegendItem onClick={() => OnClick("미술")}>미술</LegendItem>
-        <LegendItem onClick={() => OnClick("영어")}>영어</LegendItem>
-        <LegendItem onClick={() => OnClick("국어")}>국어</LegendItem>
-        <LegendItem onClick={() => OnClick("수학")}>수학</LegendItem>
-        <LegendItem onClick={() => OnClick("음악")}>음악</LegendItem>
-        <LegendItem onClick={() => OnClick("사회문화")}>사회문화</LegendItem>
-        <LegendItem onClick={() => OnClick("과학")}>과학</LegendItem>
+        <LegendItem color="#6BFAE7" onClick={() => OnClick("미술")}>
+          미술
+        </LegendItem>
+        <LegendItem color="#D34DFF" onClick={() => OnClick("영어")}>
+          영어
+        </LegendItem>
+        <LegendItem color="#FCEB60" onClick={() => OnClick("국어")}>
+          국어
+        </LegendItem>
+        <LegendItem color="#28A128" onClick={() => OnClick("수학")}>
+          수학
+        </LegendItem>
+        <LegendItem color="#FF503F" onClick={() => OnClick("음악")}>
+          음악
+        </LegendItem>
+        <LegendItem color="#566BE3" onClick={() => OnClick("사회문화")}>
+          사회문화
+        </LegendItem>
+        <LegendItem color="#76E356" onClick={() => OnClick("과학")}>
+          과학
+        </LegendItem>
       </FlexRow>
     </MainFlexGrid>
   );
 };
 
 const GraphAria = styled.div`
-  margin: 50px auto 5px auto;
+  margin: 50px auto 50px auto;
   width: 70%;
   height: 70%;
 `;
@@ -95,13 +109,16 @@ const FlexRow = styled.div`
 `;
 
 const LegendItem = styled.div`
+  border-radius: 5px;
   margin: 0 10px 0 10px;
   align-items: center;
-
-  height: 50px;
-  width: 100px;
-  background-color: gray;
-  float: left;
+  justify-content: center;
+  display: flex;
+  height: 30px;
+  width: 50px;
+  font-size: 12px;
+  background-color: ${(props) => props.color};
+  cursor: pointer;
 `;
 
 export default Grade;

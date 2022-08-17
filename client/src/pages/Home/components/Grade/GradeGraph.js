@@ -49,13 +49,14 @@ const GradeGraph = ({ arr }) => {
           for (const i in res) {
             var flag = true;
             if (data.length === 0) {
+              //데이터가 없으면 새로 배열 넣기
               data.push({
-                name: res[i].date,
+                name: res[i].date + "월",
                 [sbjname(res[i].subjectCode)]: res[i].score,
               });
             } else {
               for (const j in data) {
-                if (data[j].name === res[i].date) {
+                if (data[j].name === res[i].date + "월") {
                   flag = false;
                   data[j][sbjname(res[i].subjectCode)] = res[i].score;
                   break;
@@ -63,7 +64,7 @@ const GradeGraph = ({ arr }) => {
               }
               if (flag) {
                 data.push({
-                  name: res[i].date,
+                  name: res[i].date + "월",
                   [sbjname(res[i].subjectCode)]: res[i].score,
                 });
               }
@@ -113,6 +114,8 @@ const GradeGraph = ({ arr }) => {
         )}
 
         <Tooltip />
+        <Legend />
+        <CartesianGrid strokeDasharray="3 3" />
         <CartesianGrid stroke="#ccc" strokeDasharray=" 0 100 " />
         <XAxis dataKey="name" />
         <YAxis height="2000px" />
