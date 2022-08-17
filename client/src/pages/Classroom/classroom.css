@@ -27,7 +27,7 @@
   grid-row-start: 3;
   grid-row-end: 4;
   display: grid;
-  grid-template-rows: 600px 100px;
+  grid-template-rows: 650px 100px;
 }
 
 .subjectBoxContainer {

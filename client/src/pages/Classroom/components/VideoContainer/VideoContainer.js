@@ -1,4 +1,3 @@
-import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -14,10 +13,14 @@ import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import ScreenShareIcon from "@mui/icons-material/ScreenShare";
 import { openSession } from "../../../../api/classroom";
 import { useNavigate } from "react-router-dom";
-import { deleteSession } from "../../../../api/classroom";
+import {
+  deleteSession,
+  openSessionApi,
+  getTokenApi,
+  deleteSessionApi,
+} from "../../../../api/classroom";
 
 const OPENVIDU_SERVER_URL = "https://i7a706.p.ssafy.io:7060";
-const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
   const navigate = useNavigate();
@@ -179,20 +182,7 @@ function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
     const mySession = session;
 
     if (user.authority === "TEACHER") {
-      axios.delete(
-        OPENVIDU_SERVER_URL + `/openvidu/api/sessions/${mySessionId}`,
-        {
-          headers: {
-            Authorization:
-              "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET,POST",
-          },
-        },
-      );
-
-      deleteSession(
+      deleteSessionApi(
         mySessionId,
         (response) => {
           console.log(response);
@@ -215,7 +205,7 @@ function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
     // setPublisher(undefined);
     // setCurrentVideoDevice(undefined);
 
-    // navigate("/main");
+    navigate("/main");
   };
 
   const switchCamera = async () => {
@@ -251,15 +241,16 @@ function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
       }
     } catch (e) {
       console.error(e);
-      axios.post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions", {
-        headers: {
-          Authorization:
-            "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,POST",
+      var data = {};
+      openSessionApi(
+        data,
+        (response) => {
+          console.log(response);
         },
-      });
+        (error) => {
+          console.log(error);
+        },
+      );
     }
   };
 
@@ -284,21 +275,13 @@ function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
   const createSession = (sessionId) => {
     return new Promise((resolve, reject) => {
       var data = JSON.stringify({ customSessionId: sessionId });
-      axios
-        .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions", data, {
-          headers: {
-            Authorization:
-              "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET,POST",
-          },
-        })
-        .then((response) => {
+      openSessionApi(
+        data,
+        (response) => {
           console.log("CREATE SESSION", response);
           resolve(response.data.id);
-        })
-        .catch((response) => {
+        },
+        (response) => {
           var error = Object.assign({}, response);
           if (error?.response?.status === 409) {
             resolve(sessionId);
@@ -323,35 +306,23 @@ function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
               );
             }
           }
-        });
+        },
+      );
     });
   };
 
   const createToken = (sessionId) => {
     return new Promise((resolve, reject) => {
       var data = {};
-      axios
-        .post(
-          OPENVIDU_SERVER_URL +
-            "/openvidu/api/sessions/" +
-            sessionId +
-            "/connection",
-          data,
-          {
-            headers: {
-              Authorization:
-                "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
-              "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "*",
-              "Access-Control-Allow-Methods": "GET,POST",
-            },
-          },
-        )
-        .then((response) => {
+      getTokenApi(
+        sessionId,
+        data,
+        (response) => {
           console.log("TOKEN", response);
           resolve(response.data.token);
-        })
-        .catch((error) => reject(error));
+        },
+        (error) => reject(error),
+      );
     });
   };
 
@@ -416,15 +387,17 @@ function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
             {subscribers.map((sub, i) => {
               if (
                 host !== undefined &&
-                sub.stream.connection.connectionId ===
-                  host.stream.connection.connectionId
+                (sub.stream.connection.connectionId ===
+                  host.stream.connection.connectionId ||
+                  sub.stream.connection.connectionId ===
+                    publisher.session.connection.connectionId)
               ) {
                 return null;
               } else {
                 return (
                   <div
                     key={i}
-                    className="studentVideoContainer"
+                    className="subVideoContainer"
                     // onClick={() => handleMainVideoStream(sub)}
                   >
                     <UserVideoComponent

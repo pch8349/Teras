@@ -22,7 +22,7 @@ p {
 
 .videoContainer {
   display: grid;
-  grid-template-columns: 900px 450px;
+  grid-template-columns: 900px 600px;
   grid-row-start: 1;
   grid-row-end: 2;
 }
@@ -40,6 +40,7 @@ p {
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: flex-start;
+  overflow: scroll;
   grid-column-start: 2;
   grid-column-end: 3;
   padding-top: 20px;
@@ -49,11 +50,13 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 210px;
+  width: 280px;
+  height: 210px;
+  margin: 5px;
 }
 
 .streamcomponent {
-  width: 740px;
+  width: 95%;
   overflow: hidden;
   border-radius: 15px;
 }
