@@ -1,6 +1,7 @@
 package com.teras.api.controller;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import com.teras.common.auth.SsafyUserDetails;
 import com.teras.common.model.response.BaseResponseBody;
 import com.teras.db.dto.OpenviduDto;
 import com.teras.db.entity.Openvidu;
+import com.teras.db.repository.OpenviduRepository;
 
 import io.openvidu.java.client.ConnectionProperties;
 import io.openvidu.java.client.ConnectionType;
@@ -67,6 +69,9 @@ public class OpenviduController {
 	OpenviduService openviduService;
 
 	@Autowired
+	OpenviduRepository openviduRepository;
+	
+	@Autowired
 	public OpenviduController(@Value("${openvidu.secret}") String secret,
 			@Value("${openvidu.url}") String openviduUrl) {
 		this.SECRET = secret;
@@ -94,14 +99,31 @@ public class OpenviduController {
 	}
 
 	
+//	@DeleteMapping("/del/{sessionId}")
+//	public ResponseEntity<? extends BaseResponseBody> deleteOpenvidu(
+//			@PathVariable(name = "sessionId") String sessionId) {
+//		
+//		openviduService.endInfo(sessionId);
+//		System.out.println(sessionId); 
+//		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+//	}
 	@DeleteMapping("/del/{sessionId}")
 	public ResponseEntity<? extends BaseResponseBody> deleteOpenvidu(
 			@PathVariable(name = "sessionId") String sessionId) {
 		
-		openviduService.endInfo(sessionId);
-//		System.out.println("로그인성공!"); 
-		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+		Optional<Openvidu> openvidu = openviduRepository.findById(sessionId);
+		if(openvidu.isPresent()) {
+			openviduRepository.delete(openvidu.get());
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+		}else {
+			return ResponseEntity.status(500).body(BaseResponseBody.of(500, "not exist")); 
+		}
+		
 	}
+	
+	
+	
+	
 	
 //	@DeleteMapping("/del/{sessionId}")
 //	public ResponseEntity<? extends BaseResponseBody> deleteOpenvidu(@PathVariable(name = "sessionId") String sessionId) {
