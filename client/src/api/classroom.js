@@ -24,6 +24,8 @@ export async function deleteSession(sessionId, success, fail) {
     .delete(`/api/openvidu/del/${sessionId}`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "DELETE",
       },
     })
     .then(success)

@@ -65,7 +65,7 @@ function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
       // so OpenVidu doesn't create an HTML video by its own
       var subscriber = mySession.subscribe(event.stream, undefined);
 
-      setSubscribers([...subscribers, subscriber]);
+      setSubscribers((prev) => [...prev, subscriber]);
     });
 
     // subscriber가 세션 떠날 시 state update 후 렌더링
@@ -89,7 +89,6 @@ function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
     getToken().then((token) => {
       // First param is the token got from OpenVidu Server. Second param can be retrieved by every user on event
       // 'streamCreated' (property Stream.connection.data), and will be appended to DOM as the user's nickname
-      console.log(OV);
       mySession
         .connect(token, { clientData: myUserName })
         .then(async () => {
@@ -153,7 +152,7 @@ function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
   }, [session]);
 
   useEffect(() => {
-    if (host === undefined) {
+    if (user.authority === "STUDENT" && host === undefined) {
       const host = subscribers.find((subscriber) => {
         if (subscriber.stream.connection.connectionId === hostId) return true;
       });
@@ -191,6 +190,15 @@ function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
           console.log(error);
         },
       );
+      deleteSession(
+        mySessionId,
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.log(error);
+        },
+      );
     } else {
       mySession.disconnect();
     }
@@ -205,7 +213,7 @@ function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
     // setPublisher(undefined);
     // setCurrentVideoDevice(undefined);
 
-    navigate("/main");
+    // navigate("/main");
   };
 
   const switchCamera = async () => {
@@ -431,12 +439,14 @@ function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
               <VideocamIcon fontSize="large" />
             )}
           </div>
-          <div
-            className="classroomButton greenButton"
-            onClick={handleScreenShare}
-          >
-            <ScreenShareIcon fontSize="large" />
-          </div>
+          {user.authority === "TEACHER" ? (
+            <div
+              className="classroomButton greenButton"
+              onClick={handleScreenShare}
+            >
+              <ScreenShareIcon fontSize="large" />
+            </div>
+          ) : null}
           <div className="classroomButton redButton" onClick={handleOpenModal}>
             <CloseIcon fontSize="large" />
           </div>

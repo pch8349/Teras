@@ -1,3 +1,77 @@
 .studyRoomContainer {
   display: grid;
+  grid-template-rows: 160px 540px;
+}
+
+.titleContainer {
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.studyroomsContainer {
+  grid-row-start: 2;
+  grid-row-end: 3;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: flex-start;
+}
+
+.studyroom {
+  width: 270px;
+  height: 220px;
+  margin: 10px 27px;
+  border-radius: 20px;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 170px 50px;
+  box-shadow: 5px 5px 10px rgb(157, 157, 157);
+  transition: transform 0.5s;
+}
+
+.studyroom:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.redContainer {
+  background-color: #ea4c1d;
+}
+
+.yellowContainer {
+  background-color: #ffb41d;
+}
+
+.greenContainer {
+  background-color: #0ac97f;
+}
+
+.blueContainer {
+  background-color: #19b6f6;
+}
+
+.purpleContainer {
+  background-color: #9d56f7;
+}
+
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.studyroomNameContainer {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.studyroomNameContainer p {
+  font-weight: bolder;
+  font-size: 18px;
+  margin-left: 15px;
 }
