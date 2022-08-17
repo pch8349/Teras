@@ -31,7 +31,15 @@ function Main() {
       <FlexRow>
         <Part onClick={handleOpen}>
           <GradeGraph
-            arr={[{ value: true }, { value: true }, { value: true }]}
+            arr={[
+              { value: true },
+              { value: true },
+              { value: true },
+              { value: true },
+              { value: true },
+              { value: true },
+              { value: true },
+            ]}
           />
         </Part>
         <Modal
@@ -55,7 +63,15 @@ function Main() {
                 성적 그래프
               </Typography>
               <GradeGraph
-                arr={[{ value: true }, { value: true }, { value: true }]}
+                arr={[
+                  { value: true },
+                  { value: true },
+                  { value: true },
+                  { value: true },
+                  { value: true },
+                  { value: true },
+                  { value: true },
+                ]}
               />
             </Box>
           </Fade>
@@ -101,7 +117,8 @@ const style = {
   width: 700,
   height: 500,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  border: "none",
+  borderRadius: "5px",
   boxShadow: 24,
   p: 4,
 };

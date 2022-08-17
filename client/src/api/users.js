@@ -17,7 +17,6 @@ export async function userCheck(userId, success, fail) {
 }
 
 export async function getUser(success, fail) {
-  console.log("겟유저 내부", sessionStorage.getItem("accessToken"));
   await api
     .get("/users", {
       headers: {
@@ -58,7 +57,6 @@ export async function classCreate(user, success, fail) {
 }
 
 export const getUserScore = async (params, success, fail) => {
-  console.log("api까진");
   return await api
     .get("/score", {
       headers: {
