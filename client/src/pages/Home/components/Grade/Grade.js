@@ -40,18 +40,21 @@ const Grade = () => {
   useEffect(() => {}, [social]);
 
   return (
-    <>
-      <GradeGraph
-        arr={[
-          { value: art },
-          { value: english },
-          { value: korean },
-          { value: math },
-          { value: music },
-          { value: social },
-          { value: science },
-        ]}
-      />
+    <MainFlexGrid>
+      <GraphAria>
+        <GradeGraph
+          arr={[
+            { value: art },
+            { value: english },
+            { value: korean },
+            { value: math },
+            { value: music },
+            { value: social },
+            { value: science },
+          ]}
+        />
+      </GraphAria>
+
       <FlexRow>
         <LegendItem onClick={() => OnClick("미술")}>미술</LegendItem>
         <LegendItem onClick={() => OnClick("영어")}>영어</LegendItem>
@@ -61,25 +64,40 @@ const Grade = () => {
         <LegendItem onClick={() => OnClick("사회문화")}>사회문화</LegendItem>
         <LegendItem onClick={() => OnClick("과학")}>과학</LegendItem>
       </FlexRow>
-    </>
+    </MainFlexGrid>
   );
 };
 
-const FlexRow = styled.div`
-  float: left;
-  text-align: center;
-  flex-direction: row;
-  justify-content: center;
-  align-self: center;
+const GraphAria = styled.div`
+  margin: 50px auto 5px auto;
+  width: 70%;
+  height: 70%;
 `;
 
-const Graded = styled.div`
-width: 2000px
-height: 2000px
-display: 
+const MainFlexGrid = styled.div`
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  width: flex;
+`;
+
+const FlexRow = styled.div`
+  gap: 35x;
+  width: 100%;
+  text-align: center;
+  margin: 0 0 0 0;
+  flex-direction: row;
+  justify-content: center;
+  align-self: stretch;
+  display: flex;
 `;
 
 const LegendItem = styled.div`
+  margin: 0 10px 0 10px;
+  align-items: center;
+
   height: 50px;
   width: 100px;
   background-color: gray;

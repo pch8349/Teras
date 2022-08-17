@@ -11,6 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import "./gradeGraph.css";
+import styled from "styled-components";
 
 const GradeGraph = ({ arr }) => {
   console.log("메인에서 arr 주기", arr);
@@ -78,7 +79,11 @@ const GradeGraph = ({ arr }) => {
   };
 
   return (
-    <ResponsiveContainer className={"responsiveChart"} height="80%" width="80%">
+    <ResponsiveContainer
+      className={"responsiveChart"}
+      height="100%"
+      width="100%"
+    >
       <LineChart data={score}>
         {arr[0].value && (
           <Line type="linear" dataKey="미술" stroke="#6BFAE7" strokeWidth={3} />

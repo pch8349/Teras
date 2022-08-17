@@ -28,7 +28,6 @@ const App = () => {
             <Route path="/test" element={<Test />} />
             <Route path="/*" element={<Home />} />
             <Route path="/classroom" element={<Classroom />} />
-            <Route path="/classmake" element={<ClassMake />} />
           </Routes>
         </>
       ) : (
