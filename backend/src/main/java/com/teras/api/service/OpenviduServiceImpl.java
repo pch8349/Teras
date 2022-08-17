@@ -26,42 +26,6 @@ public class OpenviduServiceImpl implements OpenviduService {
 	UserRepository userRepository;
 
 	@Override
-	public JsonObject createRoom() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deleteRoom() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void enterRoom() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void leaveRoom() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void fetchInfo() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void fetchAll() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public Openvidu createSession(OpenviduRegisterPostReq registerInfo, String userId) {
 		ClassEntity classEntity = classEntityRepository.findByClassCode(registerInfo.getClassCode()).get();
 		User user = userRepository.findByUserId(userId).get();
@@ -72,6 +36,23 @@ public class OpenviduServiceImpl implements OpenviduService {
 		return openviduRepository.save(openvidu);
 	}
 
+	//openviduServicelmpl
+	@Override
+    public Openvidu endInfo(String sessionId) {
+		Openvidu openvidu = openviduRepository.findById(sessionId).orElse(null);
+		System.out.println(openviduRepository.save(openvidu));
+		if (openvidu != null) {
+			openviduRepository.delete(openvidu);
+		}
+		
+		return openviduRepository.save(openvidu);
+    }
+
+	@Override
+    public void deletePost(String sessionId) {
+		openviduRepository.deleteById(sessionId);
+	}
+	
 	@Override
 	public OpenviduDto searchOpenvidu(String sessionId) {
 		OpenviduDto openviduDto = new OpenviduDto(openviduRepository.findById(sessionId).get());

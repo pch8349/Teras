@@ -37,7 +37,7 @@ public class FileController {
 	}
 	
 	@GetMapping("/download")
-	public ResponseEntity<Object> getdownload(@RequestParam String uuid) {
+	public ResponseEntity<Object> getdownload(@RequestParam("uuid") String uuid) {
 
 		return fileService.downloadFile(uuid);
 	}

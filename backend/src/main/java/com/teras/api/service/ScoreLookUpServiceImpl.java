@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teras.db.dto.ScoreDto;
+import com.teras.db.entity.ClassEntity;
 import com.teras.db.entity.ScoreLookUp;
 import com.teras.db.entity.User;
 import com.teras.db.repository.ScoreLookUpRepository;
@@ -26,8 +27,19 @@ public class ScoreLookUpServiceImpl implements ScoreLookUpService {
 		
 		List<ScoreDto> list = new ArrayList<>();
 		
-		for (ScoreLookUp score : scoreRepository.findByScoreIdUserId(user).get()) {
-			list.add(new ScoreDto(score));
+		if (user.getAuthority().toString() == "STUDENT") {
+			for (ScoreLookUp score : scoreRepository.findByScoreIdUserId(user).get()) {
+				list.add(new ScoreDto(score));
+			}
+		} else if (user.getAuthority().toString() == "TEACHER") {
+			ClassEntity classCode = user.getClassCode();
+			for (User student : userRepository.findByClassCode(classCode).get()) {
+				if (student.getAuthority().toString() == "STUDENT") {
+					for (ScoreLookUp score : scoreRepository.findByScoreIdUserId(student).get()) {
+						list.add(new ScoreDto(score));
+					}
+				}
+			}
 		}
 
 		return list;

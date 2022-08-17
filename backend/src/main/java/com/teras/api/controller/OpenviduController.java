@@ -1,12 +1,14 @@
 package com.teras.api.controller;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +27,7 @@ import com.teras.common.auth.SsafyUserDetails;
 import com.teras.common.model.response.BaseResponseBody;
 import com.teras.db.dto.OpenviduDto;
 import com.teras.db.entity.Openvidu;
+import com.teras.db.repository.OpenviduRepository;
 
 import io.openvidu.java.client.ConnectionProperties;
 import io.openvidu.java.client.ConnectionType;
@@ -63,6 +66,9 @@ public class OpenviduController {
 	OpenviduService openviduService;
 
 	@Autowired
+	OpenviduRepository openviduRepository;
+
+	@Autowired
 	public OpenviduController(@Value("${openvidu.secret}") String secret,
 			@Value("${openvidu.url}") String openviduUrl) {
 		this.SECRET = secret;
@@ -80,14 +86,118 @@ public class OpenviduController {
 
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
 	}
-	
+
 	@GetMapping("/{sessionId}")
 	public ResponseEntity<? extends BaseResponseBody> getOpenvidu(@PathVariable(name = "sessionId") String sessionId) {
-		
+
 		OpenviduDto openvidu = openviduService.searchOpenvidu(sessionId);
-		
+
 		return ResponseEntity.status(200).body(OpenviduGetRes.of(200, "SUCCESS", openvidu));
 	}
+
+//	
+//	@DeleteMapping("/del/{sessionId}")
+//	public ResponseEntity<? extends BaseResponseBody> deleteOpenvidu(
+//			@PathVariable(name = "sessionId") String sessionId) {
+//		
+//		openviduService.endInfo(sessionId);
+//		System.out.println(sessionId); 
+//		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+//	}
+
+	@DeleteMapping("/del/{sessionId}")
+	public ResponseEntity<? extends BaseResponseBody> deleteOpenvidu(
+			@PathVariable(name = "sessionId") String sessionId) {
+
+		Optional<Openvidu> openvidu = openviduRepository.findById(sessionId);
+		if (openvidu.isPresent()) {
+			openviduRepository.delete(openvidu.get());
+			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+		} else {
+			return ResponseEntity.status(500).body(BaseResponseBody.of(500, "not exist"));
+		}
+
+	}
+
+//	@DeleteMapping("/del/{sessionId}")
+//	public ResponseEntity<? extends BaseResponseBody> deleteOpenvidu(@PathVariable(name = "sessionId") String sessionId) {
+//		openviduService.deletePost(sessionId);
+//		 
+//		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+//		//return "redirect:/";
+//	}
+
+//	@ApiOperation(value = "get session 토큰", notes = "세션 id의 정보로 토큰을 가져온다.")
+//	@PostMapping("/get-token")
+//	public ResponseEntity<OpenviduPostRes> getToken(
+//			@RequestBody @ApiParam(value = "getToken", required = true) OpenviduPostReq openviduPostReq) {
+//
+//		System.out.println("Getting sessionId and token | {sessionName}=" + openviduPostReq.getSessionName());
+//		String sessionName = openviduPostReq.getSessionName();
+//
+//		// The video-call to connect ("TUTORIAL")
+//
+//		// Role associated to this user
+//		OpenViduRole role = OpenViduRole.PUBLISHER;
+//
+//		// Build connectionProperties object with the serverData and the role
+//		ConnectionProperties connectionProperties = new ConnectionProperties.Builder().type(ConnectionType.WEBRTC)
+//				.role(role).data("").build();
+//
+//		// enterRoom
+//		// 세션이 있으면 -> 참가자로서 입장
+//		if (this.mapSessions.get(sessionName) != null) {
+//			// Session already exists
+//			System.out.println("Existing session " + sessionName);
+//			try {
+//
+//				// Generate a new token with the recently created connectionProperties
+//				String token = this.mapSessions.get(sessionName).createConnection(connectionProperties).getToken();
+//
+//				// Update our collection storing the new token
+//				this.mapSessionNamesTokens.get(sessionName).put(token, role);
+//
+//				// Prepare the response with the token
+//				// Return the response to the client
+//				return ResponseEntity.ok(OpenviduPostRes.of(200, "Success", token));
+//
+//			} catch (OpenViduJavaClientException e1) {
+//				// If internal error generate an error message and return it to client
+//				return ResponseEntity.status(401).body(OpenviduPostRes.of(401, "Invalid", null));
+//			} catch (OpenViduHttpException e2) {
+//				if (404 == e2.getStatus()) {
+//					// Invalid sessionId (user left unexpectedly). Session object is not valid
+//					// anymore. Clean collections and continue as new session
+//					this.mapSessions.remove(sessionName);
+//					this.mapSessionNamesTokens.remove(sessionName);
+//				}
+//			}
+//		}
+//
+//		// New session 새로운 방 생성
+//		try {
+//			// Create a new OpenVidu Session
+//			// System.out.println("hello");
+//			Session session = this.openVidu.createSession();
+//			System.out.println("New session " + sessionName);
+//			// Generate a new token with the recently created connectionProperties
+//			String token = session.createConnection(connectionProperties).getToken();
+//
+//			// Store the session and the token in our collections
+//			this.mapSessions.put(sessionName, session);
+//			this.mapSessionNamesTokens.put(sessionName, new ConcurrentHashMap<>());
+//			this.mapSessionNamesTokens.get(sessionName).put(token, role);
+//
+//			// Prepare the response with the sessionId and the token
+//			System.out.println(token);
+//			// Return the response to the client
+//			return ResponseEntity.ok(OpenviduPostRes.of(200, "Success", token));
+//
+//		} catch (Exception e) {
+//			// If error generate an error message and return it to client
+//			return ResponseEntity.status(401).body(OpenviduPostRes.of(401, "Invalid1", null));
+//		}
+//	}
 
 	@ApiOperation(value = "get session 토큰", notes = "세션 id의 정보로 토큰을 가져온다.")
 	@PostMapping("/get-token")

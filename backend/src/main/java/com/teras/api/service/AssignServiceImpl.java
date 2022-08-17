@@ -57,12 +57,14 @@ public class AssignServiceImpl implements AssignService {
 
 			for (Assignment assign : assignmentRepository
 					.findByClassCodeAndSubjectCodeOrderByDeadlineAsc(user.getClassCode(), subject, pageable).get()) {
-				list.add(new AssignmentDto(assign));
+				int state = assignCommentRepository.countByAssignCommentId_AssignNoAndAssignCommentId_UserId(assign, user);
+				list.add(new AssignmentDto(assign, state));
 			}
 		} else {
 			for (Assignment assign : assignmentRepository
 					.findByClassCodeOrderByDeadlineAsc(user.getClassCode(), pageable).get()) {
-				list.add(new AssignmentDto(assign));
+				int state = assignCommentRepository.countByAssignCommentId_AssignNoAndAssignCommentId_UserId(assign, user);
+				list.add(new AssignmentDto(assign, state));
 			}
 		}
 
@@ -77,7 +79,23 @@ public class AssignServiceImpl implements AssignService {
 		
 		List<AssignmentDto> list = new ArrayList<AssignmentDto>();
 		
-		return null;
+		if (!subjectCode.toUpperCase().equals("ALL")) {
+			SubjectDetail subject = subjectDetailRepository.findBySubjectCode(subjectCode).get();
+
+			for (Assignment assign : assignmentRepository
+					.findByClassCodeAndSubjectCodeOrderByDeadlineAsc(user.getClassCode(), subject).get()) {
+				int state = assignCommentRepository.countByAssignCommentId_AssignNoAndAssignCommentId_UserId(assign, user);
+				list.add(new AssignmentDto(assign, state));
+			}
+		} else {
+			for (Assignment assign : assignmentRepository
+					.findByClassCodeOrderByDeadlineAsc(user.getClassCode()).get()) {
+				int state = assignCommentRepository.countByAssignCommentId_AssignNoAndAssignCommentId_UserId(assign, user);
+				list.add(new AssignmentDto(assign, state));
+			}
+		}
+		
+		return list;
 	}
 
 	@Override

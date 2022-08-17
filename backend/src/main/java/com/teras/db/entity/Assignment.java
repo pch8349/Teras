@@ -1,5 +1,6 @@
 package com.teras.db.entity;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -14,6 +15,8 @@ import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,8 +46,8 @@ public class Assignment {
     String deadline;
 	
 	@CreatedDate
-	@Column(name = "createDate", nullable = false)
-    LocalDateTime createdDate;
+	@Column(name = "createDate", nullable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	Timestamp createdDate;
 	
     @ManyToOne
     @JoinColumn(name = "uuid", nullable = true)
