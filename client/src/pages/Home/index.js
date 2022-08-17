@@ -124,7 +124,7 @@ const Home = (tmp) => {
                 <Route path="grade" element={<Grade />} />
                 <Route path="schedule" element={<Schedule />} />
                 <Route path="studyroom" element={<StudyRoom />} />
-                <Route path="myclass" element={<MyClass />} />
+                <Route path="myclass/*" element={<MyClass />} />
               </Routes>
             </div>
 
