@@ -65,7 +65,7 @@ function VideoContainer({ sessionId, goal, period, classCode, hostId }) {
       // so OpenVidu doesn't create an HTML video by its own
       var subscriber = mySession.subscribe(event.stream, undefined);
 
-      setSubscribers((prev) => [...prev, subscriber]);
+      setSubscribers([...subscribers, subscriber]);
     });
 
     // subscriber가 세션 떠날 시 state update 후 렌더링
