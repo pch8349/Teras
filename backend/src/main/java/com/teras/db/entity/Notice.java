@@ -40,9 +40,8 @@ public class Notice {
 	@Column(name = "content", nullable = false)
 	String content;
 
-	@CreatedDate
-	@Column(name = "createDate", nullable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	Timestamp createdDate;
+	@Column(name = "createDate", nullable = false)
+	String createdDate;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)

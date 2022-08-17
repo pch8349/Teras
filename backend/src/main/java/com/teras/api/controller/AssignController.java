@@ -78,9 +78,9 @@ public class AssignController {
 		String userId = userDetails.getUsername();
 
 		AssignmentDto assign = assignService.getAssignByAssignNo(assignNo);
-		AssignCommentDto comment = assignService.getAssignCommentByAssignNoAndUserId(assignNo, userId);
+		List<AssignCommentDto> list = assignService.getAssignCommentByAssignNoAndUserId(assignNo, userId);
 
-		return ResponseEntity.status(200).body(AssignDetailGetRes.of(200, "SUCCESS", assign, comment));
+		return ResponseEntity.status(200).body(AssignDetailGetRes.of(200, "SUCCESS", assign, list));
 	}
 
 	@PostMapping("/comment")

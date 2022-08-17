@@ -45,9 +45,8 @@ public class Assignment {
 	@Column(name = "deadline", nullable = false)
     String deadline;
 	
-	@CreatedDate
-	@Column(name = "createDate", nullable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	Timestamp createdDate;
+	@Column(name = "createDate", nullable = false)
+	String createdDate;
 	
     @ManyToOne
     @JoinColumn(name = "uuid", nullable = true)

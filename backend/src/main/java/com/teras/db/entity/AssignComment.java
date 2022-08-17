@@ -1,7 +1,5 @@
 package com.teras.db.entity;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -10,7 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.teras.db.embeddedId.AssignCommentId;
@@ -35,9 +32,8 @@ public class AssignComment {
 	@Column(name = "content", nullable = false)
 	String content;
 
-	@CreatedDate
 	@Column(name = "submitDate", nullable = false)
-	LocalDateTime submitDate;
+	String submitDate;
 
 	@ManyToOne
 	@JoinColumn(name = "uuid", nullable = true)

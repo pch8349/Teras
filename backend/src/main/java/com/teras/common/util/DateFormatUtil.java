@@ -4,9 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateFormatUtil {
+	static SimpleDateFormat nowFormat = new SimpleDateFormat("yyyy-mm-dd HH:MM:SS");
 	static SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-mm-dd");
 	static SimpleDateFormat monthFormat = new SimpleDateFormat("yyyy-mm");
 	static SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+	
+	public static String now() {
+		return nowFormat.format(new Date());
+	}
 
 	public static String getDate(String date) {
 		return dayFormat.format(date);

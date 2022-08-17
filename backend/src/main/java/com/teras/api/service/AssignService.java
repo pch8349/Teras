@@ -18,7 +18,7 @@ public interface AssignService {
 
 	AssignmentDto getAssignByAssignNo(long assignNo);
 
-	AssignCommentDto getAssignCommentByAssignNoAndUserId(long assignNo, String userId);
+	List<AssignCommentDto> getAssignCommentByAssignNoAndUserId(long assignNo, String userId);
 
 	AssignComment createAssignComment(AssignCommentRegisterPostReq registerInfo, String userId);
 }

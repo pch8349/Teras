@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.teras.api.request.NoticeRegisterPostReq;
+import com.teras.common.util.DateFormatUtil;
 import com.teras.db.dto.NoticeDto;
 import com.teras.db.entity.Notice;
 import com.teras.db.entity.User;
@@ -39,7 +40,7 @@ public class NoticeServiceImpl implements NoticeService {
 		User user = userRepository.findByUserId(userId).get();
 
 		Notice notice = Notice.builder().title(noticeRegisterInfo.getTitle()).content(noticeRegisterInfo.getContent())
-				.user(user).classCode(user.getClassCode())
+				.user(user).classCode(user.getClassCode()).createdDate(DateFormatUtil.now())
 				.attach(attachmentRepository.findByUuid(noticeRegisterInfo.getUuid()).orElse(null)).build();
 
 		return noticeRepository.save(notice);
