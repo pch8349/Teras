@@ -53,20 +53,33 @@ public class AssignServiceImpl implements AssignService {
 		Pageable pageable = PageRequest.of(page, 10, Sort.by("assignNo").descending());
 		List<AssignmentDto> list = new ArrayList<AssignmentDto>();
 
+		int state = 0;
+
 		if (!subjectCode.toUpperCase().equals("ALL")) {
 			SubjectDetail subject = subjectDetailRepository.findBySubjectCode(subjectCode).get();
 
 			for (Assignment assign : assignmentRepository
 					.findByClassCodeAndSubjectCodeOrderByDeadlineAsc(user.getClassCode(), subject, pageable).get()) {
-				int state = assignCommentRepository.countByAssignCommentId_AssignNoAndAssignCommentId_UserId(assign,
-						user);
+
+				if ("TEACHER".equals(user.getAuthority())) {
+					state = assignCommentRepository.countByAssignCommentId_AssignNo(assign);
+				} else {
+					state = assignCommentRepository.countByAssignCommentId_AssignNoAndAssignCommentId_UserId(assign,
+							user);
+				}
 				list.add(new AssignmentDto(assign, state));
 			}
 		} else {
 			for (Assignment assign : assignmentRepository
 					.findByClassCodeOrderByDeadlineAsc(user.getClassCode(), pageable).get()) {
-				int state = assignCommentRepository.countByAssignCommentId_AssignNoAndAssignCommentId_UserId(assign,
-						user);
+
+				if ("TEACHER".equals(user.getAuthority())) {
+					state = assignCommentRepository.countByAssignCommentId_AssignNo(assign);
+				} else {
+					state = assignCommentRepository.countByAssignCommentId_AssignNoAndAssignCommentId_UserId(assign,
+							user);
+				}
+
 				list.add(new AssignmentDto(assign, state));
 			}
 		}
@@ -79,21 +92,30 @@ public class AssignServiceImpl implements AssignService {
 		User user = userRepository.findByUserId(userId).get();
 
 		List<AssignmentDto> list = new ArrayList<AssignmentDto>();
+		int state = 0;
 
 		if (!subjectCode.toUpperCase().equals("ALL")) {
 			SubjectDetail subject = subjectDetailRepository.findBySubjectCode(subjectCode).get();
 
 			for (Assignment assign : assignmentRepository
 					.findByClassCodeAndSubjectCodeOrderByDeadlineAsc(user.getClassCode(), subject).get()) {
-				int state = assignCommentRepository.countByAssignCommentId_AssignNoAndAssignCommentId_UserId(assign,
-						user);
+				if ("TEACHER".equals(user.getAuthority())) {
+					state = assignCommentRepository.countByAssignCommentId_AssignNo(assign);
+				} else {
+					state = assignCommentRepository.countByAssignCommentId_AssignNoAndAssignCommentId_UserId(assign,
+							user);
+				}
 				list.add(new AssignmentDto(assign, state));
 			}
 		} else {
 			for (Assignment assign : assignmentRepository.findByClassCodeOrderByDeadlineAsc(user.getClassCode())
 					.get()) {
-				int state = assignCommentRepository.countByAssignCommentId_AssignNoAndAssignCommentId_UserId(assign,
-						user);
+				if ("TEACHER".equals(user.getAuthority())) {
+					state = assignCommentRepository.countByAssignCommentId_AssignNo(assign);
+				} else {
+					state = assignCommentRepository.countByAssignCommentId_AssignNoAndAssignCommentId_UserId(assign,
+							user);
+				}
 				list.add(new AssignmentDto(assign, state));
 			}
 		}

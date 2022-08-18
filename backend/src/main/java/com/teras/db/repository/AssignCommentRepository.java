@@ -17,4 +17,5 @@ public interface AssignCommentRepository extends JpaRepository<AssignComment, As
 	Optional<AssignComment> findByAssignCommentId_AssignNoAndAssignCommentId_UserId(Assignment assignNo,User userId);
 	
 	Integer countByAssignCommentId_AssignNoAndAssignCommentId_UserId(Assignment assignNo, User user);
+	Integer countByAssignCommentId_AssignNo(Assignment assign);
 }

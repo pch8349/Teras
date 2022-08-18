@@ -18,4 +18,8 @@ public class Attendance {
 	
 	@Column(name = "statement", nullable = false)
     int statement;
+
+	public void update(int state) {
+		statement = state;
+	}
 }

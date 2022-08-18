@@ -1,5 +1,6 @@
 package com.teras.db.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +12,5 @@ import com.teras.db.entity.User;
 
 @Repository
 public interface AttendanceRepository extends JpaRepository<Attendance, AttendanceId>{
-	Optional<Attendance> findByAttendanceId_UserIdAndAttendanceId_DateContains(User user, String date);
+	Optional<List<Attendance>> findByAttendanceId_UserIdAndAttendanceId_DateContains(User user, String date);
 }
