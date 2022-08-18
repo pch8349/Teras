@@ -10,7 +10,8 @@ import com.teras.db.entity.Attachment;
 
 public interface FileService {
 	String uploadFile(MultipartFile file) throws IllegalStateException, IOException;
-	ResponseEntity<Object> downloadFile(String uuid);
+	ResponseEntity<Object> downloadFile(String uuid, String agent);
 	
 	Attachment createFile(String uuid, String fileName, String fileType, String filePath);
+	String getFileName(String uuid);
 }
