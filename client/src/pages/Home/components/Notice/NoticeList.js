@@ -9,10 +9,6 @@ import "../../../../assets/pagination.css";
 import { useSelector } from "react-redux";
 import { selectUser } from "storage/UserSlice";
 
-<<<<<<< HEAD
-
-=======
->>>>>>> b8728837d7dd46f55b47833f2123261b3c32273b
 const Container = styled.div`
   width: 980px;
   padding: 3rem 5rem;
@@ -96,10 +92,11 @@ function NoticeList() {
         <ButtonContainer>
           {user.authority === "TEACHER" && (
             <Button
-              height='30px'
-              width='100px'
-              name='글쓰기'
-              onClick={()=> Navigate("./register")} />
+              height="30px"
+              width="100px"
+              name="글쓰기"
+              onClick={() => Navigate("./register")}
+            />
           )}
         </ButtonContainer>
         <StyledTable>

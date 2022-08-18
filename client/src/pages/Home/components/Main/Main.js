@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
+import Style from '../Schedule/Style';
 
 function Main() {
   const [open, setOpen] = useState(false);
@@ -31,19 +32,6 @@ function Main() {
       </FlexRow>
       <FlexRow>
         <Part onClick={handleOpen}>
-<<<<<<< HEAD
-          <GradeGraph
-            arr={[
-              { value: true },
-              { value: true },
-              { value: true },
-              { value: true },
-              { value: true },
-              { value: true },
-              { value: true },
-            ]}
-          />
-=======
           <GraphAria>
             <GradeGraph
               arr={[
@@ -57,7 +45,6 @@ function Main() {
               ]}
             />
           </GraphAria>
->>>>>>> b8728837d7dd46f55b47833f2123261b3c32273b
         </Part>
         <Modal
           aria-labelledby="transition-modal-title"
@@ -93,7 +80,9 @@ function Main() {
             </Box>
           </Fade>
         </Modal>
-        <Part>출결현황</Part>
+        <Part>
+          <Style />
+        </Part>
       </FlexRow>
     </MainFlexGrid>
   );

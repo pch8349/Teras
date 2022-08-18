@@ -35,13 +35,9 @@ function Main_Notice({}) {
 
   return (
     <Container>
-<<<<<<< HEAD
-      <SubjectText>공지사항</SubjectText>
-=======
       <SubjectText>
         <div onClick={() => Navigate(`/notice`)}>공지사항</div>
       </SubjectText>
->>>>>>> b8728837d7dd46f55b47833f2123261b3c32273b
 
       <StyledTable>
         <colgroup>
@@ -69,20 +65,7 @@ function Main_Notice({}) {
   );
 }
 
-<<<<<<< HEAD
-const SubjectText = styled.div`
-  display: flex;
-  flex-direction: row;
-  text-align: center;
-  margin: 10px 0 30px 10px;
-  font-size: 17px;
-  font-weight: bold;
-`;
-
-const StyledTr = styled.tr`
-=======
 const TextClick = styled.div`
->>>>>>> b8728837d7dd46f55b47833f2123261b3c32273b
   cursor: pointer;
   &:hover {
     font-weight: bold;
