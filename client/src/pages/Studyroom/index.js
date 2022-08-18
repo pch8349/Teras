@@ -2,7 +2,6 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "storage/UserSlice";
-import { Box, Typography } from "@mui/material";
 import "./studyroom.css";
 import VideoContainer from "./components/VideoContainer/VideoContainer";
 

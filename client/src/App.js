@@ -1,5 +1,4 @@
 import "./App.css";
-import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/index";
 import UserLogin from "./pages/Login/UserLogin";
@@ -7,9 +6,8 @@ import SignUp from "./pages/Login/SignUp";
 import SignUpFin from "./pages/Login/SignUpFin";
 import Classroom from "./pages/Classroom/index";
 import Studyroom from "./pages/Studyroom/index";
-import ClassMake from "./pages/Login/ClassMake";
 import { useDispatch, useSelector } from "react-redux";
-import { login, selectLogined, selectUser } from "storage/UserSlice";
+import { login, selectUser } from "storage/UserSlice";
 import Test from "Test/Test";
 
 const App = () => {
@@ -29,6 +27,7 @@ const App = () => {
             <Route path="/test" element={<Test />} />
             <Route path="/*" element={<Home />} />
             <Route path="/classroom" element={<Classroom />} />
+            <Route path="/studyroompage" element={<Studyroom />} />
           </Routes>
         </>
       ) : (
