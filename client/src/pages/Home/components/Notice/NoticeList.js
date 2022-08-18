@@ -91,15 +91,7 @@ function NoticeList() {
       <Container>
         <ButtonContainer>
           {user.authority === "TEACHER" && (
-<<<<<<< HEAD
             <Button name="글쓰기" onClick={() => Navigate("./register")} />
-=======
-            <Button
-              height='30px'
-              width='100px'
-              name='글쓰기'
-              onClick={()=> Navigate("./register")} />
->>>>>>> 35ab572 ([FE] 공지사항,파일다운로드,과제,우리반보기 수정)
           )}
         </ButtonContainer>
         <StyledTable>

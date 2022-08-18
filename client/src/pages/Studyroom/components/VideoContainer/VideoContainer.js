@@ -2,8 +2,6 @@ import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import React, { Component } from "react";
 import UserVideoComponent from "./UserVideoComponent";
-import { useSelector } from "react-redux";
-import { selectUser } from "storage/UserSlice";
 import { deleteSession } from "api/studyroom";
 import { Link } from "react-router-dom";
 
@@ -138,7 +136,7 @@ class VideoContainer extends Component {
             .then(async () => {
               var devices = await this.OV.getDevices();
               var videoDevices = devices.filter(
-                (device) => device.kind === "videoinput"
+                (device) => device.kind === "videoinput",
               );
 
               // --- 5) Get your own camera stream ---
@@ -171,11 +169,11 @@ class VideoContainer extends Component {
               console.log(
                 "There was an error connecting to the session:",
                 error.code,
-                error.message
+                error.message,
               );
             });
         });
-      }
+      },
     );
   }
 
@@ -192,7 +190,7 @@ class VideoContainer extends Component {
         },
         (error) => {
           console.log(error);
-        }
+        },
       );
     } else {
       mySession.disconnect();
@@ -214,12 +212,13 @@ class VideoContainer extends Component {
     try {
       const devices = await this.OV.getDevices();
       var videoDevices = devices.filter(
-        (device) => device.kind === "videoinput"
+        (device) => device.kind === "videoinput",
       );
 
       if (videoDevices && videoDevices.length > 1) {
         var newVideoDevice = videoDevices.filter(
-          (device) => device.deviceId !== this.state.currentVideoDevice.deviceId
+          (device) =>
+            device.deviceId !== this.state.currentVideoDevice.deviceId,
         );
 
         if (newVideoDevice.length > 0) {
@@ -342,7 +341,7 @@ class VideoContainer extends Component {
 
   getToken() {
     return this.createSession(this.state.mySessionId).then((sessionId) =>
-      this.createToken(sessionId)
+      this.createToken(sessionId),
     );
   }
 
@@ -369,7 +368,7 @@ class VideoContainer extends Component {
             console.log(error);
             console.warn(
               "No connection to OpenVidu Server. This may be a certificate error at " +
-                OPENVIDU_SERVER_URL
+                OPENVIDU_SERVER_URL,
             );
             if (
               window.confirm(
@@ -378,11 +377,11 @@ class VideoContainer extends Component {
                   '"\n\nClick OK to navigate and accept it. ' +
                   'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
                   OPENVIDU_SERVER_URL +
-                  '"'
+                  '"',
               )
             ) {
               window.location.assign(
-                OPENVIDU_SERVER_URL + "/accept-certificate"
+                OPENVIDU_SERVER_URL + "/accept-certificate",
               );
             }
           }
@@ -406,7 +405,7 @@ class VideoContainer extends Component {
                 "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
               "Content-Type": "application/json",
             },
-          }
+          },
         )
         .then((response) => {
           console.log("TOKEN", response);
