@@ -15,7 +15,6 @@ const DetailContainer = styled.div`
   padding: 3rem 5rem;
   box-sizing: border-box;
   width: 100%;
-  overflow: auto;
 `;
 
 const TitleContainer = styled.div`
@@ -51,6 +50,8 @@ const BoardContainer = styled.div`
   border-radius: 5px;
   margin-top: 0.5rem;
   min-height: 20rem;
+  height: 400px;
+  overflow: auto;
 `;
 
 const FileContainer = styled.div`
@@ -280,7 +281,7 @@ function AssignDetail() {
     </TitleContainer>
     <SubContainer>
       <div>{data.name}</div>
-      <div>기한 : {data.createdDate} - {data.deadLine}</div>
+      <div>기한 : {data.createdDate.slice(0,16)} - {data.deadLine}</div>
     </SubContainer>
       
       {!isLoading && (
@@ -347,12 +348,16 @@ function AssignDetail() {
         )}
       </CommentFileContainer>
       <Button 
+        height='30px'
+        width='100px'
         name='제출하기'
         onClick={onSubmit}
       />
       <Button 
-      name='목록'
-      onClick={()=> Navigate("../")}
+        height='30px'
+        width='100px'
+        name='목록'
+        onClick={()=> Navigate("../")}
       />
     </CommentContainer>
   </DetailContainer>

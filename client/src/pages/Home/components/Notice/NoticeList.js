@@ -33,13 +33,13 @@ const StyledCol = styled.col`
 `;
 
 const StyledTh = styled.td`
-  background-color: #ffeebb;
+  background-color: #ebffd2;
   height: 2.2rem;
   vertical-align: middle;
   text-align: center;
   font-weight: 600;
   border-radius: 3px;
-  color: #fff;
+  color: #999999;
   & + & {
     border-left: 2px solid white;
   }
@@ -91,7 +91,15 @@ function NoticeList() {
       <Container>
         <ButtonContainer>
           {user.authority === "TEACHER" && (
+<<<<<<< HEAD
             <Button name="글쓰기" onClick={() => Navigate("./register")} />
+=======
+            <Button
+              height='30px'
+              width='100px'
+              name='글쓰기'
+              onClick={()=> Navigate("./register")} />
+>>>>>>> 35ab572 ([FE] 공지사항,파일다운로드,과제,우리반보기 수정)
           )}
         </ButtonContainer>
         <StyledTable>

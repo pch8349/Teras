@@ -28,7 +28,7 @@ function NoticeItem({data, index}) {
         <StyledTd>{index + 1}</StyledTd>
         <StyledTd>{data.title}</StyledTd>
         <StyledTd>{data.name}</StyledTd>
-        <StyledTd>{data.createdDate}</StyledTd>
+        <StyledTd>{data.createdDate.slice(0,16)}</StyledTd>
     </StyledTr>
   );
 };

@@ -122,7 +122,7 @@ const Home = (tmp) => {
                 <Route path="notice/*" element={<Notice />} />
                 <Route path="assign/*" element={<Assign />} />
                 <Route path="grade" element={<Grade />} />
-                <Route path="schedule" element={<Schedule />} />
+                <Route path="schedule/*" element={<Schedule />} />
                 <Route path="studyroom" element={<StudyRoom />} />
                 <Route path="myclass/*" element={<MyClass />} />
               </Routes>

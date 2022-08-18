@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { Calendar } from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+import React from "react";
+import {Routes, Route} from 'react-router-dom'
+import ScheduleList from "./ScheduleList";
 
-const Schedule = () => {
-  const [value, setValue] = useState(new Date());
+function main() {
+  return (
+  <div>
+    <Routes>
+      <Route path="" element={<ScheduleList />} />
+    </Routes>
+  </div>);
+}
 
-  function OnChange(nextValue) {
-    setValue(nextValue);
-  }
-
-  return <Calendar onChange={OnChange} value={value} />;
-};
-
-export default Schedule;
+export default main;

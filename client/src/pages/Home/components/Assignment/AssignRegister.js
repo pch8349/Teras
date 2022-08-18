@@ -11,6 +11,7 @@ import { FileIcon, defaultStyles } from "react-file-icon";
 import { registerAssign  } from '../../../../api/assign'
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import Button from 'components/Button/Button';
 
 const RegisterContainer = styled.div`
   margin: 3rem 5rem;
@@ -275,8 +276,16 @@ function AssignRegister() {
         )}
       </FileContainer>
       
-      <button onClick={onCancel}>뒤로가기</button>
-      <button onClick={onSubmit}>등록하기</button>
+      <Button 
+      name='뒤로가기'
+      height='30px'
+      width='100px'
+      onClick={onCancel} />
+      <Button 
+      name='등록하기'
+      height='30px'
+      width='100px'
+      onClick={onSubmit} />
     </RegisterContainer>
   )
 }

@@ -5,7 +5,7 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   height: 150px;
-  width: 100px;
+  width: 120px;
   text-align: center;
   justify-content: center;
   border: solid 1px #000;
@@ -17,7 +17,7 @@ const Card = styled.div`
     height: 50px; 
     border-radius: 70%;
     overflow: hidden;
-    margin-left: 25px;
+    margin-left: 35px;
   }
   .name {
     text-size: 1.5rem;
