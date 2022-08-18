@@ -7,12 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.teras.db.dto.ScoreDto;
-import com.teras.db.dto.TimeTableDto;
-import com.teras.db.dto.TimeTableTeacherDto;
-import com.teras.db.dto.TimeTableTeacherInterface;
 import com.teras.db.entity.ClassEntity;
 import com.teras.db.entity.ScoreLookUp;
-import com.teras.db.entity.TimeTable;
 import com.teras.db.entity.User;
 import com.teras.db.repository.ScoreLookUpRepository;
 import com.teras.db.repository.UserRepository;
@@ -30,6 +26,7 @@ public class ScoreLookUpServiceImpl implements ScoreLookUpService {
 	public List<ScoreDto> getScoreList(User user){
 		
 		List<ScoreDto> list = new ArrayList<>();
+		
 		if (user.getAuthority().toString() == "STUDENT") {
 			for (ScoreLookUp score : scoreRepository.findByScoreIdUserId(user).get()) {
 				list.add(new ScoreDto(score));
@@ -44,7 +41,6 @@ public class ScoreLookUpServiceImpl implements ScoreLookUpService {
 				}
 			}
 		}
-		
 
 		return list;
 	}

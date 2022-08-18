@@ -11,15 +11,14 @@ import com.teras.db.entity.Assignment;
 
 public interface AssignService {
 
-	List<AssignmentDto> findAssignByClassCodeAndSubjectCode(String userId, String subjectCode, int page);
-	
-	List<AssignmentDto> findAssignByClassCode(String userId, int page);
+	List<AssignmentDto> getAssignByClassCodeAndSubjectCode(String userId, String subjectCode, int page);
+	List<AssignmentDto> getAssignByClassCodeAndSubjectCode(String userId, String subjectCode);
 
 	Assignment createAssign(AssignRegisterPostReq registerInfo, String userId);
 
 	AssignmentDto getAssignByAssignNo(long assignNo);
 
-	AssignCommentDto getAssignCommentByAssignNoAndUserId(long assignNo, String userId);
+	List<AssignCommentDto> getAssignCommentByAssignNoAndUserId(long assignNo, String userId);
 
 	AssignComment createAssignComment(AssignCommentRegisterPostReq registerInfo, String userId);
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.teras.api.request.AssignCommentRegisterPostReq;
 import com.teras.api.request.AssignRegisterPostReq;
+import com.teras.common.util.DateFormatUtil;
 import com.teras.db.dto.AssignCommentDto;
 import com.teras.db.dto.AssignmentDto;
 import com.teras.db.embeddedId.AssignCommentId;
@@ -47,22 +48,39 @@ public class AssignServiceImpl implements AssignService {
 	AttachmentRepository attachmentRepository;
 
 	@Override
-	public List<AssignmentDto> findAssignByClassCodeAndSubjectCode(String userId, String subjectCode, int page) {
+	public List<AssignmentDto> getAssignByClassCodeAndSubjectCode(String userId, String subjectCode, int page) {
 		User user = userRepository.findByUserId(userId).get();
 		Pageable pageable = PageRequest.of(page, 10, Sort.by("assignNo").descending());
 		List<AssignmentDto> list = new ArrayList<AssignmentDto>();
 
-		if (subjectCode != "ALL") {
+		int state = 0;
+
+		if (!subjectCode.toUpperCase().equals("ALL")) {
 			SubjectDetail subject = subjectDetailRepository.findBySubjectCode(subjectCode).get();
 
 			for (Assignment assign : assignmentRepository
 					.findByClassCodeAndSubjectCodeOrderByDeadlineAsc(user.getClassCode(), subject, pageable).get()) {
-				list.add(new AssignmentDto(assign));
+
+				if ("TEACHER".equals(user.getAuthority())) {
+					state = assignCommentRepository.countByAssignCommentId_AssignNo(assign);
+				} else {
+					state = assignCommentRepository.countByAssignCommentId_AssignNoAndAssignCommentId_UserId(assign,
+							user);
+				}
+				list.add(new AssignmentDto(assign, state));
 			}
 		} else {
 			for (Assignment assign : assignmentRepository
 					.findByClassCodeOrderByDeadlineAsc(user.getClassCode(), pageable).get()) {
-				list.add(new AssignmentDto(assign));
+
+				if ("TEACHER".equals(user.getAuthority())) {
+					state = assignCommentRepository.countByAssignCommentId_AssignNo(assign);
+				} else {
+					state = assignCommentRepository.countByAssignCommentId_AssignNoAndAssignCommentId_UserId(assign,
+							user);
+				}
+
+				list.add(new AssignmentDto(assign, state));
 			}
 		}
 
@@ -70,16 +88,36 @@ public class AssignServiceImpl implements AssignService {
 	}
 
 	@Override
-	public List<AssignmentDto> findAssignByClassCode(String userId, int page) {
+	public List<AssignmentDto> getAssignByClassCodeAndSubjectCode(String userId, String subjectCode) {
 		User user = userRepository.findByUserId(userId).get();
 
-		Pageable pageable = PageRequest.of(page, 10, Sort.by("assignNo").descending());
-
 		List<AssignmentDto> list = new ArrayList<AssignmentDto>();
+		int state = 0;
 
-		for (Assignment assign : assignmentRepository.findByClassCodeOrderByDeadlineAsc(user.getClassCode(), pageable)
-				.get()) {
-			list.add(new AssignmentDto(assign));
+		if (!subjectCode.toUpperCase().equals("ALL")) {
+			SubjectDetail subject = subjectDetailRepository.findBySubjectCode(subjectCode).get();
+
+			for (Assignment assign : assignmentRepository
+					.findByClassCodeAndSubjectCodeOrderByDeadlineAsc(user.getClassCode(), subject).get()) {
+				if ("TEACHER".equals(user.getAuthority())) {
+					state = assignCommentRepository.countByAssignCommentId_AssignNo(assign);
+				} else {
+					state = assignCommentRepository.countByAssignCommentId_AssignNoAndAssignCommentId_UserId(assign,
+							user);
+				}
+				list.add(new AssignmentDto(assign, state));
+			}
+		} else {
+			for (Assignment assign : assignmentRepository.findByClassCodeOrderByDeadlineAsc(user.getClassCode())
+					.get()) {
+				if ("TEACHER".equals(user.getAuthority())) {
+					state = assignCommentRepository.countByAssignCommentId_AssignNo(assign);
+				} else {
+					state = assignCommentRepository.countByAssignCommentId_AssignNoAndAssignCommentId_UserId(assign,
+							user);
+				}
+				list.add(new AssignmentDto(assign, state));
+			}
 		}
 
 		return list;
@@ -91,7 +129,8 @@ public class AssignServiceImpl implements AssignService {
 
 		Assignment assign = Assignment.builder().title(registerInfo.getTitle()).content(registerInfo.getContent())
 				.deadline(registerInfo.getDeadLine()).classCode(user.getClassCode()).subjectCode(user.getSubjectCode())
-				.userId(user).uuid(attachmentRepository.findByUuid(registerInfo.getUuid()).orElse(null)).build();
+				.userId(user).createdDate(DateFormatUtil.now())
+				.uuid(attachmentRepository.findByUuid(registerInfo.getUuid()).orElse(null)).build();
 		return assignmentRepository.save(assign);
 	}
 
@@ -103,11 +142,22 @@ public class AssignServiceImpl implements AssignService {
 	}
 
 	@Override
-	public AssignCommentDto getAssignCommentByAssignNoAndUserId(long assignNo, String userId) {
-		AssignCommentDto comment = new AssignCommentDto(
-				assignCommentRepository.findByAssignNoAndUserId(assignNo, userId).orElse(null));
+	public List<AssignCommentDto> getAssignCommentByAssignNoAndUserId(long assignNo, String userId) {
+		User user = userRepository.findByUserId(userId).get();
+		Assignment assign = assignmentRepository.findByAssignNo(assignNo).orElse(null);
 
-		return comment;
+		List<AssignCommentDto> list = new ArrayList<>();
+
+		if ("TEACHER".equals(user.getAuthority())) {
+			for (AssignComment comment : assignCommentRepository.findByAssignCommentId_AssignNo(assign).get()) {
+				list.add(new AssignCommentDto(comment));
+			}
+		} else {
+
+			list.add(new AssignCommentDto(assignCommentRepository
+					.findByAssignCommentId_AssignNoAndAssignCommentId_UserId(assign, user).orElse(null)));
+		}
+		return list;
 	}
 
 	@Override
@@ -118,7 +168,7 @@ public class AssignServiceImpl implements AssignService {
 		AssignCommentId assignCommentId = new AssignCommentId(user, assignment);
 
 		AssignComment comment = AssignComment.builder().content(registerInfo.getContent())
-				.assignCommentId(assignCommentId)
+				.assignCommentId(assignCommentId).submitDate(DateFormatUtil.now())
 				.uuid(attachmentRepository.findByUuid(registerInfo.getUuid()).orElse(null)).build();
 
 		return assignCommentRepository.save(comment);

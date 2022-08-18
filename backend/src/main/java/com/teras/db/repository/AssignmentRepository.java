@@ -15,8 +15,11 @@ import com.teras.db.entity.SubjectDetail;
 public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
 	Optional<List<Assignment>> findByClassCodeAndSubjectCodeOrderByDeadlineAsc(ClassEntity classCode,
 			SubjectDetail subjectCode, Pageable pageable);
+	Optional<List<Assignment>> findByClassCodeAndSubjectCodeOrderByDeadlineAsc(ClassEntity classCode,
+			SubjectDetail subjectCode);
 
 	Optional<List<Assignment>> findByClassCodeOrderByDeadlineAsc(ClassEntity classCode, Pageable pageable);
+	Optional<List<Assignment>> findByClassCodeOrderByDeadlineAsc(ClassEntity classCode);
 
 	Optional<Assignment> findByAssignNo(long assignNo);
 }

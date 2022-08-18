@@ -1,7 +1,6 @@
 package com.teras.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonObject;
@@ -27,49 +26,12 @@ public class OpenviduServiceImpl implements OpenviduService {
 	UserRepository userRepository;
 
 	@Override
-	public JsonObject createRoom() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deleteRoom() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void enterRoom() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void leaveRoom() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void fetchInfo() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void fetchAll() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public Openvidu createSession(OpenviduRegisterPostReq registerInfo, String userId) {
 		ClassEntity classEntity = classEntityRepository.findByClassCode(registerInfo.getClassCode()).get();
 		User user = userRepository.findByUserId(userId).get();
 
 		Openvidu openvidu = Openvidu.builder().sessionId(registerInfo.getSessionId()).goal(registerInfo.getGoal())
-				.subjectCode(user.getSubjectCode()).hostId(registerInfo.getHostId()).period(registerInfo.getPeriod())
-				.classCode(classEntity).build();
+				.subjectCode(user.getSubjectCode()).hostId(registerInfo.getHostId()).classCode(classEntity).build();
 
 		return openviduRepository.save(openvidu);
 	}

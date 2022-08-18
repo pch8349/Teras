@@ -14,6 +14,12 @@ public class AssignmentDto {
 	private String createdDate;
 	private String deadLine;
 	private String uuid;
+	private int state;
+
+	public AssignmentDto(Assignment assign, int state) {
+		this(assign);
+		this.state = state;
+	}
 
 	public AssignmentDto(Assignment assign) {
 		assignNo = assign.getAssignNo();

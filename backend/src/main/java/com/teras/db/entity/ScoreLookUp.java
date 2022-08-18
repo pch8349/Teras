@@ -7,10 +7,7 @@ import javax.persistence.Table;
 
 import com.teras.db.embeddedId.ScoreId;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
