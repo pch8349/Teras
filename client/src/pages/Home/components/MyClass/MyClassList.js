@@ -107,17 +107,17 @@ function MyClassList() {
     }
   }, [isTeacherLoading]);
 
-  // useEffect(() => {
-  //   if (data) {
-  //     for (var j = 0; j < total; j++) {
-  //       if (data[j].authority === "TEACHER") {
-  //         data.splice(j, 1);
-  //         j--;
-  //         total--;
-  //       }
-  //     }
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    if (data) {
+      for (var j = 0; j < total; j++) {
+        if (data[j].authority === "TEACHER") {
+          data.splice(j, 1);
+          j--;
+          total--;
+        }
+      }
+    }
+  }, [data]);
 
   return (
     <ListContainer>

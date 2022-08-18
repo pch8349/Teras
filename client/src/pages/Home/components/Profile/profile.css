@@ -5,8 +5,9 @@
   border: solid;
   border-color: #7ccc77;
   border-width: medium;
-  display: grid;
-  grid-template-rows: 120px 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .currentStatusBox {
@@ -48,9 +49,18 @@
   cursor: pointer;
 }
 
+.profile img {
+  margin-right: 10px;
+}
+
 .schoolInfo {
-  color: green;
+  background-color: #51ae4a;
+  color: white;
   font-weight: bolder;
+  font-size: 15px;
+  padding: 5px 8px;
+  border-radius: 8px;
+  margin-bottom: 5px;
 }
 
 .nameInfo {
