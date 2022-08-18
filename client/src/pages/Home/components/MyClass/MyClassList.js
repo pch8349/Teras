@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 
 const ListContainer = styled.div`
+  height: 700px;
   overflow: auto;
 `
 
@@ -26,11 +27,12 @@ const TeacherContainer = styled.div`
   flex-direction: column;
   height: 300px;
   width: 100%;
-  text-align: center;
   justify-content: center;
-  line-height: 100px;
   font-size: 1.5em;
   align-items: center;
+`
+const TextContainer = styled.div`
+  margin-top: 30px;
 `
 
 const StudentContainer = styled.div`
@@ -112,7 +114,7 @@ function MyClassList() {
       </TitleContainer>
         )}
       <TeacherContainer>
-        담임 선생님
+        <TextContainer>담임 선생님</TextContainer>
         {teacherData &&
           !isTeacherLoading && (
             <MyClassItem
@@ -121,7 +123,7 @@ function MyClassList() {
               data={teacherData}
             />
           )}
-        학생
+        <TextContainer>학생</TextContainer>
       </TeacherContainer>
       <StudentContainer>
         <StudentItem>

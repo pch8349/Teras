@@ -28,7 +28,7 @@ function AssignItem({data, index}) {
         <StyledTd>{data.subjectName}</StyledTd>
         <StyledTd>{data.title}</StyledTd>
         <StyledTd>{data.name}</StyledTd>
-        <StyledTd>{data.createdDate}</StyledTd>
+        <StyledTd>{data.createdDate.slice(0,16)}</StyledTd>
         <StyledTd>{data.deadLine}</StyledTd>
         <StyledTd>{submit[data.state]}</StyledTd>
     </StyledTr>

@@ -13,7 +13,6 @@ const DetailContainer = styled.div`
   padding: 3rem 5rem;
   box-sizing: border-box;
   width: 100%;
-  overflow: auto;
 `;
 
 const TitleContainer = styled.div`
@@ -49,6 +48,8 @@ const BoardContainer = styled.div`
   border-radius: 5px;
   margin-top: 0.5rem;
   min-height: 20rem;
+  height: 400px;
+  overflow: auto;
 `;
 
 const FileContainer = styled.div`
@@ -115,7 +116,7 @@ function NoticeDetail() {
         }
       })
       .catch((e) => {
-        if (e.response.status == 401) {
+        if (e.response.status === 401) {
           errorAlert(401);
         } else {
           errorAlert(e.response.status, "공지사항을 불러오지 못했습니다.");
@@ -160,18 +161,25 @@ function NoticeDetail() {
 
     const onDownload = () => {
       file.uuid = data.uuid
-      console.log(file)
-      postDownloadFile(file).then((res)=> {
-        console.log(res)
-        window.open(res)
-      }).catch((e) => {
-        Swal.fire({
-          icon: 'error',
-          title: `${e.response.status} Error`,
-          text: '다운로드에 실패하였습니다.',
-        })
-      });
-    };
+      getDownloadFile(file.uuid)
+      .then((res) => {
+        const blob = new Blob([res.data]);
+        const fileObjectUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = fileObjectUrl;
+        link.style.display = "none";
+        link.download = `${file.fileName}`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(fileObjectUrl);
+      })
+      .catch((e) => {
+        alert("다운로드에 실패했습니다.");
+        console.log(e)
+      })
+        };
+
 
     const makeExtension = (fileName) => {
       let fileLength = fileName.length;
@@ -221,6 +229,8 @@ function NoticeDetail() {
       )}
       <Button 
         name="목록"
+        height='30px'
+        width='100px'
         onClick={onCancle} 
         />
     </DetailContainer>

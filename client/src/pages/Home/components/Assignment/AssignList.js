@@ -40,13 +40,13 @@ const StyledCol = styled.col`
 `;
 
 const StyledTh = styled.td`
-  background-color: #fec25c;
+  background-color: #ebffd2;
   height: 2.2rem;
   vertical-align: middle;
   text-align: center;
   font-weight: 600;
   border-radius: 3px;
-  color: black;
+  color: #999999;
   & + & {
     border-left: 2px solid white;
   }
@@ -118,31 +118,37 @@ function AssignList() {
   }, [selectedSubject]);
 
   return (
-    <ListContainer>
-      <Container>
-        <ButtonContainer>
-          <StyledSelect width="10rem" height="2rem">
-            <FormControl fullWidth={true} size="small">
-              <InputLabel id="demo-simple-select-label">과목</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="과목"
-                onChange={onDropDown}
-              >
-                <MenuItem value="전체">전체</MenuItem>
-                <MenuItem value="국어">국어</MenuItem>
-                <MenuItem value="수학">수학</MenuItem>
-                <MenuItem value="영어">영어</MenuItem>
-                <MenuItem value="사회">사회</MenuItem>
-                <MenuItem value="과학">과학</MenuItem>
-                <MenuItem value="음악">음악</MenuItem>
-                <MenuItem value="미술">미술</MenuItem>
-              </Select>
-            </FormControl>
-          </StyledSelect>
-          {user.authority === "TEACHER" && (
-            <Button name="글쓰기" onClick={() => Navigate("./register")} />
+  <ListContainer>
+    <Container>
+      <ButtonContainer>
+      <StyledSelect width="10rem" height="1rem">
+        <FormControl fullWidth={true} size='small'>
+          <InputLabel id="demo-simple-select-label">과목</InputLabel>
+          <Select
+          style={{minHeight:"20px"}}
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="과목"
+            onChange={onDropDown}
+          >
+            <MenuItem value='전체'>전체</MenuItem>
+            <MenuItem value="국어">국어</MenuItem>
+            <MenuItem value="수학">수학</MenuItem>
+            <MenuItem value="영어">영어</MenuItem>
+            <MenuItem value="사회">사회</MenuItem>
+            <MenuItem value="과학">과학</MenuItem>
+            <MenuItem value="음악">음악</MenuItem>
+            <MenuItem value="미술">미술</MenuItem>
+          </Select>
+
+        </FormControl>
+      </StyledSelect>
+        {user.authority === "TEACHER" && (
+            <Button
+              height='30px'
+              width='100px'
+              name='글쓰기'
+              onClick={()=> Navigate("./register")} />
           )}
         </ButtonContainer>
         <StyledTable>
