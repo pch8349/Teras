@@ -1,15 +1,4 @@
-import { display } from "@mui/system";
 import React, { useEffect, useState } from "react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
 import styled from "styled-components";
 import GradeGraph from "./GradeGraph";
 

@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const OPENVIDU_SERVER_SECRET = "MY_SECRET";
+
 // axios 객체 생성
 export function apiInstance() {
   const instance = axios.create({
@@ -62,3 +64,17 @@ export const fileApi = axios.create({
     "Content-Type": `multipart/form-data`,
   },
 });
+
+export function openviduApiInstance() {
+  const instance = axios.create({
+    baseURL: "https://i7a706.p.ssafy.io:8443/",
+    headers: {
+      Authorization: "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,POST,DELETE",
+    },
+  });
+
+  return instance;
+}

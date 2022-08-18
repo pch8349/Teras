@@ -2,7 +2,9 @@ import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import React, { Component } from "react";
 import UserVideoComponent from "./UserVideoComponent";
-import { openSession, deleteSession } from "api/classroom";
+import { useSelector } from "react-redux";
+import { selectUser } from "storage/UserSlice";
+import { deleteSession } from "api/studyroom";
 import { Link } from "react-router-dom";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -15,13 +17,13 @@ import ScreenShareIcon from "@mui/icons-material/ScreenShare";
 const OPENVIDU_SERVER_URL = "https://i7a706.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
-class App extends Component {
+class VideoContainer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      mySessionId: this.props.sessionId,
-      myUserName: this.props.userName,
+      mySessionId: props.sessionId,
+      myUserName: props.userName,
       session: undefined,
       mainStreamManager: undefined,
       publisher: undefined,
@@ -158,42 +160,10 @@ class App extends Component {
 
               mySession.publish(publisher);
 
-              if (this.props.authority === "TEACHER") {
-                await openSession(
-                  {
-                    sessionId: this.state.mySessionId,
-                    hostId: publisher.stream.session.connection.connectionId,
-                    goal: this.props.goal,
-                    classCode: this.props.classCode,
-                  },
-                  (response) => {
-                    console.log(response);
-                  },
-                  (error) => {
-                    console.log(error);
-                  }
-                );
-
-                this.setState({
-                  mainStreamManager: publisher,
-                });
-              } else {
-                const host = this.state.subscribers.find((subscriber) => {
-                  if (
-                    subscriber.stream.connection.connectionId ===
-                    this.props.hostId
-                  )
-                    return true;
-                });
-
-                this.setState({
-                  mainStreamManager: host,
-                });
-              }
-
               // Set the main video in the page to display our webcam and store our Publisher
               this.setState({
                 currentVideoDevice: videoDevices[0],
+                mainStreamManager: publisher,
                 publisher: publisher,
               });
             })
@@ -214,7 +184,7 @@ class App extends Component {
 
     const mySession = this.state.session;
 
-    if (this.props.authority === "TEACHER") {
+    if (this.state.subscribers.length === 0) {
       deleteSession(
         this.state.mySessionId,
         (response) => {
@@ -226,6 +196,7 @@ class App extends Component {
       );
     } else {
       mySession.disconnect();
+
       // Empty all properties...
       this.OV = null;
       this.setState({
@@ -278,16 +249,16 @@ class App extends Component {
   }
 
   handleMicButton() {
-    this.state.publisher.publishAudio(this.state.micOn);
+    this.publisher.publishAudio(this.micOn);
     this.setState({
-      micOn: !this.state.micOn,
+      micOn: !this.micOn,
     });
   }
 
   handleVideoButton() {
-    this.state.publisher.publishVideo(this.state.videoOn);
+    this.publisher.publishVideo(this.videoOn);
     this.setState({
-      videoOn: !this.state.videoOn,
+      videoOn: !this.videoOn,
     });
   }
 
@@ -296,68 +267,64 @@ class App extends Component {
     const myUserName = this.state.myUserName;
 
     return (
-      <div className="classroomMainContainer">
-        <div className="classroomVideosContainer">
+      <>
+        <div id="studyroomvideocontainer" className="col-md-6">
           {this.state.mainStreamManager !== undefined ? (
-            <div className="classroomMainVideoContainer">
+            <div
+              className="studyroomStreamcontainer"
+              onClick={() =>
+                this.handleMainVideoStream(this.state.mainStreamManager)
+              }
+            >
               <UserVideoComponent
                 streamManager={this.state.mainStreamManager}
               />
             </div>
           ) : null}
-          <div className="classroomSubVideosContainer">
-            {this.props.authority === "STUDENT" ? (
-              <div className="classroomSubVideoContainer">
-                <UserVideoComponent streamManager={this.state.publisher} />
-              </div>
-            ) : null}
-            {this.state.subscribers.map((sub, i) =>
-              this.props.authority === "STUDENT" &&
-              sub.stream.connection.connectionId ===
-                this.props.hostId ? null : (
-                <div key={i} className="classroomSubVideoContainer">
-                  <UserVideoComponent streamManager={sub} />
-                </div>
-              )
-            )}
-          </div>
+          {this.state.subscribers.map((sub, i) => (
+            <div
+              key={i}
+              className="studyroomStreamcontainer"
+              onClick={() => this.handleMainVideoStream(sub)}
+            >
+              <UserVideoComponent streamManager={sub} />
+            </div>
+          ))}
         </div>
-        <div className="classroomButtonContainer">
+        <div className="studyroomButtonContainer">
           <div
-            className="classroomButton greenButton"
+            className="studyroomButton yellowButton"
             onClick={this.handleMicButton}
           >
-            {this.state.micOn ? (
+            {this.micOn ? (
               <MicOffIcon fontSize="large" />
             ) : (
               <MicIcon fontSize="large" />
             )}
           </div>
           <div
-            className="classroomButton greenButton"
+            className="studyroomButton yellowButton"
             onClick={this.handleVideoButton}
           >
-            {this.state.videoOn ? (
+            {this.videoOn ? (
               <VideocamOffIcon fontSize="large" />
             ) : (
               <VideocamIcon fontSize="large" />
             )}
           </div>
-          {this.props.authority === "TEACHER" ? (
-            <div
-              className="classroomButton greenButton"
-              onClick={this.handleScreenShare}
-            >
-              <ScreenShareIcon fontSize="large" />
-            </div>
-          ) : null}
+          <div className="studyroomButton yellowButton">
+            <ScreenShareIcon fontSize="large" />
+          </div>
           <Link to="/main">
-            <div className="classroomButton redButton">
+            <div
+              className="studyroomButton redButton"
+              onClick={this.leaveSession}
+            >
               <CloseIcon fontSize="large" />
             </div>
           </Link>
         </div>
-      </div>
+      </>
     );
   }
 
@@ -450,4 +417,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default VideoContainer;

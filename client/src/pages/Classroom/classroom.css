@@ -5,7 +5,7 @@
 
 .classroomGridContainer {
   display: grid;
-  grid-template-rows: 100px 50px 700px;
+  grid-template-rows: 100px 50px 900px;
   margin-top: 20px;
 }
 
@@ -23,11 +23,11 @@
   grid-row-end: 3;
 }
 
-.mainContainer {
+.classroomMainContainer {
   grid-row-start: 3;
   grid-row-end: 4;
   display: grid;
-  grid-template-rows: 600px 100px;
+  grid-template-rows: 750px 100px;
 }
 
 .subjectBoxContainer {

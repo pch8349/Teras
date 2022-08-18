@@ -11,7 +11,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import "./gradeGraph.css";
-import styled from "styled-components";
 
 const GradeGraph = ({ arr }) => {
   console.log("메인에서 arr 주기", arr);

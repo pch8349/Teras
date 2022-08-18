@@ -1,0 +1,79 @@
+video {
+  width: 100%;
+  float: left;
+  cursor: pointer;
+}
+
+.studyroomNameTag {
+  position: absolute;
+  background: #f8f8f8;
+  padding: 5px 15px;
+  color: #fff;
+  font-size: 20px;
+  background-color: #e5ac3a;
+  font-weight: bold;
+  border-bottom-right-radius: 15px;
+  border-top-left-radius: 15px;
+}
+
+p {
+  margin: 0;
+}
+
+.studyroomvideoContainer {
+  grid-row-start: 1;
+  grid-row-end: 2;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.studyroomStreamcontainer {
+  width: 500px;
+  display: inline-block;
+}
+
+.streamcomponent {
+  width: 95%;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.studyroomButtonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.studyroomButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  margin: 0 12px;
+  box-shadow: 2px 2px 2px #bcbcbc;
+}
+
+:hover .studyroomButton {
+  cursor: pointer;
+}
+
+.yellowButton {
+  background-color: #e5ac3a;
+}
+
+.yellowButton:hover {
+  background-color: #f1c56d;
+}
+
+.redButton {
+  background-color: #ea5050;
+}
+
+.redButton:hover {
+  background-color: #e87272;
+}

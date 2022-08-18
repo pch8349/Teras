@@ -2,17 +2,18 @@ video {
   width: 100%;
   float: left;
   cursor: pointer;
+  border-top-right-radius: 20px;
 }
 
-.streamcomponent div {
-  position: absolute;
+.classroomNameTag {
+  display: inline-block;
   background: #f8f8f8;
   padding: 5px 15px;
   color: #fff;
   font-size: 20px;
   background-color: #69c561;
   font-weight: bold;
-  border-bottom-right-radius: 15px;
+  border-top-right-radius: 15px;
   border-top-left-radius: 15px;
 }
 
@@ -20,14 +21,14 @@ p {
   margin: 0;
 }
 
-.videoContainer {
+.classroomVideosContainer {
   display: grid;
-  grid-template-columns: 900px 450px;
+  grid-template-columns: 900px 600px;
   grid-row-start: 1;
   grid-row-end: 2;
 }
 
-.mainVideoContainer {
+.classroomMainVideoContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,30 +36,33 @@ p {
   grid-column-end: 2;
 }
 
-.subVideosContainer {
+.classroomSubVideosContainer {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: flex-start;
+  overflow: scroll;
   grid-column-start: 2;
   grid-column-end: 3;
   padding-top: 20px;
 }
 
-.subVideoContainer {
+.classroomSubVideoContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 210px;
+  width: 270px;
+  height: 210px;
+  margin: 20px 5px;
 }
 
 .streamcomponent {
-  width: 740px;
+  width: 95%;
   overflow: hidden;
   border-radius: 15px;
 }
 
-.buttonContainer {
+.classroomButtonContainer {
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -74,6 +78,7 @@ p {
   height: 70px;
   border-radius: 35px;
   margin: 0 12px;
+  box-shadow: 2px 2px 2px #bebebe;
 }
 
 :hover .classroomButton {
@@ -86,4 +91,12 @@ p {
 
 .redButton {
   background-color: #ea5050;
+}
+
+.greenButton:hover {
+  background-color: #94d78e;
+}
+
+.redButton:hover {
+  background-color: #e1a0a0;
 }

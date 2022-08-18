@@ -41,6 +41,7 @@ function TimetableItem({ period, item, active }) {
             classCode: user.classCode,
             sessionId: user.classCode,
             subject: item,
+            period: period,
           },
         });
       },

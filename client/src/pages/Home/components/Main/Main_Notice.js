@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Button from "../../../../components/Button/Button";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getNoticeList } from "api/notice";
@@ -95,6 +94,7 @@ const StyledTd = styled.td`
   vertical-align: middle;
   text-align: ${(props) => props.ta || "left"};
   padding: 0 1.5rem;
+  box-shadow: 0 0.4px #525252;
 `;
 
 const Container = styled.div`
