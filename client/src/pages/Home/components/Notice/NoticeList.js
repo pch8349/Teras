@@ -1,18 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import NoticeItem from "./NoticeItem";
-import { getNoticeList } from '../../../../api/notice';
-import Button from '../../../../components/Button/Button';
-import Pagination from 'react-js-pagination';
-import '../../../../assets/pagination.css'
-import { useSelector } from 'react-redux';
+import { getNoticeList } from "../../../../api/notice";
+import Button from "../../../../components/Button/Button";
+import Pagination from "react-js-pagination";
+import "../../../../assets/pagination.css";
+import { useSelector } from "react-redux";
 import { selectUser } from "storage/UserSlice";
 
-
 const Container = styled.div`
-  width: 100%;
-  padding : 3rem 5rem;
+  width: 980px;
+  padding: 3rem 5rem;
   box-sizing: border-box;
   height: 80%;
 `;
@@ -50,54 +49,49 @@ const PageContainer = styled.div`
   margin-top: 1rem;
 `;
 
-
 function NoticeList() {
-    const Navigate = useNavigate();
-    const [data, setData] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [totalItemsCount, setTotalItemsCount] = useState(0);
-    const [isTotalItemsCountLoading, setIsTotalItemsCountLoading] = useState(true);
-    const [page, setPage] = useState(0);
-    const user = useSelector(selectUser);
-    
+  const Navigate = useNavigate();
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [totalItemsCount, setTotalItemsCount] = useState(0);
+  const [isTotalItemsCountLoading, setIsTotalItemsCountLoading] =
+    useState(true);
+  const [page, setPage] = useState(0);
+  const user = useSelector(selectUser);
 
-    useEffect(() => {
-        if (isTotalItemsCountLoading) {
-          getNoticeList(page).then((res) => {
-            setTotalItemsCount(res.data.total*10 + res.data.list.length);
-            setIsTotalItemsCountLoading(false);
-          });
-        } else {
-          setIsLoading(true);
-        }
-      }, [isTotalItemsCountLoading]);
+  useEffect(() => {
+    if (isTotalItemsCountLoading) {
+      getNoticeList(page).then((res) => {
+        setTotalItemsCount(res.data.total * 10 + res.data.list.length);
+        setIsTotalItemsCountLoading(false);
+      });
+    } else {
+      setIsLoading(true);
+    }
+  }, [isTotalItemsCountLoading]);
 
-    // useEffect 데이터 read
-    useEffect(() => {
-      if (isLoading) {
-        getNoticeList(page).then((res) => {
-          setData(res.data.list);
-          setIsLoading(false);
-        });
-      };
-    }, [isLoading]);
+  // useEffect 데이터 read
+  useEffect(() => {
+    if (isLoading) {
+      getNoticeList(page).then((res) => {
+        setData(res.data.list);
+        setIsLoading(false);
+      });
+    }
+  }, [isLoading]);
 
-
-    const handlePageChange = (page) => {
+  const handlePageChange = (page) => {
     setPage(page - 1);
     Navigate(`?page=${page}`);
     setIsLoading(true);
-    };
+  };
 
-
-    return (
+  return (
     <>
       <Container>
         <ButtonContainer>
           {user.authority === "TEACHER" && (
-            <Button
-              name='글쓰기'
-              onClick={()=> Navigate("./register")} />
+            <Button name="글쓰기" onClick={() => Navigate("./register")} />
           )}
         </ButtonContainer>
         <StyledTable>
@@ -137,11 +131,10 @@ function NoticeList() {
             nextPageText={"›"}
             onChange={handlePageChange}
           />
-      </PageContainer>
-        </Container>
+        </PageContainer>
+      </Container>
     </>
-  )
+  );
 }
 
-
-export default NoticeList
+export default NoticeList;

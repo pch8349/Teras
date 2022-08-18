@@ -67,7 +67,7 @@ export const fileApi = axios.create({
 
 export function openviduApiInstance() {
   const instance = axios.create({
-    baseURL: "https://i7a706.p.ssafy.io:7060/",
+    baseURL: "https://i7a706.p.ssafy.io:8443/",
     headers: {
       Authorization: "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
       "Content-Type": "application/json",

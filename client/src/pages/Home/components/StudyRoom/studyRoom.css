@@ -1,9 +1,10 @@
-.studyRoomContainer {
+.studyRoomListContainer {
+  width: 100%;
   display: grid;
   grid-template-rows: 160px 540px;
 }
 
-.titleContainer {
+.studyRoomListContainer .titleContainer {
   grid-row-start: 1;
   grid-row-end: 2;
   display: flex;

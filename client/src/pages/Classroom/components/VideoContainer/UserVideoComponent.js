@@ -12,10 +12,10 @@ function UserVideoComponent({ streamManager }) {
     <>
       {streamManager !== undefined ? (
         <div className="streamcomponent">
-          <OpenViduVideoComponent streamManager={streamManager} />
-          <div>
+          <div className="classroomNameTag">
             <p>{getNicknameTag()}</p>
           </div>
+          <OpenViduVideoComponent streamManager={streamManager} />
         </div>
       ) : null}
     </>

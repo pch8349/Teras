@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./studyRoom.css";
 import { useNavigate } from "react-router-dom";
 import StudyRoomItem from "./StudyRoomItem.js";
 import { Modal, Box, Button, TextField } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectUser } from "storage/UserSlice";
+import { openSession, getSessions } from "api/studyroom";
 
 const boxColorList = [
   "redContainer",
@@ -18,50 +19,51 @@ function StudyRoom() {
   const user = useSelector(selectUser);
   const navigate = useNavigate();
 
-  const [studyroomList, setStudyroomList] = useState([
-    {
-      studyroomName: "중간고사 리뷰",
-      sessionId: "studyroom1",
-      boxColor: boxColorList[Math.floor(Math.random() * 5)],
-    },
-    {
-      studyroomName: "잡담방",
-      sessionId: "studyroom2",
-      boxColor: boxColorList[Math.floor(Math.random() * 5)],
-    },
-    {
-      studyroomName: "화학숙제",
-      sessionId: "studyroom3",
-      boxColor: boxColorList[Math.floor(Math.random() * 5)],
-    },
-    {
-      studyroomName: "미적분 같이 풀어요",
-      sessionId: "studyroom4",
-      boxColor: boxColorList[Math.floor(Math.random() * 5)],
-    },
-    {
-      studyroomName: "3학년 11반 모여",
-      sessionId: "studyroom5",
-      boxColor: boxColorList[Math.floor(Math.random() * 5)],
-    },
-  ]);
+  const [studyroomList, setStudyroomList] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [newStudyroomName, setNewStudyroomName] = useState("");
+
+  useEffect(() => {
+    getSessions((response) => {
+      const studyroomDatas = response.data.list;
+      if (studyroomDatas !== undefined) {
+        const newStudyroomList = studyroomDatas.map((studyroom) => ({
+          studyroomName: studyroom.roomName,
+          sessionId: studyroom.sessionId,
+          boxColor: boxColorList[Math.floor(Math.random() * 5)],
+        }));
+        setStudyroomList(newStudyroomList);
+      }
+    });
+  }, []);
 
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
   const openNewStudyroom = () => {
-    navigate("/studyroompage", {
-      state: {
-        sessionId: user.userId,
-        studyroomName: newStudyroomName,
-      },
-    });
+    console.log(user.id);
+    console.log(newStudyroomName);
+    openSession(
+      { sessionId: user.id, roomName: newStudyroomName },
+      (response) => {
+        navigate(
+          "/studyroompage",
+          {
+            state: {
+              sessionId: user.id,
+              studyroomName: newStudyroomName,
+            },
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
+    );
   };
 
   return (
     <>
-      <div className="studyRoomContainer">
+      <div className="studyRoomListContainer">
         <div className="titleContainer">
           <div className="title">스터디룸</div>
           <div className="openStudyroomButton" onClick={handleOpenModal}>
