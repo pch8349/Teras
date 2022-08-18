@@ -7,6 +7,7 @@ import com.teras.api.request.OpenviduRegisterPostReq;
 import com.teras.db.dto.OpenviduDto;
 import com.teras.db.entity.Openvidu;
 
+
 public interface OpenviduService {
 	JsonObject createRoom();
 	void deleteRoom();
@@ -21,4 +22,3 @@ public interface OpenviduService {
 
 	
 }
-	
