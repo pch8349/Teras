@@ -6,6 +6,7 @@ import UserLogin from "./pages/Login/UserLogin";
 import SignUp from "./pages/Login/SignUp";
 import SignUpFin from "./pages/Login/SignUpFin";
 import Classroom from "./pages/Classroom/index";
+import Studyroom from "./pages/Studyroom/index";
 import ClassMake from "./pages/Login/ClassMake";
 import { useDispatch, useSelector } from "react-redux";
 import { login, selectLogined, selectUser } from "storage/UserSlice";

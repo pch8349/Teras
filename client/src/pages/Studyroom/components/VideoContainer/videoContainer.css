@@ -1,0 +1,92 @@
+video {
+  width: 100%;
+  float: left;
+  cursor: pointer;
+}
+
+.streamcomponent div {
+  position: absolute;
+  background: #f8f8f8;
+  padding: 5px 15px;
+  color: #fff;
+  font-size: 20px;
+  background-color: #69c561;
+  font-weight: bold;
+  border-bottom-right-radius: 15px;
+  border-top-left-radius: 15px;
+}
+
+p {
+  margin: 0;
+}
+
+.videoContainer {
+  display: grid;
+  grid-template-columns: 900px 600px;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.mainVideoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.subVideosContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  overflow: scroll;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  padding-top: 20px;
+}
+
+.subVideoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 280px;
+  height: 210px;
+  margin: 5px;
+}
+
+.streamcomponent {
+  width: 95%;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.classroomButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  margin: 0 12px;
+}
+
+:hover .classroomButton {
+  cursor: pointer;
+}
+
+.greenButton {
+  background-color: #69c561;
+}
+
+.redButton {
+  background-color: #ea5050;
+}
