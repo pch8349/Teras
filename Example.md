@@ -199,12 +199,12 @@
             <img src="/uploads/8a957c23971bab7ac9f3fec55e64c918/경환.jpg" width="140px" /> <br><br> 😶 김경환 <br>(Back-End) </a> <br></td>
     </tr>
     <tr>
-        <td align="center">UI/UX<br/>React<br/></td>
+        <td align="center">UI/UX<br/>React<br/>DB<br/>Infra<br/></td>
         <td align="center">UI/UX<br/>React<br/>WebRTC<br/>WebSocket</td>
         <td align="center">UI/UX<br/>React</td>
         <td align="center">REST API<br/>WebRTC<br/>WebSocket</td>
         <td align="center">REST API<br/>CI/CD<br/></td>
-        <td align="center">REST API<br/>Database<br/>S3<br/>Infra<br/></td>
+        <td align="center">REST API<br/>DB<br/>S3<br/>Infra<br/></td>
     </tr>
 </table>
 
