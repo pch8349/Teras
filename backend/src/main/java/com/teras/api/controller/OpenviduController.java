@@ -99,15 +99,13 @@ public class OpenviduController {
 	@DeleteMapping("/del/{sessionId}")
 	public ResponseEntity<? extends BaseResponseBody> deleteOpenvidu(
 			@PathVariable(name = "sessionId") String sessionId) {
-//		System.out.println(sessionId);
 		Optional<Openvidu> openvidu = openviduRepository.findBySessionId(sessionId);	
-		System.out.println(openvidu); 
 
 		if (openvidu.isPresent()) {
 			openviduRepository.delete(openvidu.get());
 			return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
 		} else {
-			return ResponseEntity.status(500).body(BaseResponseBody.of(500, "not exist"));
+			return ResponseEntity.status(500).body(BaseResponseBody.of(500, "DATA NOT EXIST"));
 		}
 
 	}
