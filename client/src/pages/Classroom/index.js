@@ -1,5 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectUser } from "storage/UserSlice";
 import { Box, Typography } from "@mui/material";
 import "./classroom.css";
 import VideoContainer from "./components/VideoContainer/VideoContainer";
@@ -12,6 +14,8 @@ function Classroom() {
   const classCode = location.state.classCode;
   const period = location.state.period;
   const hostId = location.state.hostId;
+
+  const user = useSelector(selectUser);
 
   return (
     <div className="classroomFelxContainer">
@@ -63,6 +67,8 @@ function Classroom() {
           goal={goal}
           preiod={period}
           hostId={hostId}
+          userName={user.name}
+          authority={user.authority}
         />
       </div>
     </div>

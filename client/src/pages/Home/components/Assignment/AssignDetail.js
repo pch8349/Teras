@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components';
 import { errorAlert, successAlert } from '../../../../modules/alert';
 import { FileIcon, defaultStyles } from "react-file-icon";
-import { getDownloadFile, postDownloadFile } from '../../../../api/file';
+import { getDownloadFile, getFileName, postDownloadFile } from '../../../../api/file';
 import { Viewer } from '@toast-ui/react-editor';
 import Button from '../../../../components/Button/Button';
 import { TextField } from '@mui/material';
@@ -15,7 +15,6 @@ const DetailContainer = styled.div`
   padding: 3rem 5rem;
   box-sizing: border-box;
   width: 100%;
-  overflow: auto;
 `;
 
 const TitleContainer = styled.div`
@@ -51,6 +50,8 @@ const BoardContainer = styled.div`
   border-radius: 5px;
   margin-top: 0.5rem;
   min-height: 20rem;
+  height: 400px;
+  overflow: auto;
 `;
 
 const FileContainer = styled.div`
@@ -158,6 +159,9 @@ function AssignDetail() {
       .then((res) => {
         setData(res.data.assign);
         setIsLoading(false);
+        if (res.data.assign.uuid) {
+          getFileName(res.data.assign.uuid).then((res)=>{setFile(res.data)})
+        }
       })
       .catch((e) => {
         if (e.response.status === 401) {
@@ -277,7 +281,7 @@ function AssignDetail() {
     </TitleContainer>
     <SubContainer>
       <div>{data.name}</div>
-      <div>기한 : {data.createdDate} - {data.deadLine}</div>
+      <div>기한 : {data.createdDate.slice(0,16)} - {data.deadLine}</div>
     </SubContainer>
       
       {!isLoading && (
@@ -344,12 +348,16 @@ function AssignDetail() {
         )}
       </CommentFileContainer>
       <Button 
+        height='30px'
+        width='100px'
         name='제출하기'
         onClick={onSubmit}
       />
       <Button 
-      name='목록'
-      onClick={()=> Navigate("../")}
+        height='30px'
+        width='100px'
+        name='목록'
+        onClick={()=> Navigate("../")}
       />
     </CommentContainer>
   </DetailContainer>

@@ -7,11 +7,13 @@ export const uploadFile = async(content, success, fail) => {
   };
   
 export const getDownloadFile = async(uuid, success, fail) => {
-  return await fileApi.get(`file/download?uuid=${uuid}`).then(success).catch(fail);
+  return await api.get(`file/download?uuid=${uuid}`,{
+    responseType:'blob'
+  }).then(success).catch(fail);
 }; 
 
 export const getFileName = async(uuid, success, fail) => {
-  return await fileApi.get(`file/?uuid=${uuid}`).then(success).catch(fail);
+  return await fileApi.get(`file?uuid=${uuid}`).then(success).catch(fail);
 }; 
   
 export const postDownloadFile = async(uuid, success, fail) => {

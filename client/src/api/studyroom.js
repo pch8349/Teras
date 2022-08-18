@@ -1,27 +1,22 @@
-import { apiInstance, authApiInstance, openviduApiInstance } from "./index";
+import { apiInstance, openviduApiInstance } from "./index";
 
 const api = apiInstance();
-const authApi = authApiInstance();
 const openviduApi = openviduApiInstance();
 
 export async function openSession(session, success, fail) {
   await api
-    .post(`/api/openvidu`, JSON.stringify(session), {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-      },
-    })
+    .post(`/api/study-room`, JSON.stringify(session))
     .then(success)
     .catch(fail);
 }
 
-export async function getSession(sessionId, success, fail) {
-  await api.get(`/api/openvidu/${sessionId}`).then(success).catch(fail);
+export async function getSessions(success, fail) {
+  await api.get(`/api/study-room`).then(success).catch(fail);
 }
 
 export async function deleteSession(sessionId, success, fail) {
   await api
-    .delete(`/api/openvidu/del/${sessionId}`, {
+    .delete(`/api/study-room/${sessionId}`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         "Access-Control-Allow-Origin": "*",

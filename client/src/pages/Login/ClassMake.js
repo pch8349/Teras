@@ -22,7 +22,7 @@ const ClassMake = ({}) => {
         (response) => {
           const accessToken = response.data.accessToken;
           localStorage.setItem("accessToken", accessToken);
-          console.log("성공");
+          console.log("성공", accessToken);
         },
         () => {
           console.log("전송 실패");

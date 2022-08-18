@@ -1,15 +1,4 @@
-import { display } from "@mui/system";
 import React, { useEffect, useState } from "react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
 import styled from "styled-components";
 import GradeGraph from "./GradeGraph";
 
@@ -40,50 +29,85 @@ const Grade = () => {
   useEffect(() => {}, [social]);
 
   return (
-    <>
-      <GradeGraph
-        arr={[
-          { value: art },
-          { value: english },
-          { value: korean },
-          { value: math },
-          { value: music },
-          { value: social },
-          { value: science },
-        ]}
-      />
+    <MainFlexGrid>
+      <GraphAria>
+        <GradeGraph
+          arr={[
+            { value: art },
+            { value: english },
+            { value: korean },
+            { value: math },
+            { value: music },
+            { value: social },
+            { value: science },
+          ]}
+        />
+      </GraphAria>
+
       <FlexRow>
-        <LegendItem onClick={() => OnClick("미술")}>미술</LegendItem>
-        <LegendItem onClick={() => OnClick("영어")}>영어</LegendItem>
-        <LegendItem onClick={() => OnClick("국어")}>국어</LegendItem>
-        <LegendItem onClick={() => OnClick("수학")}>수학</LegendItem>
-        <LegendItem onClick={() => OnClick("음악")}>음악</LegendItem>
-        <LegendItem onClick={() => OnClick("사회문화")}>사회문화</LegendItem>
-        <LegendItem onClick={() => OnClick("과학")}>과학</LegendItem>
+        <LegendItem color="#6BFAE7" onClick={() => OnClick("미술")}>
+          미술
+        </LegendItem>
+        <LegendItem color="#D34DFF" onClick={() => OnClick("영어")}>
+          영어
+        </LegendItem>
+        <LegendItem color="#FCEB60" onClick={() => OnClick("국어")}>
+          국어
+        </LegendItem>
+        <LegendItem color="#28A128" onClick={() => OnClick("수학")}>
+          수학
+        </LegendItem>
+        <LegendItem color="#FF503F" onClick={() => OnClick("음악")}>
+          음악
+        </LegendItem>
+        <LegendItem color="#566BE3" onClick={() => OnClick("사회문화")}>
+          사회문화
+        </LegendItem>
+        <LegendItem color="#76E356" onClick={() => OnClick("과학")}>
+          과학
+        </LegendItem>
       </FlexRow>
-    </>
+    </MainFlexGrid>
   );
 };
 
-const FlexRow = styled.div`
-  float: left;
-  text-align: center;
-  flex-direction: row;
-  justify-content: center;
-  align-self: center;
+const GraphAria = styled.div`
+  margin: 50px auto 50px auto;
+  width: 70%;
+  height: 70%;
 `;
 
-const Graded = styled.div`
-width: 2000px
-height: 2000px
-display: 
+const MainFlexGrid = styled.div`
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  width: flex;
+`;
+
+const FlexRow = styled.div`
+  gap: 35x;
+  width: 100%;
+  text-align: center;
+  margin: 0 0 0 0;
+  flex-direction: row;
+  justify-content: center;
+  align-self: stretch;
+  display: flex;
 `;
 
 const LegendItem = styled.div`
-  height: 50px;
-  width: 100px;
-  background-color: gray;
-  float: left;
+  border-radius: 5px;
+  margin: 0 10px 0 10px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  height: 30px;
+  width: 50px;
+  font-size: 12px;
+  background-color: ${(props) => props.color};
+  cursor: pointer;
 `;
 
 export default Grade;

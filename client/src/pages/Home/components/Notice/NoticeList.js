@@ -1,18 +1,21 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import NoticeItem from "./NoticeItem";
-import { getNoticeList } from '../../../../api/notice';
-import Button from '../../../../components/Button/Button';
-import Pagination from 'react-js-pagination';
-import '../../../../assets/pagination.css'
-import { useSelector } from 'react-redux';
+import { getNoticeList } from "../../../../api/notice";
+import Button from "../../../../components/Button/Button";
+import Pagination from "react-js-pagination";
+import "../../../../assets/pagination.css";
+import { useSelector } from "react-redux";
 import { selectUser } from "storage/UserSlice";
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> b8728837d7dd46f55b47833f2123261b3c32273b
 const Container = styled.div`
-  width: 100%;
-  padding : 3rem 5rem;
+  width: 980px;
+  padding: 3rem 5rem;
   box-sizing: border-box;
   height: 80%;
 `;
@@ -34,13 +37,13 @@ const StyledCol = styled.col`
 `;
 
 const StyledTh = styled.td`
-  background-color: #ffeebb;
+  background-color: #ebffd2;
   height: 2.2rem;
   vertical-align: middle;
   text-align: center;
   font-weight: 600;
   border-radius: 3px;
-  color: #fff;
+  color: #999999;
   & + & {
     border-left: 2px solid white;
   }
@@ -50,52 +53,51 @@ const PageContainer = styled.div`
   margin-top: 1rem;
 `;
 
-
 function NoticeList() {
-    const Navigate = useNavigate();
-    const [data, setData] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [totalItemsCount, setTotalItemsCount] = useState(0);
-    const [isTotalItemsCountLoading, setIsTotalItemsCountLoading] = useState(true);
-    const [page, setPage] = useState(0);
-    const user = useSelector(selectUser);
-    
+  const Navigate = useNavigate();
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [totalItemsCount, setTotalItemsCount] = useState(0);
+  const [isTotalItemsCountLoading, setIsTotalItemsCountLoading] =
+    useState(true);
+  const [page, setPage] = useState(0);
+  const user = useSelector(selectUser);
 
-    useEffect(() => {
-        if (isTotalItemsCountLoading) {
-          getNoticeList(page).then((res) => {
-            setTotalItemsCount(res.data.total*10 + res.data.list.length);
-            setIsTotalItemsCountLoading(false);
-          });
-        } else {
-          setIsLoading(true);
-        }
-      }, [isTotalItemsCountLoading]);
+  useEffect(() => {
+    if (isTotalItemsCountLoading) {
+      getNoticeList(page).then((res) => {
+        setTotalItemsCount(res.data.total * 10 + res.data.list.length);
+        setIsTotalItemsCountLoading(false);
+      });
+    } else {
+      setIsLoading(true);
+    }
+  }, [isTotalItemsCountLoading]);
 
-    // useEffect 데이터 read
-    useEffect(() => {
-      if (isLoading) {
-        getNoticeList(page).then((res) => {
-          setData(res.data.list);
-          setIsLoading(false);
-        });
-      };
-    }, [isLoading]);
+  // useEffect 데이터 read
+  useEffect(() => {
+    if (isLoading) {
+      getNoticeList(page).then((res) => {
+        setData(res.data.list);
+        setIsLoading(false);
+      });
+    }
+  }, [isLoading]);
 
-
-    const handlePageChange = (page) => {
+  const handlePageChange = (page) => {
     setPage(page - 1);
     Navigate(`?page=${page}`);
     setIsLoading(true);
-    };
+  };
 
-
-    return (
+  return (
     <>
       <Container>
         <ButtonContainer>
           {user.authority === "TEACHER" && (
             <Button
+              height='30px'
+              width='100px'
               name='글쓰기'
               onClick={()=> Navigate("./register")} />
           )}
@@ -137,11 +139,10 @@ function NoticeList() {
             nextPageText={"›"}
             onChange={handlePageChange}
           />
-      </PageContainer>
-        </Container>
+        </PageContainer>
+      </Container>
     </>
-  )
+  );
 }
 
-
-export default NoticeList
+export default NoticeList;

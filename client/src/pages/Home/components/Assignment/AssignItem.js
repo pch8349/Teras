@@ -21,14 +21,16 @@ const StyledTd = styled.td`
 
 function AssignItem({data, index}) {
   const Navigate = useNavigate();
+  const submit = ['미제출','제출']
 
   return (
     <StyledTr onClick={() => Navigate(`./${data.assignNo}`)}>
         <StyledTd>{data.subjectName}</StyledTd>
         <StyledTd>{data.title}</StyledTd>
         <StyledTd>{data.name}</StyledTd>
-        <StyledTd>{data.createdDate}</StyledTd>
+        <StyledTd>{data.createdDate.slice(0,16)}</StyledTd>
         <StyledTd>{data.deadLine}</StyledTd>
+        <StyledTd>{submit[data.state]}</StyledTd>
     </StyledTr>
   );
 }

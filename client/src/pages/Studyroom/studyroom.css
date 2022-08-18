@@ -1,0 +1,48 @@
+.studyroomFelxContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.studyroomGridContainer {
+  display: grid;
+  grid-template-rows: 150px 700px;
+  margin-top: 20px;
+  width: 1500px;
+}
+
+.studyroomHeaderContainer {
+  grid-row-start: 1;
+  grid-row-end: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.studyroomMainContainer {
+  grid-row-start: 2;
+  grid-row-end: 3;
+  display: grid;
+  grid-template-rows: 750px 100px;
+}
+
+.studyroomYellowBox {
+  width: 200px;
+  height: 60px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  background-color: #e5ac3a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 30px;
+  font-weight: bolder;
+}
+
+.studyroomNameBox {
+  width: 800px;
+  height: 60px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background-color: #fff;
+}

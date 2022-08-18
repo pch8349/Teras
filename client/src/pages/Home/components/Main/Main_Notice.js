@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Button from "../../../../components/Button/Button";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getNoticeList } from "api/notice";
@@ -36,7 +35,13 @@ function Main_Notice({}) {
 
   return (
     <Container>
+<<<<<<< HEAD
       <SubjectText>공지사항</SubjectText>
+=======
+      <SubjectText>
+        <div onClick={() => Navigate(`/notice`)}>공지사항</div>
+      </SubjectText>
+>>>>>>> b8728837d7dd46f55b47833f2123261b3c32273b
 
       <StyledTable>
         <colgroup>
@@ -46,12 +51,15 @@ function Main_Notice({}) {
         <tbody>
           {data &&
             !isLoading &&
-            data.slice(0, 4).map((item, totalItemsCount) => (
-              <StyledTr
-                data={item}
-                onClick={() => Navigate(`/notice/${item.noticeNo}`)}
-              >
-                <StyledTd>{item.title}</StyledTd>
+            data.slice(0, 4).map((item) => (
+              <StyledTr data={item}>
+                <StyledTd>
+                  <TextClick
+                    onClick={() => Navigate(`/notice/${item.noticeNo}`)}
+                  >
+                    {item.title}
+                  </TextClick>
+                </StyledTd>
                 <StyledTd>{item.name}</StyledTd>
               </StyledTr>
             ))}
@@ -60,6 +68,26 @@ function Main_Notice({}) {
     </Container>
   );
 }
+
+<<<<<<< HEAD
+const SubjectText = styled.div`
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  margin: 10px 0 30px 10px;
+  font-size: 17px;
+  font-weight: bold;
+`;
+
+const StyledTr = styled.tr`
+=======
+const TextClick = styled.div`
+>>>>>>> b8728837d7dd46f55b47833f2123261b3c32273b
+  cursor: pointer;
+  &:hover {
+    font-weight: bold;
+  }
+`;
 
 const SubjectText = styled.div`
   display: flex;
@@ -71,19 +99,17 @@ const SubjectText = styled.div`
 `;
 
 const StyledTr = styled.tr`
-  cursor: pointer;
+  border-bottom: 1px solid #ddd;
   &:hover {
     background-color: ${({ theme }) => theme.noticeHoverColor};
-  }
-  & + & {
-    border-top: 1px solid #dedede;
   }
 `;
 
 const StyledTd = styled.td`
+  border-bottom: 1px solid #ddd;
   height: 3rem;
   vertical-align: middle;
-  text-align: ${(props) => props.ta || "center"};
+  text-align: ${(props) => props.ta || "left"};
   padding: 0 1.5rem;
   box-shadow: 0 0.4px #525252;
 `;
@@ -98,6 +124,7 @@ const Container = styled.div`
 
 const StyledTable = styled.table`
   width: 100%;
+  border-collapse: collapse;
 `;
 
 const StyledCol = styled.col`

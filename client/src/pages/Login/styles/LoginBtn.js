@@ -33,7 +33,9 @@ const GreenBtn = styled.button`
 `;
 
 const YellowBtn = styled.button`
-  background-color: #F1E9A3;
+  background-color: #f1e9a3;
+  width: 200px;
+  min-height: 35px;
   display: flex;
   flex-direction: column;
   justify-content: center;

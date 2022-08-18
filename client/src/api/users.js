@@ -40,7 +40,7 @@ export async function getTimetable(success, fail) {
 
 export const getSchool = async (params, success, fail) => {
   return await api
-    .get("/school?schoolName=", { params })
+    .get(`/school?schoolName=${params}`)
     .then(success)
     .catch(fail);
 };

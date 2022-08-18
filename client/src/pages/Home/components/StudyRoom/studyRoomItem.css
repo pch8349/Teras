@@ -1,0 +1,68 @@
+.studyroom:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.redContainer {
+  background-color: #ea4c1d;
+}
+
+.yellowContainer {
+  background-color: #ffb41d;
+}
+
+.greenContainer {
+  background-color: #0ac97f;
+}
+
+.blueContainer {
+  background-color: #19b6f6;
+}
+
+.purpleContainer {
+  background-color: #9d56f7;
+}
+
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.studyroomNameContainer {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.studyroomNameContainer p {
+  font-weight: bolder;
+  font-size: 20px;
+  color: rgb(62, 62, 62);
+  margin-left: 25px;
+  font-family: "MICEGothic Bold";
+}
+
+.studyroomModalContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.studyroomTitle {
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.modalButtonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
