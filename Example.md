@@ -215,9 +215,9 @@
     </tr>
     <tr>
         <td align="center">UI/UX<br/>React<br/>DB<br/>Infra<br/></td>
-        <td align="center">UI/UX<br/>React<br/>WebRTC<br/>WebSocket</td>
+        <td align="center">UI/UX<br/>React<br/>WebRTC</td>
         <td align="center">UI/UX<br/>React</td>
-        <td align="center">REST API<br/>WebRTC<br/>WebSocket</td>
+        <td align="center">REST API<br/>WebRTC</td>
         <td align="center">REST API<br/>CI/CD<br/></td>
         <td align="center">REST API<br/>DB<br/>S3<br/>Infra<br/></td>
     </tr>
