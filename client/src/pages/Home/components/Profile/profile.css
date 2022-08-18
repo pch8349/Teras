@@ -3,7 +3,7 @@
   height: 210px;
   background-color: white;
   border: solid;
-  border-color: #7CCC77;
+  border-color: #7ccc77;
   border-width: medium;
   display: grid;
   grid-template-rows: 120px 90px;
@@ -12,9 +12,9 @@
 .currentStatusBox {
   width: 280px;
   height: 50px;
-  background-color: #7CCC77;
+  background-color: #7ccc77;
   border: solid;
-  border-color: #7CCC77;
+  border-color: #7ccc77;
   border-width: medium;
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
@@ -39,6 +39,7 @@
   width: 95%;
   height: 95%;
   transition: transform 0.5s;
+  background-color: #fff;
 }
 
 .profile:hover {

@@ -1,6 +1,6 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 const StyledTr = styled.tr`
   cursor: pointer;
@@ -13,24 +13,24 @@ const StyledTr = styled.tr`
 `;
 
 const StyledTd = styled.td`
-  height: 3rem;
+  height: 4.5rem;
   vertical-align: middle;
   text-align: ${(props) => props.ta || "center"};
   padding: 0 1.5rem;
   box-shadow: 0.2px 0.2px #525252;
 `;
 
-function NoticeItem({data, index}) {
+function NoticeItem({ data, index }) {
   const Navigate = useNavigate();
 
   return (
     <StyledTr onClick={() => Navigate(`./${data.noticeNo}`)}>
-        <StyledTd>{index + 1}</StyledTd>
-        <StyledTd>{data.title}</StyledTd>
-        <StyledTd>{data.name}</StyledTd>
-        <StyledTd>{data.createdDate.slice(0,16)}</StyledTd>
+      <StyledTd>{index + 1}</StyledTd>
+      <StyledTd>{data.title}</StyledTd>
+      <StyledTd>{data.name}</StyledTd>
+      <StyledTd>{data.createdDate.slice(0, 16)}</StyledTd>
     </StyledTr>
   );
-};
+}
 
-export default NoticeItem
+export default NoticeItem;

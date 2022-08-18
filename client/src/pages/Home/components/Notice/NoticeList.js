@@ -9,11 +9,19 @@ import "../../../../assets/pagination.css";
 import { useSelector } from "react-redux";
 import { selectUser } from "storage/UserSlice";
 
+const NoticeComponentTitle = styled.div`
+  height: 80px;
+  font-size: 40px;
+  font-weight: bolder;
+  font-family: "MICEGothic Bold";
+  color: green;
+`;
+
 const Container = styled.div`
-  width: 980px;
+  width: 100%;
   padding: 3rem 5rem;
   box-sizing: border-box;
-  height: 80%;
+  height: 100%;
 `;
 
 const StyledTable = styled.table`
@@ -25,7 +33,7 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   box-sizing: border-box;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 `;
 
 const StyledCol = styled.col`
@@ -89,6 +97,7 @@ function NoticeList() {
   return (
     <>
       <Container>
+        <NoticeComponentTitle>공지사항</NoticeComponentTitle>
         <ButtonContainer>
           {user.authority === "TEACHER" && (
             <Button name="글쓰기" onClick={() => Navigate("./register")} />
