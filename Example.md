@@ -186,17 +186,17 @@
 <table>
     <tr>
         <td height="140px" align="center"> <a href="https://github.com/PowerBBear">
-            <img src="#" width="140px" /> <br><br> 👑 김민성 <br>(Front-End) </a> <br></td>
+            <img src="![민성](/uploads/b0ab56b839be9246253b4053b33b373c/민성.jpg)" width="140px" /> <br><br> 👑 김민성 <br>(Front-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/JunPark364">
-            <img src="#" width="140px" /> <br><br> 🙂 박영준 <br>(Front-End) </a> <br></td>
+            <img src="![영준](/uploads/62c8c647a9a7f0457f513f1e8b9c17fe/영준.jpg)" width="140px" /> <br><br> 🙂 박영준 <br>(Front-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/pch8349">
-            <img src="#" width="140px" /> <br><br> 😆 박찬혁 <br>(Front-End) </a> <br></td>
+            <img src="![찬혁](/uploads/bde99e85c40adf4a84d8a4b12a4e864b/찬혁.jpg)" width="140px" /> <br><br> 😆 박찬혁 <br>(Front-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/SilverLight96">
-            <img src="#" width="140px" /> <br><br> 😁 강경은 <br>(Back-End) </a> <br></td>
+            <img src="![경은](/uploads/b4261571e054933c2178a03f13e19f2d/경은.jpg)" width="140px" /> <br><br> 😁 강경은 <br>(Back-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/heunhanireum">
-            <img src="#" width="140px" /> <br><br> 🙄 김민지 <br>(Back-End) </a> <br></td>
+            <img src="![민지](/uploads/ae19dde3e26a774bcef77adcc154f725/민지.jpg)" width="140px" /> <br><br> 🙄 김민지 <br>(Back-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/kkh9700">
-            <img src="#" width="140px" /> <br><br> 😶 김경환 <br>(Back-End) </a> <br></td>
+            <img src="![경환](/uploads/8a957c23971bab7ac9f3fec55e64c918/경환.jpg)" width="140px" /> <br><br> 😶 김경환 <br>(Back-End) </a> <br></td>
     </tr>
     <tr>
         <td align="center">UI/UX<br/>React<br/></td>
@@ -225,10 +225,9 @@
 ## 📋 프로젝트 관련 문서
 |  구분  |  링크  |
 | :--------------- | :---------------: |
-| 와이어프레임 | [와이어프레임 바로가기](/docs/와이어프레임.md) |
+| 와이어프레임 | [와이어프레임 바로가기](https://www.figma.com/file/UGLmvsrx12LGMRymKGRVPw/TERAS-STUDY?node-id=0%3A1) |
 | 테스트데이터 | [테스트데이터 바로가기](/docs/테스트데이터.md) |
-| ERD | [ERD 바로가기](/docs/ERD.md) |
+| ERD | [ERD 바로가기](https://drive.google.com/file/d/1PmUqEjwf3GyiuHPqTALUJH6emQohCJ5I/view?usp=sharing) |
 | 빌드/배포 | [빌드/배포 바로가기](/exec/01_서울_6반_A607_빌드및배포.pdf) |
-| 외부서비스 정보 | [외부서비스 정보 바로가기](/exec/02_서울_6반_A607_외부서비스_정보.pdf) |
 | 시연 시나리오 | [시연 시나리오 바로가기](/exec/04_서울_6반_A607_시연시나리오.pdf) |
 | 발표자료 | [발표자료 바로가기](/docs/서울_6반_A607_발표자료.pdf) |
