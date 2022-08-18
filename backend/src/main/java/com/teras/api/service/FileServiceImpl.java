@@ -2,6 +2,8 @@ package com.teras.api.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -41,21 +43,26 @@ public class FileServiceImpl implements FileService {
 	}
 
 	@Override
-	public ResponseEntity<Object> downloadFile(String uuid) {
+	public ResponseEntity<Object> downloadFile(String uuid, String agent) {
 		Attachment attach = attachmentRepository.findByUuid(uuid).get();
-		String path = "/ubuntu/home/" + attach.getFilePath();
-
 		try {
+			String originFileName = URLDecoder.decode(attach.getFileName(), "UTF-8");
+			String path = "/home/ubuntu/file/" + attach.getFilePath();
+
+			String onlyFileName = originFileName.substring(originFileName.lastIndexOf("_") + 1);
+
+			if (agent.contains("Trident"))// Internet Explore
+				onlyFileName = URLEncoder.encode(onlyFileName, "UTF-8").replaceAll("\\+", " ");
+			else if (agent.contains("Edge")) // Micro Edge
+				onlyFileName = URLEncoder.encode(onlyFileName, "UTF-8");
+			else // Chrome
+				onlyFileName = new String(onlyFileName.getBytes("UTF-8"), "ISO-8859-1");
+
 			Path filePath = Paths.get(path);
 			Resource resource = new InputStreamResource(Files.newInputStream(filePath));
-			System.out.println("a");
-
-			File file = new File(path);
-			System.out.println("a");
 
 			HttpHeaders headers = new HttpHeaders();
-			headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName()).build()); //
-			System.out.println("a");
+			headers.setContentDisposition(ContentDisposition.builder("attachment").filename(onlyFileName).build()); //
 
 			return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
 		} catch (Exception e) {
@@ -68,6 +75,11 @@ public class FileServiceImpl implements FileService {
 		Attachment attachment = Attachment.builder().uuid(uuid).fileName(fileName).fileType(fileType).filePath(filePath)
 				.build();
 		return attachmentRepository.save(attachment);
+	}
+
+	@Override
+	public String getFileName(String uuid) {
+		return attachmentRepository.findByUuid(uuid).get().getFileName();
 	}
 
 }
