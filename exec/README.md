@@ -4,7 +4,18 @@
 
 ### 1.8 Julu
 
-## AWS 진행 사항
+## IDE
+
+### Eclipse
+4.19
+
+### Visual Studio
+2019
+
+### Mysql
+8.0
+
+## AWS
 
 ### 기본 설정
 방화벽 설정(ssh 허용, 방화성 활성화)
