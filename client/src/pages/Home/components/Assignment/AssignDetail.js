@@ -10,11 +10,14 @@ import { TextField } from '@mui/material';
 import { submitAssign, getAssignDetail } from '../../../../api/assign';
 import axios from 'axios';
 import Dropzone from "react-dropzone";
+import { useSelector } from "react-redux";
+import { selectUser } from "storage/UserSlice";
 
 const DetailContainer = styled.div`
-  padding: 3rem 5rem;
   box-sizing: border-box;
-  width: 100%;
+  width: 800px;
+  height: 600px;
+  margin-top: 50px;
 `;
 
 const TitleContainer = styled.div`
@@ -42,6 +45,9 @@ const SubContainer = styled.div`
 `;
 
 const BoardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   border-top: 1px solid #dadde6;
   border-bottom: 1px solid #dadde6;
   box-sizing: border-box;
@@ -50,7 +56,7 @@ const BoardContainer = styled.div`
   border-radius: 5px;
   margin-top: 0.5rem;
   min-height: 20rem;
-  height: 400px;
+  height: 250px;
   overflow: auto;
 `;
 
@@ -124,6 +130,10 @@ const CommentContainer = styled.div`
   margin-top: 2rem;
 `;
 
+const Buttondiv = styled.div`
+  margin-top: 90px;
+`
+
 function AssignDetail() {
   const Navigate = useNavigate();
   const params = useParams();
@@ -152,6 +162,7 @@ function AssignDetail() {
       name: "",
       deadLine: "",
   });
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     if (isLoading) {
@@ -211,14 +222,23 @@ function AssignDetail() {
   };
 
   const onDownload = () => {
-    file.uuid = data.uuid
-    console.log(file)
-    postDownloadFile(file).then((res)=> {
-      console.log(res)
-      window.open(res)
-    }).catch((e) => {
-      alert("다운로드에 실패하였습니다.")
-    });
+    file.uuid = data.uuid;
+    getDownloadFile(file.uuid)
+      .then((res) => {
+        const blob = new Blob([res.data]);
+        const fileObjectUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = fileObjectUrl;
+        link.style.display = "none";
+        link.download = `${file.fileName}`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(fileObjectUrl);
+      })
+      .catch((e) => {
+        alert("다운로드에 실패했습니다.");
+      });
   };
 
   const onSubmit = () => {
@@ -287,26 +307,27 @@ function AssignDetail() {
       {!isLoading && (
       <BoardContainer>
           <Viewer initialValue={`${data.content}`} />
+          {data.uuid && (
+            <FileContainer>
+              <div className="desc">첨부파일</div>
+                <div className="fileList">
+                  <div className="fileItem">
+                    <div className="icon" >
+                      <FileIcon
+                        extension={makeExtension(file.fileName)}
+                        {...defaultStyles[makeExtension(file.fileName)]}
+                      />
+                    </div>
+                    <button className="file" onClick={onDownload}>
+                      {file.fileName}
+                    </button>
+                </div>
+              </div>
+            </FileContainer>
+            )}
       </BoardContainer>
       )}
-    {data.uuid && (
-      <FileContainer>
-        <div className="desc">첨부파일</div>
-          <div className="fileList">
-            <div className="fileItem">
-              <div className="icon" >
-                <FileIcon
-                  extension={makeExtension(file.fileName)}
-                  {...defaultStyles[makeExtension(file.fileName)]}
-                />
-              </div>
-              <button className="file" onClick={onDownload}>
-                {file.fileName}
-              </button>
-          </div>
-        </div>
-      </FileContainer>
-      )}
+    {user.authority === "STUDENT" && (
     <CommentContainer>
       <div>과제 제출하기</div>
       <label for='comment'></label>
@@ -347,19 +368,25 @@ function AssignDetail() {
           </div>
         )}
       </CommentFileContainer>
+
+    </CommentContainer>
+    )}
+    <Buttondiv>
+    {user.authority === "STUDENT" && (
       <Button 
         height='30px'
         width='100px'
         name='제출하기'
         onClick={onSubmit}
-      />
+      />)}
       <Button 
         height='30px'
         width='100px'
         name='목록'
         onClick={()=> Navigate("../")}
       />
-    </CommentContainer>
+    </Buttondiv>
+
   </DetailContainer>
   )
 }

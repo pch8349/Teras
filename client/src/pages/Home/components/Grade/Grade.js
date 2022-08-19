@@ -5,8 +5,8 @@ import GradeGraph from "./GradeGraph";
 const Grade = () => {
   const [art, setArt] = useState(false);
   const [english, setEnglish] = useState(false);
-  const [korean, setKorean] = useState(false);
-  const [math, setMath] = useState(false);
+  const [korean, setKorean] = useState(true);
+  const [math, setMath] = useState(true);
   const [music, setMusic] = useState(false);
   const [social, setSocial] = useState(false);
   const [science, setScience] = useState(false);

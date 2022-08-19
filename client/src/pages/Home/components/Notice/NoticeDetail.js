@@ -47,6 +47,9 @@ const SubContainer = styled.div`
 `;
 
 const BoardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   border-top: 1px solid #dadde6;
   border-bottom: 1px solid #dadde6;
   box-sizing: border-box;
