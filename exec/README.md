@@ -64,3 +64,9 @@ mysql-server 설치
 
 방화벽 설정(mysql 허용)
 * sudo ufw allow mysql
+
+## 주요 계정
+
+### Mysql
+ID: admin_teras
+PW: ssafy706
