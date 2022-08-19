@@ -248,4 +248,4 @@
 | ERD | [ERD 바로가기](https://drive.google.com/file/d/1PmUqEjwf3GyiuHPqTALUJH6emQohCJ5I/view?usp=sharing) |
 | 빌드/배포 | [빌드/배포 바로가기](/exec/배포환경.md) |
 | 시연 시나리오 | [시연 시나리오 바로가기](/exec/시연시나리오_대본.docx) |
-| 발표자료 | [발표자료 바로가기](#) |
+| 발표자료 | [발표자료 바로가기](/exec/서울_7반_A706_발표자료.pdf)) |
