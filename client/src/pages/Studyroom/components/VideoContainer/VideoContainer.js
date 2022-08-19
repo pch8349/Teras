@@ -37,6 +37,9 @@ class VideoContainer extends Component {
     this.handleChangeUserName = this.handleChangeUserName.bind(this);
     this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
     this.onbeforeunload = this.onbeforeunload.bind(this);
+    this.handleMicButton = this.handleMicButton.bind(this);
+    this.handleVideoButton = this.handleVideoButton.bind(this);
+    this.handleScreenShare = this.handleScreenShare.bind(this);
   }
 
   componentDidMount() {
@@ -248,17 +251,51 @@ class VideoContainer extends Component {
   }
 
   handleMicButton() {
-    this.publisher.publishAudio(this.micOn);
+    this.state.publisher.publishAudio(this.state.micOn);
     this.setState({
-      micOn: !this.micOn,
+      micOn: !this.state.micOn,
     });
   }
 
   handleVideoButton() {
-    this.publisher.publishVideo(this.videoOn);
+    this.state.publisher.publishVideo(this.state.videoOn);
     this.setState({
-      videoOn: !this.videoOn,
+      videoOn: !this.state.videoOn,
     });
+  }
+
+  handleScreenShare() {
+    var newScreenShare = this.OV.initPublisher(undefined, {
+      videoSource: "screen",
+    });
+
+    newScreenShare.once("accessAllowed", (event) => {
+      newScreenShare.stream
+        .getMediaStream()
+        .getVideoTracks()[0]
+        .addEventListener("ended", () => {
+          console.log('User pressed the "Stop sharing" button');
+          this.state.session.unpublish(this.state.mainStreamManager);
+          this.state.session.publish(this.state.publisher);
+          this.setState({
+            mainStreamManager: this.state.publisher,
+          });
+        });
+      this.state.session.unpublish(this.state.publisher);
+      this.state.session.publish(newScreenShare);
+      this.setState({
+        mainStreamManager: newScreenShare,
+      });
+    });
+
+    newScreenShare.once("accessDenied", (event) => {
+      console.warn("ScreenShare: Access Denied");
+    });
+
+    //newPublisher.once("accessAllowed", () => {
+    // await session.unpublish(mainStreamManager);
+    // await session.publish(newScreenShare);
+    // setHost(newScreenShare);
   }
 
   render() {
@@ -312,7 +349,10 @@ class VideoContainer extends Component {
             )}
           </div>
           <div className="studyroomButton yellowButton">
-            <ScreenShareIcon fontSize="large" />
+            <ScreenShareIcon
+              fontSize="large"
+              onClick={this.handleScreenShare}
+            />
           </div>
           <Link to="/main">
             <div

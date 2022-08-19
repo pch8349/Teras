@@ -37,6 +37,7 @@
   color: white;
   font-size: 30px;
   font-weight: bolder;
+  box-shadow: 3px 3px 3px #9e9e9e;
 }
 
 .studyroomNameBox {
@@ -45,4 +46,9 @@
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
   background-color: #fff;
+  box-shadow: 3px 3px 3px #9e9e9e;
+  line-height: 60px;
+  padding: 0 25px;
+  font-size: 25px;
+  font-weight: bolder;
 }

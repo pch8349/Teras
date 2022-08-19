@@ -35,10 +35,7 @@ function Main_Notice({}) {
 
   return (
     <Container>
-      <SubjectText>
-        <div onClick={() => Navigate(`/notice`)}>공지사항</div>
-      </SubjectText>
-
+      <SubjectText onClick={() => Navigate(`/notice`)}>공지사항</SubjectText>
       <StyledTable>
         <colgroup>
           <StyledCol width="70%"></StyledCol>
@@ -53,7 +50,7 @@ function Main_Notice({}) {
                   <TextClick
                     onClick={() => Navigate(`/notice/${item.noticeNo}`)}
                   >
-                    {item.title}
+                    <span>{item.title}</span>
                   </TextClick>
                 </StyledTd>
                 <StyledTd>{item.name}</StyledTd>
@@ -70,15 +67,21 @@ const TextClick = styled.div`
   &:hover {
     font-weight: bold;
   }
+  width: 100%;
 `;
 
 const SubjectText = styled.div`
-  display: flex;
-  flex-direction: row;
-  text-align: center;
-  margin: 10px 0 30px 10px;
-  font-size: 17px;
+  height: 40px;
+  line-height: 40px;
+  padding: 5px 0;
+  font-size: 20px;
   font-weight: bold;
+  width: 100%;
+  background-color: #5ab151;
+  color: white;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const StyledTr = styled.tr`

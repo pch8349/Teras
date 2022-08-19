@@ -8,6 +8,7 @@
   border-radius: 8px;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
   line-height: 1.125em;
 }
 .react-calendar--doubleView {
@@ -48,11 +49,12 @@
   background: none;
 }
 .react-calendar__navigation button {
-  color: #6f48eb;
+  color: green;
   height: 0px; /* 년월 선택부분의 화살표, 글씨의 수평 위치 */
   min-width: 44px;
   background: none;
-  font-size: 16px;
+  font-size: 20px;
+  font-weight: bolder;
   margin-top: 8px;
 }
 .react-calendar__navigation button:enabled:hover,
@@ -71,35 +73,35 @@ abbr[title] {
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
   background: #f8f8fa;
-  color: #6f48eb;
+  color: #349f28;
   border-radius: 6px;
 }
 .react-calendar__tile--now {
-  background: #6f48eb33;
+  background: #6fb66758;
   border-radius: 6px;
   font-weight: bold;
-  color: #6f48eb;
+  color: #000;
 }
 .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
-  background: #6f48eb33;
+  background: #5bb151ab;
   border-radius: 6px;
   font-weight: bold;
-  color: #6f48eb;
+  color: #5ab151;
 }
 .react-calendar__tile--hasActive:enabled:hover,
 .react-calendar__tile--hasActive:enabled:focus {
   background: #f8f8fa;
 }
 .react-calendar__tile--active {
-  background: #6f48eb;
+  background: #5ab151;
   border-radius: 6px;
   font-weight: bold;
   color: white;
 }
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
-  background: #6f48eb;
+  background: #5ab151;
   color: white;
 }
 .react-calendar--selectRange .react-calendar__tile--hover {
@@ -115,7 +117,7 @@ abbr[title] {
   border-bottom-right-radius: 0;
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
-  background: #6f48eb;
+  background: #5ab151;
   color: white;
 }
 .react-calendar__tile--rangeEnd {
@@ -123,6 +125,6 @@ abbr[title] {
   border-bottom-left-radius: 0;
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
-  background: #6f48eb;
+  background: #5ab151;
   color: white;
 }

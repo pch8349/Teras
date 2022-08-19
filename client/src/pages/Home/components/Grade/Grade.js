@@ -107,11 +107,11 @@ const GradeTitleBox = styled.div`
   justify-content: flex-end;
   align-items: center;
   height: 80px;
-  font-size: 45px;
+  font-size: 40px;
   font-weight: bolder;
   font-family: "MICEGothic Bold";
   color: green;
-  margin: 30px 110px 0 0;
+  margin: 30px 140px 0 0;
 `;
 
 const GraphAria = styled.div`

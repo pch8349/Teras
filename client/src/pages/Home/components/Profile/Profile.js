@@ -45,12 +45,14 @@ function Profile() {
           </div>
         </div>
         <div className="attendanceButtonContainer">
-          <button
-            className={attendanceTime ? "attended" : "attendanceButton"}
-            onClick={handleAttendance}
-          >
-            {attendanceTime ? attendanceTime : "출석"}
-          </button>
+          {user.authority === "STUDENT" ? (
+            <button
+              className={attendanceTime ? "attended" : "attendanceButton"}
+              onClick={handleAttendance}
+            >
+              {attendanceTime ? attendanceTime : "출석"}
+            </button>
+          ) : null}
         </div>
       </div>
     </>

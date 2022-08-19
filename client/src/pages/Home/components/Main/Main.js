@@ -32,6 +32,7 @@ function Main() {
       </FlexRow>
       <FlexRow>
         <Part onClick={handleOpen}>
+          <GradeTitleContainer>성적</GradeTitleContainer>
           <GraphAria>
             <GradeGraph
               arr={[
@@ -90,8 +91,9 @@ function Main() {
 
 const GraphAria = styled.div`
   margin: 20px 80px 50px auto;
-  width: 90%;
-  height: 90%;
+  width: 80%;
+  height: 80%;
+  padding-left: 40px;
 `;
 
 const FlexRow = styled.div`
@@ -102,6 +104,19 @@ const FlexRow = styled.div`
   align-items: center;
   gap: 20px;
 `;
+const GradeTitleContainer = styled.div`
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  font-weight: bolder;
+  background-color: #5ab151;
+  padding: 5px 0;
+  color: white;
+  :hover {
+    cursor: pointer;
+  }
+`;
 
 const MainFlexGrid = styled.div`
   justify-content: center;
@@ -111,19 +126,21 @@ const MainFlexGrid = styled.div`
 `;
 
 const Part = styled.div`
-  box-shadow: 0 0 3px 3px rgba(100, 100, 100, 0.1);
+  box-shadow: 3px 3px 3px 3px rgba(100, 100, 100, 0.1);
   justify-content: center;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
   margin: 5px 5px 5px 5px;
   width: 400px;
   height: 300px;
-  background-color: #ebffd2;
-  border-radius: 5px;
+  background-color: #fff;
+  border-radius: 8px;
   transition: transform 0.2s;
   &: hover {
     transform: scale(1.03);
     box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
   }
+  overflow: hidden;
 `;
 const style = {
   position: "absolute",
