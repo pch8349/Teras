@@ -246,6 +246,6 @@
 | :--------------- | :---------------: |
 | 와이어프레임 | [와이어프레임 바로가기](https://www.figma.com/file/UGLmvsrx12LGMRymKGRVPw/TERAS-STUDY?node-id=0%3A1) |
 | ERD | [ERD 바로가기](https://drive.google.com/file/d/1PmUqEjwf3GyiuHPqTALUJH6emQohCJ5I/view?usp=sharing) |
-| 빌드/배포 | [빌드/배포 바로가기](#) |
-| 시연 시나리오 | [시연 시나리오 바로가기](#) |
+| 빌드/배포 | [빌드/배포 바로가기](/exec/배포환경.md) |
+| 시연 시나리오 | [시연 시나리오 바로가기](/exec/시연시나리오_대본.docx) |
 | 발표자료 | [발표자료 바로가기](#) |
