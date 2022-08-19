@@ -70,3 +70,11 @@ mysql-server 설치
 ### Mysql
 ID: admin_teras
 PW: ssafy706
+
+### Teras
+#### 선생
+ID: teacher
+PW: 1234
+#### 학생
+ID: ssafy
+PW: 1234
