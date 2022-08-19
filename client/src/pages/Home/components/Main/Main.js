@@ -90,7 +90,7 @@ function Main() {
 }
 
 const GraphAria = styled.div`
-  margin: 20px 80px 50px auto;
+  margin-top: 25px;
   width: 80%;
   height: 80%;
   padding-left: 40px;
