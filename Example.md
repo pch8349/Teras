@@ -245,8 +245,7 @@
 |  구분  |  링크  |
 | :--------------- | :---------------: |
 | 와이어프레임 | [와이어프레임 바로가기](https://www.figma.com/file/UGLmvsrx12LGMRymKGRVPw/TERAS-STUDY?node-id=0%3A1) |
-| 테스트데이터 | [테스트데이터 바로가기](/docs/테스트데이터.md) |
 | ERD | [ERD 바로가기](https://drive.google.com/file/d/1PmUqEjwf3GyiuHPqTALUJH6emQohCJ5I/view?usp=sharing) |
-| 빌드/배포 | [빌드/배포 바로가기](/exec/01_서울_6반_A607_빌드및배포.pdf) |
-| 시연 시나리오 | [시연 시나리오 바로가기](/exec/04_서울_6반_A607_시연시나리오.pdf) |
-| 발표자료 | [발표자료 바로가기](/docs/서울_6반_A607_발표자료.pdf) |
+| 빌드/배포 | [빌드/배포 바로가기](#) |
+| 시연 시나리오 | [시연 시나리오 바로가기](#) |
+| 발표자료 | [발표자료 바로가기](#) |
