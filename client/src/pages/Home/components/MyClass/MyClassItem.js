@@ -1,40 +1,34 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
 const Card = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   height: 150px;
-  width: 120px;
+  width: 130px;
   text-align: center;
   justify-content: center;
-  border: solid 1px #000;
-  box-shadow: 2px 2px #525252;
-  border-radius: 5px;
-  margin-top: 15px;
-  .image {
-    width: 50px;
-    height: 50px; 
-    border-radius: 70%;
-    overflow: hidden;
-    margin-left: 35px;
+  border: solid 1px #7ccc77;
+  box-shadow: 2px 2px 2px #dedede;
+  border-radius: 10px;
+  margin: 5px 20px;
+  img {
+    margin-top: 10px;
   }
   .name {
-    text-size: 1.5rem;
+    font-size: 20px;
+    font-weight: bold;
     margin-top: 15%;
   }
-`
+`;
 
-function MyClassItem({data, index}) {
-
+function MyClassItem({ data, imgSrc }) {
   return (
     <Card>
-      <div className='image'>
-        <img src='https://via.placeholder.com/300x250?text=300x250+MPU' alt='' />
-      </div>
-      <div className='name'>{data.name}</div>
+      <img src={imgSrc} width="80" height="80" alt="" />
+      <div className="name">{data.name}</div>
     </Card>
-  )
+  );
 }
 
-export default MyClassItem
+export default MyClassItem;

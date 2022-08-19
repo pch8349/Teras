@@ -36,9 +36,7 @@ function Main_Assign({}) {
 
   return (
     <Container>
-      <SubjectText>
-        <div onClick={() => Navigate(`/assign`)}>과제</div>
-      </SubjectText>
+      <SubjectText onClick={() => Navigate(`/assign`)}>과제</SubjectText>
       <StyledTable>
         <colgroup>
           <StyledCol width="70%"></StyledCol>
@@ -73,12 +71,17 @@ const TextClick = styled.div`
 `;
 
 const SubjectText = styled.div`
-  display: flex;
-  flex-direction: row;
-  text-align: center;
-  margin: 10px 0 30px 10px;
-  font-size: 17px;
+  height: 40px;
+  line-height: 40px;
+  padding: 5px 0;
+  font-size: 20px;
   font-weight: bold;
+  width: 100%;
+  background-color: #5ab151;
+  color: white;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const StyledTr = styled.tr`

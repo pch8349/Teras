@@ -9,8 +9,8 @@ const Container = styled.div`
     flex-direction: column;
     max-width: 100%;
     height: 100%; /*달력과 밑에 표시되는 그날 일정표시 사이 간격 벌어짐 */
-    background-color: #ebffd2;
-    color: #222;
+    background-color: #5ab151;
+    color: #fff;
     border-radius: 8px;
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
     font-family: Arial, Helvetica, sans-serif;
@@ -54,11 +54,11 @@ const Container = styled.div`
     background: none;
   }
   .react-calendar__navigation button {
-    color: #6f48eb;
+    color: #fff;
     height: 0px;
     min-width: 44px;
     background: none;
-    font-size: 16px;
+    font-size: 20px;
     margin-top: 8px;
   }
   .react-calendar__navigation button:enabled:hover,
@@ -126,7 +126,7 @@ const Container = styled.div`
     border-bottom-left-radius: 0;
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
-    background: #6f48eb;
+    background: #5ab151;
     color: white;
   }
 `;

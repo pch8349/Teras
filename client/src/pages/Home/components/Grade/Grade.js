@@ -30,6 +30,7 @@ const Grade = () => {
 
   return (
     <MainFlexGrid>
+      <GradeTitleBox>성적</GradeTitleBox>
       <GraphAria>
         <GradeGraph
           arr={[
@@ -45,25 +46,53 @@ const Grade = () => {
       </GraphAria>
 
       <FlexRow>
-        <LegendItem color="#6BFAE7" onClick={() => OnClick("미술")}>
+        <LegendItem
+          color="#AC4425"
+          isClicked={art}
+          onClick={() => OnClick("미술")}
+        >
           미술
         </LegendItem>
-        <LegendItem color="#D34DFF" onClick={() => OnClick("영어")}>
+        <LegendItem
+          color="#2B7A0B"
+          isClicked={english}
+          onClick={() => OnClick("영어")}
+        >
           영어
         </LegendItem>
-        <LegendItem color="#FCEB60" onClick={() => OnClick("국어")}>
+        <LegendItem
+          color="#D61C4E"
+          isClicked={korean}
+          onClick={() => OnClick("국어")}
+        >
           국어
         </LegendItem>
-        <LegendItem color="#28A128" onClick={() => OnClick("수학")}>
+        <LegendItem
+          color="#319DA0"
+          isClicked={math}
+          onClick={() => OnClick("수학")}
+        >
           수학
         </LegendItem>
-        <LegendItem color="#FF503F" onClick={() => OnClick("음악")}>
+        <LegendItem
+          color="#FFB200"
+          isClicked={music}
+          onClick={() => OnClick("음악")}
+        >
           음악
         </LegendItem>
-        <LegendItem color="#566BE3" onClick={() => OnClick("사회문화")}>
+        <LegendItem
+          color="#781C68"
+          isClicked={social}
+          onClick={() => OnClick("사회문화")}
+        >
           사회문화
         </LegendItem>
-        <LegendItem color="#76E356" onClick={() => OnClick("과학")}>
+        <LegendItem
+          color="#277BC0"
+          isClicked={science}
+          onClick={() => OnClick("과학")}
+        >
           과학
         </LegendItem>
       </FlexRow>
@@ -71,27 +100,40 @@ const Grade = () => {
   );
 };
 
+const GradeTitleBox = styled.div`
+  grid-row-start: 1;
+  grid-row-end: 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 80px;
+  font-size: 40px;
+  font-weight: bolder;
+  font-family: "MICEGothic Bold";
+  color: green;
+  margin: 30px 140px 0 0;
+`;
+
 const GraphAria = styled.div`
-  margin: 50px auto 50px auto;
-  width: 70%;
-  height: 70%;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 60px;
 `;
 
 const MainFlexGrid = styled.div`
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  display: grid;
+  grid-template-rows: 100px 500px 100px;
   width: 100%;
-  height: 100%;
-  width: flex;
 `;
 
 const FlexRow = styled.div`
   gap: 35x;
-  width: 100%;
-  text-align: center;
-  margin: 0 0 0 0;
-  flex-direction: row;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  margin: 0;
   justify-content: center;
   align-self: stretch;
   display: flex;
@@ -104,10 +146,16 @@ const LegendItem = styled.div`
   justify-content: center;
   display: flex;
   height: 30px;
-  width: 50px;
-  font-size: 12px;
-  background-color: ${(props) => props.color};
+  color: ${(props) => (props.isClicked ? "white" : props.color)};
+  background-color: ${(props) => (props.isClicked ? props.color : "white")};
+  width: 75px;
+  font-size: 16px;
+  border: solid 1px ${(props) => props.color};
   cursor: pointer;
+  :hover {
+    background-color: ${(props) => props.color};
+    color: white;
+  }
 `;
 
 export default Grade;

@@ -79,33 +79,33 @@ const GradeGraph = ({ arr }) => {
   };
 
   return (
-    <ResponsiveContainer className={"responsiveChart"} height="80%" width="80%">
+    <ResponsiveContainer className={"responsiveChart"} height="90%" width="90%">
       <LineChart data={score}>
         {arr[0].value && (
-          <Line type="linear" dataKey="미술" stroke="#6BFAE7" strokeWidth={3} />
+          <Line type="linear" dataKey="미술" stroke="#AC4425" strokeWidth={3} />
         )}
         {arr[1].value && (
-          <Line type="linear" dataKey="영어" stroke="#D34DFF" strokeWidth={3} />
+          <Line type="linear" dataKey="영어" stroke="#2B7A0B" strokeWidth={3} />
         )}
         {arr[2].value && (
-          <Line type="linear" dataKey="국어" stroke="#FCEB60" strokeWidth={3} />
+          <Line type="linear" dataKey="국어" stroke="#D61C4E" strokeWidth={3} />
         )}
         {arr[3].value && (
-          <Line type="linear" dataKey="수학" stroke="#28A128" strokeWidth={3} />
+          <Line type="linear" dataKey="수학" stroke="#319DA0" strokeWidth={3} />
         )}
         {arr[4].value && (
-          <Line type="linear" dataKey="음악" stroke="#FF503F" strokeWidth={3} />
+          <Line type="linear" dataKey="음악" stroke="#FFB200" strokeWidth={3} />
         )}
         {arr[5].value && (
           <Line
             type="linear"
             dataKey="사회문화"
-            stroke="#566BE3"
+            stroke="#781C68"
             strokeWidth={3}
           />
         )}
         {arr[6].value && (
-          <Line type="linear" dataKey="과학" stroke="#76E356" strokeWidth={3} />
+          <Line type="linear" dataKey="과학" stroke="#277BC0" strokeWidth={3} />
         )}
 
         <Tooltip />

@@ -55,9 +55,9 @@ function StudyRoom() {
           },
           (error) => {
             console.log(error);
-          }
+          },
         );
-      }
+      },
     );
   };
 
@@ -71,14 +71,18 @@ function StudyRoom() {
           </div>
         </div>
         <div className="studyroomsContainer">
-          {studyroomList.map((studyroom, index) => (
-            <StudyRoomItem
-              key={index}
-              studyroomName={studyroom.studyroomName}
-              sessionId={studyroom.sessionId}
-              boxColor={studyroom.boxColor}
-            />
-          ))}
+          {studyroomList.length === 0 ? (
+            <div className="noStudyroom">현재 열린 스터디룸이 없습니다</div>
+          ) : (
+            studyroomList.map((studyroom, index) => (
+              <StudyRoomItem
+                key={index}
+                studyroomName={studyroom.studyroomName}
+                sessionId={studyroom.sessionId}
+                boxColor={studyroom.boxColor}
+              />
+            ))
+          )}
         </div>
       </div>
       <Modal

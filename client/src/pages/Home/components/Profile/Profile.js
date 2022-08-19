@@ -8,6 +8,10 @@ function Profile() {
   const [attendance, setAttendance] = useState(false);
   const [showCurrentStatus, setShowCurrentStatus] = useState(false);
   const [attendanceTime, setAttendanceTime] = useState();
+  const profileImg =
+    user.authority === "TEACHER"
+      ? "/avatar_teacher.png"
+      : "/avatar_student.png";
 
   const checkTime = () => {
     setShowCurrentStatus(true);
@@ -25,26 +29,30 @@ function Profile() {
     <>
       {showCurrentStatus ? <div className="currentStatusBox">3교시</div> : null}
       <div className="profileBox">
-        <div className="profile">
-          <img src={"/avatar.png"} alt="avatar" height="70" />
-          <div>
-            <p>
-              {user.schoolName}
-              {user.classCode.slice(-4, -2).replace(/(^0+)/, "")}
-              학년 {user.classCode.slice(-2).replace(/(^0+)/, "")}반
-            </p>
-            <p>
-              {user.name} {user.authority === "TEACHER" ? "선생님" : "학생"}
-            </p>
+        <div className="profileContainer">
+          <div className="profile">
+            <img src={profileImg} alt="avatar" height="60" />
+            <div>
+              <div className="schoolInfo">
+                {user.schoolName}&nbsp;
+                {user.classCode.slice(-4, -2).replace(/(^0+)/, "")}
+                학년 {user.classCode.slice(-2).replace(/(^0+)/, "")}반
+              </div>
+              <div className="nameInfo">
+                {user.name} {user.authority === "TEACHER" ? "선생님" : "학생"}
+              </div>
+            </div>
           </div>
         </div>
         <div className="attendanceButtonContainer">
-          <button
-            className={attendanceTime ? "attended" : "attendanceButton"}
-            onClick={handleAttendance}
-          >
-            {attendanceTime ? attendanceTime : "출석"}
-          </button>
+          {user.authority === "STUDENT" ? (
+            <button
+              className={attendanceTime ? "attended" : "attendanceButton"}
+              onClick={handleAttendance}
+            >
+              {attendanceTime ? attendanceTime : "출석"}
+            </button>
+          ) : null}
         </div>
       </div>
     </>

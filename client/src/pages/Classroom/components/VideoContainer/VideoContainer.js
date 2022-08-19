@@ -2,7 +2,7 @@ import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import React, { Component } from "react";
 import UserVideoComponent from "./UserVideoComponent";
-import { openSession, deleteSession } from "api/classroom";
+import { openSession, deleteSession, deleteSessionApi } from "api/classroom";
 import { Link } from "react-router-dom";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -37,6 +37,9 @@ class App extends Component {
     this.handleChangeUserName = this.handleChangeUserName.bind(this);
     this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
     this.onbeforeunload = this.onbeforeunload.bind(this);
+    this.handleMicButton = this.handleMicButton.bind(this);
+    this.handleVideoButton = this.handleVideoButton.bind(this);
+    this.handleScreenShare = this.handleScreenShare.bind(this);
   }
 
   componentDidMount() {
@@ -136,7 +139,7 @@ class App extends Component {
             .then(async () => {
               var devices = await this.OV.getDevices();
               var videoDevices = devices.filter(
-                (device) => device.kind === "videoinput"
+                (device) => device.kind === "videoinput",
               );
 
               // --- 5) Get your own camera stream ---
@@ -171,7 +174,7 @@ class App extends Component {
                   },
                   (error) => {
                     console.log(error);
-                  }
+                  },
                 );
 
                 this.setState({
@@ -201,11 +204,11 @@ class App extends Component {
               console.log(
                 "There was an error connecting to the session:",
                 error.code,
-                error.message
+                error.message,
               );
             });
         });
-      }
+      },
     );
   }
 
@@ -222,7 +225,17 @@ class App extends Component {
         },
         (error) => {
           console.log(error);
-        }
+        },
+      );
+
+      deleteSessionApi(
+        this.state.mySessionId,
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.log(error);
+        },
       );
     } else {
       mySession.disconnect();
@@ -243,12 +256,13 @@ class App extends Component {
     try {
       const devices = await this.OV.getDevices();
       var videoDevices = devices.filter(
-        (device) => device.kind === "videoinput"
+        (device) => device.kind === "videoinput",
       );
 
       if (videoDevices && videoDevices.length > 1) {
         var newVideoDevice = videoDevices.filter(
-          (device) => device.deviceId !== this.state.currentVideoDevice.deviceId
+          (device) =>
+            device.deviceId !== this.state.currentVideoDevice.deviceId,
         );
 
         if (newVideoDevice.length > 0) {
@@ -291,6 +305,40 @@ class App extends Component {
     });
   }
 
+  handleScreenShare() {
+    var newScreenShare = this.OV.initPublisher(undefined, {
+      videoSource: "screen",
+    });
+
+    newScreenShare.once("accessAllowed", (event) => {
+      newScreenShare.stream
+        .getMediaStream()
+        .getVideoTracks()[0]
+        .addEventListener("ended", () => {
+          console.log('User pressed the "Stop sharing" button');
+          this.state.session.unpublish(this.state.mainStreamManager);
+          this.state.session.publish(this.state.publisher);
+          this.setState({
+            mainStreamManager: this.state.publisher,
+          });
+        });
+      this.state.session.unpublish(this.state.publisher);
+      this.state.session.publish(newScreenShare);
+      this.setState({
+        mainStreamManager: newScreenShare,
+      });
+    });
+
+    newScreenShare.once("accessDenied", (event) => {
+      console.warn("ScreenShare: Access Denied");
+    });
+
+    //newPublisher.once("accessAllowed", () => {
+    // await session.unpublish(mainStreamManager);
+    // await session.publish(newScreenShare);
+    // setHost(newScreenShare);
+  }
+
   render() {
     const mySessionId = this.state.mySessionId;
     const myUserName = this.state.myUserName;
@@ -318,7 +366,7 @@ class App extends Component {
                 <div key={i} className="classroomSubVideoContainer">
                   <UserVideoComponent streamManager={sub} />
                 </div>
-              )
+              ),
             )}
           </div>
         </div>
@@ -352,7 +400,10 @@ class App extends Component {
             </div>
           ) : null}
           <Link to="/main">
-            <div className="classroomButton redButton">
+            <div
+              className="classroomButton redButton"
+              onClick={this.leaveSession}
+            >
               <CloseIcon fontSize="large" />
             </div>
           </Link>
@@ -375,7 +426,7 @@ class App extends Component {
 
   getToken() {
     return this.createSession(this.state.mySessionId).then((sessionId) =>
-      this.createToken(sessionId)
+      this.createToken(sessionId),
     );
   }
 
@@ -402,7 +453,7 @@ class App extends Component {
             console.log(error);
             console.warn(
               "No connection to OpenVidu Server. This may be a certificate error at " +
-                OPENVIDU_SERVER_URL
+                OPENVIDU_SERVER_URL,
             );
             if (
               window.confirm(
@@ -411,11 +462,11 @@ class App extends Component {
                   '"\n\nClick OK to navigate and accept it. ' +
                   'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
                   OPENVIDU_SERVER_URL +
-                  '"'
+                  '"',
               )
             ) {
               window.location.assign(
-                OPENVIDU_SERVER_URL + "/accept-certificate"
+                OPENVIDU_SERVER_URL + "/accept-certificate",
               );
             }
           }
@@ -439,7 +490,7 @@ class App extends Component {
                 "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
               "Content-Type": "application/json",
             },
-          }
+          },
         )
         .then((response) => {
           console.log("TOKEN", response);
