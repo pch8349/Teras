@@ -1,7 +1,5 @@
 <div align="center">
-  <br />
-  <img src="/uploads/e24902f1e160c77732f696262065f562/KakaoTalk_20220819_010849865.png" alt="TerasStudy" />
-  <br />
+  <img src="/readme.asset/로고.png" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
   <h1>테라스처럼 편한 학교</h1>
   <br />
 </div>
