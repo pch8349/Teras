@@ -148,11 +148,11 @@
 
 |                              공지사항(선생님)                  |
 | :---------------------------------------------------------------------------: |
-|  <img src="/uploads/514f4fc92d814fcd4625e661751d3af6/공지사항선생님.gif" alt="공지사항(선생님)" />  |
+|  ![image](/readme.asset/공지사항선생님.gif)  |
 
 |                              공지사항(학생)                  |
 | :---------------------------------------------------------------------------: |
-|  <img src="/uploads/cafc5272f63c5b18d1472f55aa64fcd8/공지사항학생.gif" alt="공지사항(학생)" />  |
+|  ![image](/readme.asset/공지사항학생.gif)  |
     
 ### 과제
 - 선생님은 자신의 과목에 과제를 원하는 기간을 설정하여 올릴 수 있습니다.
@@ -161,11 +161,11 @@
 
 |                              과제(선생님)                     |
 | :---------------------------------------------------------------------------: |
-|  <img src="/uploads/c968df19132ebf47d80bcdc3a0ccc1ec/과제선생님.gif" alt="과제(선생님)" />  |
+|  ![image](/readme.asset/과제선생님.gif)  |
 
 |                              과제(학생)                      |
 | :---------------------------------------------------------------------------: |
-|  <img src="/uploads/e7968eee8623ab2dfdcb8cac9221ef34/과제학생.gif" alt="과제(학생)" />  |
+|  ![image](/readme.asset/과제학생.gif)  |
 
 ### 캘린더/우리반보기 기타등등
 - 캘린더를 통하여 각각 날짜의 행사를 확인할 수 있습니다.
@@ -173,7 +173,7 @@
 
 |                              기타등등                    |
 | :---------------------------------------------------------------------------: |
-|  <img src="/uploads/954a56669881cd23004c5cb46c6947e6/기타등등.gif" alt="기타등등" />  |
+|  ![image](/readme.asset/기타등등.gif)  |
 
 <br/>
 
@@ -189,11 +189,11 @@
 
 |                            Jira BurnDown Chart                      |
 | :---------------------------------------------------------------------------: |
-|  <img src="/uploads/0c13df10395b2c4b1745acd68aab440e/번다운차트.PNG" />  |
+|  ![image](/readme.asset/번다운차트.png)  |
 
 |                            Notion                      |
 | :---------------------------------------------------------------------------: |
-|  <img src="/uploads/edf6cea8ba6f3d7e652e5af3acaebd42/bandicam_2022-08-19_01-14-58-548.jpg" /><img src="/uploads/18114ff56dc79137c47e068fe84c14a5/bandicam_2022-08-19_01-14-23-188.jpg" />  |
+|  ![image](/readme.asset/bandicam_2022-08-19_01-14-23-188.jpg)![image](/readme.asset/bandicam_2022-08-19_01-14-23-188.jpg)  |
 
 <br />
 
@@ -203,17 +203,17 @@
 <table>
     <tr>
         <td height="140px" align="center"> <a href="https://github.com/PowerBBear">
-            <img src="/uploads/b0ab56b839be9246253b4053b33b373c/민성.jpg" width="140px" /> <br><br> 👑 김민성 <br>(Front-End) </a> <br></td>
+            <img src="/readme.asset/민성.jpg" width="140px" /> <br><br> 👑 김민성 <br>(Front-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/JunPark364">
-            <img src="/uploads/62c8c647a9a7f0457f513f1e8b9c17fe/영준.jpg" width="140px" /> <br><br> 🙂 박영준 <br>(Front-End) </a> <br></td>
+            <img src="/readme.asset/영준.jpg" width="140px" /> <br><br> 🙂 박영준 <br>(Front-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/pch8349">
-            <img src="/uploads/bde99e85c40adf4a84d8a4b12a4e864b/찬혁.jpg" width="140px" /> <br><br> 😆 박찬혁 <br>(Front-End) </a> <br></td>
+            <img src="/readme.asset/찬혁.jpg" width="140px" /> <br><br> 😆 박찬혁 <br>(Front-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/SilverLight96">
-            <img src="/uploads/b4261571e054933c2178a03f13e19f2d/경은.jpg" width="140px" /> <br><br> 😁 강경은 <br>(Back-End) </a> <br></td>
+            <img src="/readme.asset/경은.jpg" width="140px" /> <br><br> 😁 강경은 <br>(Back-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/heunhanireum">
-            <img src="/uploads/ae19dde3e26a774bcef77adcc154f725/민지.jpg" width="140px" /> <br><br> 🙄 김민지 <br>(Back-End) </a> <br></td>
+            <img src="/readme.asset/민지.jpg" width="140px" /> <br><br> 🙄 김민지 <br>(Back-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/kkh9700">
-            <img src="/uploads/8a957c23971bab7ac9f3fec55e64c918/경환.jpg" width="140px" /> <br><br> 😶 김경환 <br>(Back-End) </a> <br></td>
+            <img src="/readme.asset/경환.jpg" width="140px" /> <br><br> 😶 김경환 <br>(Back-End) </a> <br></td>
     </tr>
     <tr>
         <td align="center">UI/UX<br/>React<br/>DB<br/>Infra<br/></td>
